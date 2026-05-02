@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model RfqRequest {
+  id            String    @id @default(uuid())
+  companyName   String
+  contactName   String
+  email         String
+  phone         String?
+  deliveryPoint String
+  details       String    @db.Text
+  status        String    @default("pending") // pending, priced, approved, rejected
+  attachmentUrls String[] @default([])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  items         RfqItem[]
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  category    String
+  description String?
+  price       Float?
+  unit        String   @default("Adet")
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  rfqItems    RfqItem[]
+}
+
+model RfqItem {
+  id        String   @id @default(uuid())
+  rfqId     String
+  productId String?
+  name      String   // Fallback for custom items
+  quantity  Float
+  unit      String
+  price     Float?
+  rfq       RfqRequest @relation(fields: [rfqId], references: [id])
+  product   Product?   @relation(fields: [productId], references: [id])
+}
+
+model Settings {
+  id            Int      @id @default(1)
+  companyName   String   @default("Tuzla Supply")
+  address       String?
+  phone         String?
+  email         String?
+  taxOffice     String?
+  taxNumber     String?
+  bankDetails   String?
+  showReferences Boolean @default(false)
+  showPartners   Boolean @default(false)
+  showStats      Boolean @default(false)
+  
+  // Dynamic Stats
+  statOrders     String  @default("500+")
+  statCustomers  String  @default("150+")
+  statExperience String  @default("25+")
+  statSupport    String  @default("7/24")
+  
+  updatedAt     DateTime @updatedAt
+}
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+}
+
+model SiteContent {
+  id        String   @id @default("main")
+  heroTitle String   @default("Kapsamlı Tedarik Çözümleri")
+  heroSub   String   @default("Denizcilik ve endüstriyel sektörlerde güvenilir iş ortağınız.")
+  aboutText String   @default("Tuzla Supply olarak, gemi ve endüstriyel tesislerin her türlü teknik malzeme ihtiyacını en hızlı ve kaliteli şekilde karşılıyoruz.")
+  categories String   @default("[]")
+  updatedAt  DateTime @updatedAt
+}
+
+model HeroSlide {
+  id        String   @id @default(uuid())
+  title     String
+  subtitle  String
+  imageUrl  String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Reference {
+  id          String   @id @default(uuid())
+  name        String
+  type        String
+  description String?
+  icon        String   @default("Ship")
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+model Partner {
+  id        String   @id @default(uuid())
+  name      String
+  role      String
+  color     String   @default("#0072CE")
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
