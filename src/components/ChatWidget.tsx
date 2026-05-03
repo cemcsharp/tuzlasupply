@@ -10,6 +10,8 @@ export default function ChatWidget() {
   const [isMinimized, setIsMinimized] = useState(false);
   const [input, setInput] = useState("");
   const [sessionId, setSessionId] = useState("");
+  const [leadCollected, setLeadCollected] = useState(false);
+  const [leadForm, setLeadForm] = useState({ name: "", email: "" });
   const [messages, setMessages] = useState<{ role: string, text: string }[]>([
     { role: "assistant", text: "Merhaba! Ben Tuzla AI. Size nasıl yardımcı olabilirim?" }
   ]);
@@ -92,6 +94,17 @@ export default function ChatWidget() {
     }
   };
 
+  const handleLeadSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!leadForm.name || !leadForm.email) return;
+
+    setLoading(true);
+    const { saveChatLead } = await import("@/app/actions/chat");
+    await saveChatLead({ ...leadForm, sessionId });
+    setLeadCollected(true);
+    setLoading(false);
+  };
+
   if (!isOpen) {
     return (
       <button className={styles.launcher} onClick={() => setIsOpen(true)}>
@@ -127,53 +140,90 @@ export default function ChatWidget() {
 
       {!isMinimized && (
         <>
-          {/* Messages */}
-          <div className={styles.messageList} ref={scrollRef}>
-            {messages.map((m, i) => (
-              <div key={i} className={`${styles.messageWrapper} ${m.role === "assistant" ? styles.assistant : styles.user}`}>
-                <div className={styles.avatar}>
-                  {m.role === "assistant" ? <Bot size={14} /> : <User size={14} />}
-                </div>
-                <div className={styles.messageContent}>
-                  {m.text}
-                </div>
+          {!leadCollected ? (
+            <div className={styles.leadFormContainer}>
+              <div className={styles.leadWelcome}>
+                <Bot size={40} className={styles.welcomeBot} />
+                <h3>Tuzla AI'ya Hoş Geldiniz</h3>
+                <p>Size en iyi şekilde yardımcı olabilmemiz için lütfen iletişim bilgilerinizi belirtin.</p>
               </div>
-            ))}
-            {loading && (
-              <div className={`${styles.messageWrapper} ${styles.assistant}`}>
-                <div className={styles.avatar}><Bot size={14} /></div>
-                <div className={styles.typingIndicator}>
-                  <span></span><span></span><span></span>
+              <form onSubmit={handleLeadSubmit} className={styles.leadForm}>
+                <div className={styles.leadInputGroup}>
+                  <label>Adınız Soyadınız *</label>
+                  <input 
+                    type="text" 
+                    placeholder="Örn: Ahmet Yılmaz" 
+                    required 
+                    value={leadForm.name}
+                    onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })}
+                  />
                 </div>
+                <div className={styles.leadInputGroup}>
+                  <label>E-posta Adresiniz *</label>
+                  <input 
+                    type="email" 
+                    placeholder="ornek@firma.com" 
+                    required 
+                    value={leadForm.email}
+                    onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })}
+                  />
+                </div>
+                <button type="submit" disabled={loading} className={styles.leadSubmitBtn}>
+                  {loading ? "Kaydediliyor..." : "Sohbete Başla"}
+                </button>
+              </form>
+            </div>
+          ) : (
+            <>
+              {/* Messages */}
+              <div className={styles.messageList} ref={scrollRef}>
+                {messages.map((m, i) => (
+                  <div key={i} className={`${styles.messageWrapper} ${m.role === "assistant" ? styles.assistant : styles.user}`}>
+                    <div className={styles.avatar}>
+                      {m.role === "assistant" ? <Bot size={14} /> : <User size={14} />}
+                    </div>
+                    <div className={styles.messageContent}>
+                      {m.text}
+                    </div>
+                  </div>
+                ))}
+                {loading && (
+                  <div className={`${styles.messageWrapper} ${styles.assistant}`}>
+                    <div className={styles.avatar}><Bot size={14} /></div>
+                    <div className={styles.typingIndicator}>
+                      <span></span><span></span><span></span>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          {/* Input Area */}
-          <div className={styles.inputArea}>
-            <input 
-              type="file" 
-              id="chat-file-upload" 
-              className={styles.hiddenInput} 
-              onChange={handleFileUpload}
-              accept="image/*,.pdf,.xlsx,.xls,.csv,.docx,.doc"
-            />
-            <label htmlFor="chat-file-upload" className={styles.attachmentBtn}>
-              <Paperclip size={18} />
-            </label>
-            <form className={styles.inputForm} onSubmit={handleSend}>
-              <input 
-                type="text" 
-                placeholder="Bir şeyler yazın..." 
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                autoFocus
-              />
-              <button type="submit" disabled={!input.trim() || loading}>
-                <Send size={18} />
-              </button>
-            </form>
-          </div>
+              {/* Input Area */}
+              <div className={styles.inputArea}>
+                <input 
+                  type="file" 
+                  id="chat-file-upload" 
+                  className={styles.hiddenInput} 
+                  onChange={handleFileUpload}
+                  accept="image/*,.pdf,.xlsx,.xls,.csv,.docx,.doc"
+                />
+                <label htmlFor="chat-file-upload" className={styles.attachmentBtn}>
+                  <Paperclip size={18} />
+                </label>
+                <form className={styles.inputForm} onSubmit={handleSend}>
+                  <input 
+                    type="text" 
+                    placeholder="Bir şeyler yazın..." 
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    autoFocus
+                  />
+                  <button type="submit" disabled={!input.trim() || loading}>
+                    <Send size={18} />
+                  </button>
+                </form>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>

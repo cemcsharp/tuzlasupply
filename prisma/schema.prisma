@@ -134,3 +134,12 @@ model ChatLog {
   sessionId String?  // Görüşmeleri gruplamak için
   createdAt DateTime @default(now())
 }
+
+model ChatLead {
+  id        String   @id @default(cuid())
+  sessionId String   @unique
+  name      String
+  email     String
+  phone     String?
+  createdAt DateTime @default(now())
+}
