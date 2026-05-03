@@ -169,6 +169,7 @@ export default function RFQForm() {
                     id="file-upload" 
                     multiple
                     onChange={handleFileChange}
+                    accept="image/*,.pdf,.xlsx,.xls,.csv,.docx,.doc"
                   />
                   <label htmlFor="file-upload" className={styles.fileLabel} style={{ position: "relative", overflow: "hidden" }}>
                     {aiLoading && (
@@ -186,7 +187,7 @@ export default function RFQForm() {
                     <div className={styles.uploadIcon}><Package size={32} /></div>
                     <div>
                       <strong>Dosyalarınızı Ekleyin</strong>
-                      <span>Excel, PDF veya Resimler (Birden fazla seçilebilir)</span>
+                      <span>Excel, Word, PDF veya Resimler (Birden fazla seçilebilir)</span>
                     </div>
                   </label>
                 </div>

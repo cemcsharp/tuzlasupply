@@ -1,6 +1,8 @@
 "use server";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import * as XLSX from "xlsx";
+import mammoth from "mammoth";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -8,51 +10,67 @@ export async function parseRfqFileWithAi(fileBase64: string, mimeType: string) {
   const modelsToTry = ["gemini-flash-latest", "gemini-1.5-flash", "gemini-1.5-pro"];
   let lastError = "";
 
-  for (const modelName of modelsToTry) {
-    try {
-      const model = genAI.getGenerativeModel({ model: modelName });
+  try {
+    let aiInput: any;
+    let extractedText = "";
 
-      const prompt = `
-        Sen çok titiz bir endüstriyel tedarik uzmanısın. Ekli dökümanda bir tablo/liste var.
-        
-        GÖREVİN:
-        1. Listedeki HER BİR satırı ayrı bir ürün olarak ayıkla.
-        2. Kırmızı başlıklar (Örn: GRİ SU POMPALARI için) altında listelenen maddeleri, başlıkla ilişkilendirerek ama AYRI SATIRLAR olarak yaz.
-        3. Örnek: "750 LT. 10 BAR GENLEŞME TANKI", "KL01ACD-Kit mechanical seal", "RULMAN KİT" gibi her şeyi tek tek al.
-        4. Miktarları ve birimleri (Adet, Kg vb.) yan sütunlardan oku.
+    // 1. EXCEL DESTEĞİ
+    if (mimeType.includes("spreadsheet") || mimeType.includes("excel")) {
+      const buffer = Buffer.from(fileBase64, "base64");
+      const workbook = XLSX.read(buffer, { type: "buffer" });
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet);
+      extractedText = `Excel İçeriği:\n${JSON.stringify(jsonData, null, 2)}`;
+    } 
+    // 2. WORD DESTEĞİ
+    else if (mimeType.includes("wordprocessingml") || mimeType.includes("msword")) {
+      const buffer = Buffer.from(fileBase64, "base64");
+      const result = await mammoth.extractRawText({ buffer });
+      extractedText = `Word İçeriği:\n${result.value}`;
+    }
 
-        YANIT FORMATI:
-        Sadece şu JSON formatında bir dizi döndür:
-        [{"name": "Tam Ürün Açıklaması", "quantity": 1, "unit": "Adet"}]
-        
-        HİÇBİR açıklama yapma, sadece JSON döndür. Listenin tamamını çıkardığından emin ol.
-      `;
-
-      const result = await model.generateContent([
+    // AI INPUT HAZIRLIĞI
+    if (extractedText) {
+      aiInput = [
+        `Analiz et ve ürün listesini ayıkla:\n${extractedText}\n\n` +
+        `Yanıtı SADECE JSON dizi olarak ver: [{"name": "...", "quantity": 1, "unit": "..."}]`
+      ];
+    } else {
+      // Resim veya PDF
+      aiInput = [
         {
           inlineData: {
             data: fileBase64,
             mimeType: mimeType
           }
         },
-        prompt
-      ]);
+        `Analyze this and extract all items. Return ONLY JSON array: [{"name": "...", "quantity": 1, "unit": "..."}]`
+      ];
+    }
 
-      const response = await result.response;
-      const text = response.text().trim().replace(/```json/g, "").replace(/```/g, "");
-      
+    for (const modelName of modelsToTry) {
       try {
-        const items = JSON.parse(text);
-        if (items.length > 0) return { success: true, items };
-        continue;
-      } catch (e) {
+        const model = genAI.getGenerativeModel({ model: modelName });
+        const result = await model.generateContent(aiInput);
+        const response = await result.response;
+        const text = response.text().trim().replace(/```json/g, "").replace(/```/g, "");
+        
+        try {
+          const items = JSON.parse(text);
+          if (items.length > 0) return { success: true, items };
+          continue;
+        } catch (e) {
+          continue;
+        }
+      } catch (error: any) {
+        lastError = error.message;
         continue;
       }
-    } catch (error: any) {
-      lastError = error.message;
-      continue;
     }
-  }
 
-  return { success: false, error: "Liste okuma başarısız: " + lastError };
+    return { success: false, error: "Liste okuma başarısız: " + lastError };
+  } catch (globalError: any) {
+    return { success: false, error: "Dosya işleme hatası: " + globalError.message };
+  }
 }
