@@ -446,6 +446,18 @@
   align-items: center;
 }
 
+.navCta {
+  padding: 0.6rem 1.5rem !important;
+  font-size: 0.9rem !important;
+  border-radius: 50px !important;
+  box-shadow: 0 10px 20px -5px rgba(0, 112, 243, 0.3);
+  white-space: nowrap;
+}
+
+.navCta:active {
+  transform: scale(0.95);
+}
+
 .langSwitch {
   display: flex;
   background-color: var(--color-surface);
@@ -484,14 +496,18 @@
     top: 0;
     width: 100%;
     border-radius: 0;
-    padding: 0.25rem 1rem;
+    padding: 0.75rem 1.25rem;
     border-left: none;
     border-right: none;
     border-top: none;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(25px) saturate(200%);
+    -webkit-backdrop-filter: blur(25px) saturate(200%);
   }
 
   .logoText {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    letter-spacing: -1.5px;
   }
 
   .navSlogan {
@@ -499,23 +515,29 @@
   }
 
   .hero {
-    min-height: 70vh;
-    padding-top: 100px;
+    min-height: 85vh; /* Much taller for immersive feel */
+    padding-top: 120px;
+    padding-bottom: 60px;
   }
 
   .heroSubtitle {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    opacity: 0.9;
   }
 
   .heroDescription {
-    font-size: 1rem;
-    margin-bottom: 2rem;
+    font-size: 1.05rem;
+    margin-bottom: 2.5rem;
+    padding: 0 1rem;
+    line-height: 1.5;
   }
   
   .heroActions {
     flex-direction: column;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
+    gap: 1.25rem;
   }
   
   .categoriesGrid, .categoryGrid, .refGrid {
@@ -523,33 +545,40 @@
     gap: 1.5rem;
   }
 
-  .categoryCardPremium, .refCard {
-    padding: 2rem 1.5rem;
-    flex: 0 0 100%; /* Ensure full width on mobile */
+  .categoryCardPremium {
+    padding: 2.5rem 1.5rem;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.08);
   }
 
   .statsBar {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    padding: 2rem 1rem;
+    gap: 1.25rem;
+    padding: 2.5rem 1.5rem;
+    border-radius: 30px;
+    margin-top: 2rem;
   }
 
   .statNumber {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    margin-bottom: 0.25rem;
   }
 
   .contactForm {
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 1.5rem;
+    border-radius: 35px;
   }
 
   .footerNavGroup {
     grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
   }
 
   .footerLegal {
     flex-direction: column;
     gap: 2rem;
     text-align: center;
+    padding-top: 3rem;
   }
   
   .legalLeft {
@@ -561,11 +590,16 @@
 
 @media (max-width: 480px) {
   .hero {
-    min-height: 60vh;
+    min-height: 80vh;
   }
 
   .statsBar {
     grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .statItem {
+    padding: 0.5rem;
   }
 
   .footerNavGroup {
@@ -573,7 +607,8 @@
   }
 
   .navRight .btn-primary {
-    display: none;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.75rem !important;
   }
 }
 

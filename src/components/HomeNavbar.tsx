@@ -44,8 +44,8 @@ export default function HomeNavbar() {
               EN
             </button>
           </div>
-          <Link href="/rfq" className="btn-primary" style={{ padding: "0.5rem 1.25rem", fontSize: "0.9rem" }}>
-            Teklif İste
+          <Link href="/rfq" className={`${styles.navCta} btn-primary`}>
+            {lang === "tr" ? "Teklif İste" : "Get Quote"}
           </Link>
         </div>
       </div>
