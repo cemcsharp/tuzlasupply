@@ -3,6 +3,7 @@
 import { useState } from "react";
 import styles from "./rfq.module.css";
 import { submitRfq } from "@/app/actions/rfq";
+import { parseRfqFileWithAi } from "@/app/actions/ai";
 import Link from "next/link";
 import SmartSearch from "@/components/SmartSearch";
 import { 
@@ -44,8 +45,6 @@ export default function RFQForm() {
       // Trigger AI Scanning
       setAiLoading(true);
       try {
-        const { parseRfqFileWithAi } = await import("@/app/actions/ai");
-        
         for (const file of newFiles) {
           const reader = new FileReader();
           reader.readAsDataURL(file);
