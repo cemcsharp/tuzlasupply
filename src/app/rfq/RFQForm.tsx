@@ -16,9 +16,16 @@ export default function RFQForm() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
+  const [aiLoading, setAiLoading] = useState(false);
+
   const addItem = (product: any) => {
-    if (selectedItems.find(item => item.id === product.id)) return;
-    setSelectedItems([...selectedItems, { ...product, quantity: 1 }]);
+    if (selectedItems.find(item => item.id === product.id || item.name === product.name)) return;
+    setSelectedItems([...selectedItems, { 
+      id: product.id || Math.random().toString(36).substr(2, 9), 
+      name: product.name, 
+      quantity: product.quantity || 1,
+      unit: product.unit || "Pcs"
+    }]);
   };
 
   const removeItem = (id: string) => {
@@ -29,10 +36,36 @@ export default function RFQForm() {
     setSelectedItems(selectedItems.map(item => item.id === id ? { ...item, quantity: Math.max(1, qty) } : item));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
       setFiles(prev => [...prev, ...newFiles]);
+
+      // Trigger AI Scanning
+      setAiLoading(true);
+      try {
+        const { parseRfqFileWithAi } = await import("@/app/actions/ai");
+        
+        for (const file of newFiles) {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = async () => {
+            const base64 = (reader.result as string).split(',')[1];
+            const result = await parseRfqFileWithAi(base64, file.type);
+            
+            if (result.success && result.items) {
+              result.items.forEach((item: any) => {
+                addItem(item);
+              });
+            }
+          };
+        }
+      } catch (err) {
+        console.error("AI Scan Error:", err);
+      } finally {
+        // Short delay to let the animation feel real
+        setTimeout(() => setAiLoading(false), 1500);
+      }
     }
   };
 
@@ -133,7 +166,19 @@ export default function RFQForm() {
                     multiple
                     onChange={handleFileChange}
                   />
-                  <label htmlFor="file-upload" className={styles.fileLabel}>
+                  <label htmlFor="file-upload" className={styles.fileLabel} style={{ position: "relative", overflow: "hidden" }}>
+                    {aiLoading && (
+                      <div style={{
+                        position: "absolute", inset: 0, 
+                        background: "rgba(0, 163, 255, 0.9)",
+                        color: "white", display: "flex", alignItems: "center",
+                        justifyContent: "center", gap: "1rem", zIndex: 10,
+                        fontWeight: "800", fontSize: "1.1rem",
+                        animation: "pulseAi 1.5s infinite"
+                      }}>
+                        <Layers className={styles.spinning} /> Yapay Zeka Tarafından Akıllı Tarama Yapılıyor...
+                      </div>
+                    )}
                     <div className={styles.uploadIcon}><Package size={32} /></div>
                     <div>
                       <strong>Dosyalarınızı Ekleyin</strong>
