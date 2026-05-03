@@ -132,6 +132,7 @@ model ChatLog {
   message   String   @db.Text
   role      String   // user or assistant
   sessionId String?  // Görüşmeleri gruplamak için
+  fileUrl   String?  // Dosya eki varsa linki
   createdAt DateTime @default(now())
 }
 

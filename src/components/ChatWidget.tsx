@@ -76,11 +76,18 @@ export default function ChatWidget() {
       reader.onload = async () => {
         const base64 = (reader.result as string).split(",")[1];
         const { parseRfqFileWithAi } = await import("@/app/actions/ai");
-        const { logChatMessage } = await import("@/app/actions/chat");
+        const { logChatMessage, uploadChatFile } = await import("@/app/actions/chat");
+        
+        // 1. Dosyayı Sunucuya Yükle
+        const formData = new FormData();
+        formData.append("file", file);
+        const uploadResult = await uploadChatFile(formData);
+        const fileUrl = uploadResult.success ? uploadResult.url : undefined;
+
         const result = await parseRfqFileWithAi(base64, file.type);
 
-        // 1. Kullanıcı dosya yüklemesini logla
-        await logChatMessage(sessionId, "user", `📎 Dosya yüklendi: ${file.name}`);
+        // 2. Kullanıcı dosya yüklemesini logla (URL ile)
+        await logChatMessage(sessionId, "user", `📎 Dosya yüklendi: ${file.name}`, fileUrl);
 
         if (result.success && result.items) {
           const itemsText = result.items.map((it: any) => `- ${it.name} (${it.quantity} ${it.unit})`).join("\n");

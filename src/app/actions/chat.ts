@@ -2,6 +2,8 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { prisma } from "@/lib/prisma";
+import path from "path";
+import fs from "fs";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -87,14 +89,40 @@ export async function getChatLogs(sessionId: string) {
   }
 }
 
-export async function logChatMessage(sessionId: string, role: "user" | "assistant", message: string) {
+export async function logChatMessage(sessionId: string, role: "user" | "assistant", message: string, fileUrl?: string) {
   try {
     await prisma.chatLog.create({
-      data: { sessionId, role, message }
+      data: { sessionId, role, message, fileUrl }
     });
     return { success: true };
   } catch (error: any) {
     console.error("LOG ERROR:", error.message);
     return { success: false };
+  }
+}
+
+export async function uploadChatFile(formData: FormData) {
+  try {
+    const file = formData.get("file") as File;
+    if (!file) return { success: false, error: "Dosya bulunamadı." };
+
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const uploadsDir = path.join(process.cwd(), "public", "uploads");
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir, { recursive: true });
+    }
+
+    const filename = `chat-${Date.now()}-${file.name.replace(/[^a-z0-9.]/gi, '_').toLowerCase()}`;
+    const filepath = path.join(uploadsDir, filename);
+    
+    const fs2 = require("fs/promises");
+    await fs2.writeFile(filepath, buffer);
+
+    return { success: true, url: `/uploads/${filename}` };
+  } catch (error: any) {
+    console.error("UPLOAD ERROR:", error.message);
+    return { success: false, error: error.message };
   }
 }

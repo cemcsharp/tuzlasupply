@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "../admin.module.css";
 import { getChatLeads, getChatLogs } from "@/app/actions/chat";
+import { DownloadCloud, FileText } from "lucide-react";
 
 export default function AdminChatPage() {
   const [leads, setLeads] = useState<any[]>([]);
@@ -84,6 +85,32 @@ export default function AdminChatPage() {
                     className={`${styles.chatMessage} ${log.role === 'user' ? styles.userMessage : styles.aiMessage}`}
                   >
                     <div className={styles.messageContent}>{log.message}</div>
+                    
+                    {log.fileUrl && (
+                      <a 
+                        href={log.fileUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={styles.downloadBtn}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "0.5rem",
+                          marginTop: "0.75rem",
+                          padding: "0.5rem 0.75rem",
+                          background: "rgba(255,255,255,0.1)",
+                          borderRadius: "8px",
+                          fontSize: "0.8rem",
+                          color: log.role === 'user' ? "white" : "var(--color-primary)",
+                          textDecoration: "none",
+                          border: "1px solid rgba(255,255,255,0.2)"
+                        }}
+                      >
+                        <DownloadCloud size={14} />
+                        Dosyayı İndir
+                      </a>
+                    )}
+
                     <span className={styles.messageTime}>
                       {new Date(log.createdAt).toLocaleTimeString('tr-TR')}
                     </span>
