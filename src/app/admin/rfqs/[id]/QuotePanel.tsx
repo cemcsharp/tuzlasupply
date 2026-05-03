@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import { sendQuoteEmail } from "@/app/actions/quote";
-import { DollarSign, Send, CheckCircle2, AlertCircle, FileText, Clock, CreditCard, Truck, Percent, Plus } from "lucide-react";
+import { 
+  DollarSign, Send, CheckCircle2, AlertCircle, FileText, 
+  Clock, CreditCard, Truck, Percent, Plus 
+} from "lucide-react";
 
 const labelStyle = {
   display: "flex", alignItems: "center", gap: "0.5rem",
@@ -29,6 +32,7 @@ export default function QuotePanel({ rfqId, items, customerEmail }: {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+
   // Manuel Ürün Ekleme State'i
   const [adding, setAdding] = useState(false);
   const [manualName, setManualName] = useState("");
@@ -186,7 +190,6 @@ export default function QuotePanel({ rfqId, items, customerEmail }: {
         </div>
 
         <form action={handleSubmit}>
-
           {/* Ürün Fiyatları */}
           <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "1.5rem" }}>
             <thead>
@@ -209,72 +212,107 @@ export default function QuotePanel({ rfqId, items, customerEmail }: {
                   <td style={{ padding: "0.75rem", borderBottom: "1px solid #F1F5F9", fontWeight: "600", color: "#1E293B" }}>{item.name}</td>
                   <td style={{ padding: "0.75rem", borderBottom: "1px solid #F1F5F9", textAlign: "center", color: "#64748B" }}>{item.quantity} {item.unit}</td>
                   <td style={{ padding: "0.75rem", borderBottom: "1px solid #F1F5F9", textAlign: "right" }}>
-                    <input type="number" step="0.01" name={`price-${item.id}`} defaultValue={item.price || ""} placeholder="0.00" required
-                      style={{ width: "120px", padding: "0.6rem", border: "1.5px solid #E2E8F0", borderRadius: "10px", fontSize: "0.95rem", fontWeight: "700", textAlign: "right", backgroundColor: "#F8FAFC" }}
+                    <input 
+                      type="number" 
+                      step="0.01" 
+                      name={`price-${item.id}`} 
+                      defaultValue={item.price || ""} 
+                      placeholder="0.00" 
+                      required
+                      style={{ 
+                        width: "120px", padding: "0.6rem", 
+                        border: "1.5px solid #E2E8F0", borderRadius: "10px", 
+                        fontSize: "0.95rem", fontWeight: "700", textAlign: "right", 
+                        backgroundColor: "#F8FAFC" 
+                      }}
                     />
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-            <select name="kdvRate" defaultValue="20" style={inputStyle}>
-              <option value="0">KDV Hariç (%0)</option>
-              <option value="1">%1</option>
-              <option value="10">%10</option>
-              <option value="20">%20</option>
-            </select>
-          </div>
-          <div>
-            <label style={labelStyle}><DollarSign size={14} /> Para Birimi</label>
-            <select name="currency" style={inputStyle}>
-              <option value="USD">USD ($)</option>
-              <option value="EUR">EUR (€)</option>
-              <option value="TRY">TRY (₺)</option>
-            </select>
-          </div>
-          <div>
-            <label style={labelStyle}><Clock size={14} /> Teklif Geçerlilik Süresi</label>
-            <input type="text" name="validity" defaultValue="15 gün" placeholder="Örn: 30 gün, 1 Haziran'a kadar" style={inputStyle} />
-          </div>
-          <div>
-            <label style={labelStyle}><Truck size={14} /> Tahmini Teslimat</label>
-            <input type="text" name="deliveryTime" defaultValue="3-5 iş günü" style={inputStyle} />
-          </div>
-          <div style={{ gridColumn: "1 / -1" }}>
-            <label style={labelStyle}><CreditCard size={14} /> Ödeme Koşulları</label>
-            <input type="text" name="paymentTerms" defaultValue="Sipariş ile birlikte %50 peşin, teslimat öncesi %50" style={inputStyle} />
-          </div>
-        </div>
 
-        {/* Ek Not */}
-        <div style={{ marginBottom: "1.5rem" }}>
-          <label style={labelStyle}><FileText size={14} /> Ek Notlar & Özel Koşullar (Opsiyonel)</label>
-          <textarea name="extraNote" placeholder="Garanti süresi, kargo detayları, özel koşullar..."
-            style={{ ...inputStyle, height: "80px", resize: "none" as const }}
-          />
-        </div>
-
-        {error && (
-          <div style={{ padding: "0.75rem 1rem", background: "#FEF2F2", borderRadius: "10px", color: "#EF4444", fontSize: "0.85rem", fontWeight: "600", display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
-            <AlertCircle size={16} /> {error}
+          {/* Teklif Detayları Grid */}
+          <div style={{ 
+            display: "grid", 
+            gridTemplateColumns: "1fr 1fr", 
+            gap: "1rem", 
+            marginBottom: "1.5rem", 
+            padding: "1.25rem", 
+            background: "#F8FAFC", 
+            borderRadius: "14px", 
+            border: "1px solid #E2E8F0" 
+          }}>
+            <div>
+              <label style={labelStyle}><Percent size={14} /> KDV Oranı (%)</label>
+              <select name="kdvRate" defaultValue="20" style={inputStyle}>
+                <option value="0">KDV Hariç (%0)</option>
+                <option value="1">%1</option>
+                <option value="10">%10</option>
+                <option value="20">%20</option>
+              </select>
+            </div>
+            <div>
+              <label style={labelStyle}><DollarSign size={14} /> Para Birimi</label>
+              <select name="currency" style={inputStyle}>
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EUR (€)</option>
+                <option value="TRY">TRY (₺)</option>
+              </select>
+            </div>
+            <div>
+              <label style={labelStyle}><Clock size={14} /> Teklif Geçerlilik Süresi</label>
+              <input type="text" name="validity" defaultValue="15 gün" placeholder="Örn: 30 gün" style={inputStyle} />
+            </div>
+            <div>
+              <label style={labelStyle}><Truck size={14} /> Tahmini Teslimat</label>
+              <input type="text" name="deliveryTime" defaultValue="3-5 iş günü" style={inputStyle} />
+            </div>
+            <div style={{ gridColumn: "1 / -1" }}>
+              <label style={labelStyle}><CreditCard size={14} /> Ödeme Koşulları</label>
+              <input type="text" name="paymentTerms" defaultValue="Sipariş ile birlikte %50 peşin, teslimat öncesi %50" style={inputStyle} />
+            </div>
           </div>
-        )}
 
-        <button type="submit" disabled={loading}
-          style={{
-            width: "100%", padding: "1rem",
-            background: "linear-gradient(135deg, #059669 0%, #047857 100%)",
-            color: "white", border: "none", borderRadius: "14px",
-            fontSize: "1rem", fontWeight: "800",
-            cursor: loading ? "not-allowed" : "pointer",
-            opacity: loading ? 0.6 : 1,
-            display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem",
-            boxShadow: "0 10px 15px -3px rgba(5, 150, 105, 0.3)"
-          }}
-        >
-          {loading ? "Gönderiliyor..." : <><Send size={18} /> Resmi Teklifi Müşteriye Gönder</>}
-        </button>
-      </form>
+          {/* Ek Not */}
+          <div style={{ marginBottom: "1.5rem" }}>
+            <label style={labelStyle}><FileText size={14} /> Ek Notlar & Özel Koşullar (Opsiyonel)</label>
+            <textarea 
+              name="extraNote" 
+              placeholder="Garanti süresi, kargo detayları, özel koşullar..."
+              style={{ ...inputStyle, height: "80px", resize: "none" as const }}
+            />
+          </div>
+
+          {error && (
+            <div style={{ 
+              padding: "0.75rem 1rem", background: "#FEF2F2", 
+              borderRadius: "10px", color: "#EF4444", fontSize: "0.85rem", 
+              fontWeight: "600", display: "flex", alignItems: "center", 
+              gap: "0.5rem", marginBottom: "1rem" 
+            }}>
+              <AlertCircle size={16} /> {error}
+            </div>
+          )}
+
+          <button 
+            type="submit" 
+            disabled={loading}
+            style={{
+              width: "100%", padding: "1rem",
+              background: "linear-gradient(135deg, #059669 0%, #047857 100%)",
+              color: "white", border: "none", borderRadius: "14px",
+              fontSize: "1rem", fontWeight: "800",
+              cursor: loading ? "not-allowed" : "pointer",
+              opacity: loading ? 0.6 : 1,
+              display: "flex", alignItems: "center", justifyContent: "center", gap: "0.75rem",
+              boxShadow: "0 10px 15px -3px rgba(5, 150, 105, 0.3)"
+            }}
+          >
+            {loading ? "Gönderiliyor..." : <><Send size={18} /> Resmi Teklifi Müşteriye Gönder</>}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
