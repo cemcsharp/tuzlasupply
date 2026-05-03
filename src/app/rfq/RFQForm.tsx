@@ -46,24 +46,27 @@ export default function RFQForm() {
       setAiLoading(true);
       try {
         for (const file of newFiles) {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = async () => {
-            const base64 = (reader.result as string).split(',')[1];
-            const result = await parseRfqFileWithAi(base64, file.type);
-            
-            if (result.success && result.items) {
-              result.items.forEach((item: any) => {
-                addItem(item);
-              });
-            }
-          };
+          const fileData = await new Promise<string>((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve((reader.result as string).split(',')[1]);
+            reader.readAsDataURL(file);
+          });
+
+          const result = await parseRfqFileWithAi(fileData, file.type);
+          
+          if (result.success && result.items) {
+            result.items.forEach((item: any) => {
+              addItem(item);
+            });
+          } else if (!result.success) {
+            alert("AI Tarama Hatası: " + result.error);
+          }
         }
       } catch (err) {
         console.error("AI Scan Error:", err);
+        alert("Tarama sırasında bir hata oluştu.");
       } finally {
-        // Short delay to let the animation feel real
-        setTimeout(() => setAiLoading(false), 1500);
+        setAiLoading(false);
       }
     }
   };
