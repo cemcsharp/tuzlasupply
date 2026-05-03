@@ -104,6 +104,14 @@ export default function RFQListClient({ initialRfqs }: { initialRfqs: any[] }) {
                <option value="approved">Onaylandı</option>
                <option value="rejected">Reddedildi</option>
              </select>
+
+             <button 
+              className="btn-primary" 
+              style={{ padding: "0.6rem 1.25rem", fontSize: "0.9rem", borderRadius: "10px" }}
+              onClick={() => alert('Manuel RFQ oluşturma formu yakında eklenecek. Şimdilik ana sayfadaki formu kullanabilirsiniz.')}
+             >
+               Yeni RFQ Ekle (Manuel)
+             </button>
           </div>
         </div>
         
