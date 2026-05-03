@@ -11,7 +11,8 @@ export async function submitContactForm(formData: FormData) {
     const message = formData.get("message") as string;
 
     if (!name || !email || !message) {
-      return { success: false, error: "Tüm alanları doldurunuz." };
+      console.warn("Missing fields in contact form");
+      return;
     }
 
     // 1. Save to Database
