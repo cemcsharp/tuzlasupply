@@ -74,3 +74,35 @@ export async function parseRfqFileWithAi(fileBase64: string, mimeType: string) {
     return { success: false, error: "Dosya işleme hatası: " + globalError.message };
   }
 }
+
+export async function extractItemsFromChatHistory(history: { role: string, text: string }[]) {
+  try {
+    const chatText = history.map(m => `${m.role}: ${m.text}`).join("\n");
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    
+    const prompt = `Aşağıdaki sohbet geçmişini analiz et ve müşterinin talep ettiği ürünleri bir liste olarak ayıkla.
+    
+    Sohbet Geçmişi:
+    ${chatText}
+    
+    Talimatlar:
+    1. Sadece müşterinin kesin olarak istediği veya sorduğu ürünleri al.
+    2. Eğer miktar belirtilmemişse 1 kabul et.
+    3. Yanıtı SADECE geçerli bir JSON dizisi olarak döndür. 
+    4. Format: [{"name": "Ürün Adı", "quantity": 5, "unit": "Pcs"}]
+    5. Başka hiçbir metin ekleme. Sadece JSON döndür.`;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text().trim().replace(/```json/g, "").replace(/```/g, "");
+    
+    try {
+      const items = JSON.parse(text);
+      return { success: true, items: Array.isArray(items) ? items : [] };
+    } catch (e) {
+      return { success: false, error: "Analiz sonuçları işlenemedi." };
+    }
+  } catch (err: any) {
+    return { success: false, error: err.message };
+  }
+}

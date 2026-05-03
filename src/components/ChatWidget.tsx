@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { 
   MessageSquare, X, Send, Bot, User, Minimize2, Maximize2, 
-  Paperclip, CheckCircle2, Sparkles 
+  Paperclip, CheckCircle2, Sparkles, Wand2 
 } from "lucide-react";
 import styles from "./chat-widget.module.css";
 import { chatWithAi } from "@/app/actions/chat";
@@ -84,27 +84,54 @@ export default function ChatWidget() {
         const { parseRfqFileWithAi } = await import("@/app/actions/ai");
         const result = await parseRfqFileWithAi(base64, file.type);
         if (result.success && result.items) {
-          setCurrentStep(3);
-          setModal({
-            show: true,
-            title: "Ürünler Eklensin mi?",
-            message: "Yapay zeka dökümanınızda bulunan ürünleri teklif listenize aktarmak ister misiniz?",
-            items: result.items,
-            onConfirm: () => {
-              const existing = JSON.parse(localStorage.getItem("pending_rfq_items") || "[]");
-              localStorage.setItem("pending_rfq_items", JSON.stringify([...existing, ...result.items]));
-              window.dispatchEvent(new CustomEvent("ADD_RFQ_ITEMS", { detail: result.items }));
-              setMessages(prev => [...prev, { role: "assistant", text: "Ürünleri listenize ekledim!" }]);
-              setModal(prev => ({ ...prev, show: false }));
-              setCurrentStep(2);
-            }
-          });
+          triggerConfirmation(result.items, "Döküman Analizi");
         }
         setIsScanning(false);
       };
     } catch (err) {
       setIsScanning(false);
     }
+  };
+
+  const handleFinalizeChat = async () => {
+    if (messages.length < 2 || loading) return;
+    
+    setIsScanning(true);
+    try {
+      const { extractItemsFromChatHistory } = await import("@/app/actions/ai");
+      const result = await extractItemsFromChatHistory(messages);
+      
+      if (result.success && result.items && result.items.length > 0) {
+        triggerConfirmation(result.items, "Sohbet Analizi");
+      } else {
+        setMessages(prev => [...prev, { 
+          role: "assistant", 
+          text: "Üzgünüm, sohbetimizde henüz net bir ürün talebi yakalayamadım. Lütfen neye ihtiyacınız olduğunu belirtebilir misiniz?" 
+        }]);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsScanning(false);
+    }
+  };
+
+  const triggerConfirmation = (items: any[], source: string) => {
+    setCurrentStep(3);
+    setModal({
+      show: true,
+      title: `${source}: Ürünler Hazır`,
+      message: `${source} sonucunda aşağıdaki ürünleri tespit ettim. Teklif listenize eklemek istiyor musunuz?`,
+      items: items,
+      onConfirm: () => {
+        const existing = JSON.parse(localStorage.getItem("pending_rfq_items") || "[]");
+        localStorage.setItem("pending_rfq_items", JSON.stringify([...existing, ...items]));
+        window.dispatchEvent(new CustomEvent("ADD_RFQ_ITEMS", { detail: items }));
+        setMessages(prev => [...prev, { role: "assistant", text: "Harika! Ürünleri listenize ekledim. Teklif formundan kontrol edebilirsiniz." }]);
+        setModal({ show: false, title: "", message: "" });
+        setCurrentStep(2);
+      }
+    });
   };
 
   const handleLeadSubmit = async (e: React.FormEvent) => {
@@ -154,17 +181,18 @@ export default function ChatWidget() {
             {isScanning && (
               <div className={styles.scanOverlay}>
                 <div className={styles.scanRadar} />
-                <div className={styles.scanText}>Taranıyor...</div>
+                <div className={styles.scanText}>Zihin Okunuyor...</div>
+                <div className={styles.scanSubtext}>Sohbetinizdeki talepler ayıklanıyor.</div>
               </div>
             )}
 
             {!leadCollected ? (
               <div className={styles.leadFormContainer}>
-                <div className={styles.leadWelcome}><Sparkles size={32} /><h3>Hoş Geldiniz</h3></div>
+                <div className={styles.leadWelcome}><Sparkles size={32} color="var(--color-accent)" /><h3>Akıllı Asistan</h3></div>
                 <form onSubmit={handleLeadSubmit} className={styles.leadForm}>
                   <div className={styles.leadInputGroup}><input type="text" placeholder="Ad Soyad" required value={leadForm.name} onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })} /></div>
                   <div className={styles.leadInputGroup}><input type="email" placeholder="E-posta" required value={leadForm.email} onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })} /></div>
-                  <button type="submit" disabled={loading} className={styles.leadSubmitBtn}>Başla</button>
+                  <button type="submit" disabled={loading} className={styles.leadSubmitBtn}>Bağlan</button>
                 </form>
               </div>
             ) : (
@@ -172,6 +200,7 @@ export default function ChatWidget() {
                 <div className={styles.messageList}>
                   {messages.map((m, i) => (
                     <div key={i} className={`${styles.messageWrapper} ${m.role === "assistant" ? styles.assistant : styles.user}`}>
+                      <div className={styles.avatar}>{m.role === "assistant" ? <Bot size={16} /> : <User size={16} />}</div>
                       <div className={styles.messageContent}>{m.text}</div>
                     </div>
                   ))}
@@ -179,8 +208,19 @@ export default function ChatWidget() {
                   <div ref={messagesEndRef} />
                 </div>
                 <div className={styles.inputArea}>
-                  <input type="file" id="chat-file" className={styles.hiddenInput} onChange={handleFileUpload} />
-                  <label htmlFor="chat-file" className={styles.attachmentBtn}><Paperclip size={20} /></label>
+                  <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                    <input type="file" id="chat-file" className={styles.hiddenInput} onChange={handleFileUpload} />
+                    <label htmlFor="chat-file" className={styles.attachmentBtn} title="Dosya Yükle"><Paperclip size={20} /></label>
+                    <button 
+                      onClick={handleFinalizeChat} 
+                      className={styles.attachmentBtn} 
+                      style={{ color: "var(--color-accent)" }}
+                      title="Sohbetten Teklif Oluştur"
+                      disabled={isScanning || messages.length < 2}
+                    >
+                      <Wand2 size={20} />
+                    </button>
+                  </div>
                   <form className={styles.inputForm} onSubmit={handleSend}>
                     <input type="text" placeholder="Yazın..." value={input} onChange={(e) => setInput(e.target.value)} />
                     <button type="submit" disabled={!input.trim() || loading}><Send size={18} /></button>
@@ -194,10 +234,20 @@ export default function ChatWidget() {
       {modal.show && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
-            <h3>{modal.title}</h3><p>{modal.message}</p>
+            <h3 className={styles.modalTitle}>{modal.title}</h3>
+            <p className={styles.modalMessage}>{modal.message}</p>
+            {modal.items && (
+              <div className={styles.modalList}>
+                {modal.items.map((it: any, idx: number) => (
+                  <div key={idx} className={styles.modalListItem}>
+                    • {it.name} ({it.quantity} {it.unit})
+                  </div>
+                ))}
+              </div>
+            )}
             <div className={styles.modalActions}>
-              <button onClick={modal.onConfirm} className={styles.modalBtnConfirm}>Ekle</button>
-              <button onClick={() => setModal({ ...modal, show: false })} className={styles.modalBtnCancel}>Kapat</button>
+              <button onClick={modal.onConfirm} className={styles.modalBtnConfirm}>Listeye Ekle</button>
+              <button onClick={() => setModal({ show: false, title: "", message: "" })} className={styles.modalBtnCancel}>Vazgeç</button>
             </div>
           </div>
         </div>
