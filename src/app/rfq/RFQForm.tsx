@@ -7,7 +7,7 @@ import { parseRfqFileWithAi } from "@/app/actions/ai";
 import Link from "next/link";
 import SmartSearch from "@/components/SmartSearch";
 import { 
-  Check, User, MapPin, Send, Info, Package, X, Layers
+  Check, User, MapPin, Send, Info, Package, X, Layers, Plus
 } from "lucide-react";
 
 export default function RFQForm() {
@@ -27,6 +27,11 @@ export default function RFQForm() {
     type: "info" | "error" | "success";
   }>({ show: false, title: "", message: "", type: "info" });
 
+  // Manuel ürün girişi state'leri
+  const [manualName, setManualName] = useState("");
+  const [manualQty, setManualQty] = useState(1);
+  const [manualUnit, setManualUnit] = useState("Pcs");
+
   const addItem = (product: any) => {
     setSelectedItems(prev => {
       if (prev.find(item => item.id === product.id || item.name === product.name)) return prev;
@@ -37,6 +42,14 @@ export default function RFQForm() {
         unit: product.unit || "Pcs"
       }];
     });
+  };
+
+  const handleAddManual = () => {
+    if (!manualName) return;
+    addItem({ name: manualName, quantity: manualQty, unit: manualUnit });
+    setManualName("");
+    setManualQty(1);
+    setManualUnit("Pcs");
   };
 
   const removeItem = (id: string) => {
@@ -110,14 +123,12 @@ export default function RFQForm() {
     };
     window.addEventListener("ADD_RFQ_ITEMS", handleAddItems);
 
-    // Check for pending items from Chatbot (localStorage)
     const pending = localStorage.getItem("pending_rfq_items");
     if (pending) {
       try {
         const items = JSON.parse(pending);
         if (Array.isArray(items) && items.length > 0) {
           items.forEach(item => addItem(item));
-          // Once added, clear them so they don't keep adding on every refresh
           localStorage.removeItem("pending_rfq_items");
         }
       } catch (e) {
@@ -132,11 +143,9 @@ export default function RFQForm() {
     setLoading(true);
     setError("");
 
-    // Inject selected items into formData
     formData.set("itemsJson", JSON.stringify(selectedItems));
     
-    // Add our state files to the formData
-    formData.delete("attachment"); // clear initial single select
+    formData.delete("attachment");
     files.forEach(file => {
       formData.append("attachment", file);
     });
@@ -224,42 +233,25 @@ export default function RFQForm() {
                   />
                   <label htmlFor="file-upload" className={styles.fileLabel} style={{ position: "relative", overflow: "hidden" }}>
                     {aiLoading && (
-                      <div style={{
-                        position: "absolute", inset: 0, 
-                        background: "rgba(0, 163, 255, 0.9)",
-                        color: "white", display: "flex", alignItems: "center",
-                        justifyContent: "center", gap: "1rem", zIndex: 10,
-                        fontWeight: "800", fontSize: "1.1rem",
-                        animation: "pulseAi 1.5s infinite"
-                      }}>
+                      <div className={styles.aiOverlay}>
                         <Layers className={styles.spinning} /> Yapay Zeka Tarafından Akıllı Tarama Yapılıyor...
                       </div>
                     )}
                     <div className={styles.uploadIcon}><Package size={32} /></div>
                     <div>
                       <strong>Dosyalarınızı Ekleyin</strong>
-                      <span>Excel, Word, PDF veya Resimler (Birden fazla seçilebilir)</span>
+                      <span>Excel, Word, PDF veya Resimler</span>
                     </div>
                   </label>
                 </div>
 
-                {/* Seçilen Dosya Listesi */}
                 {files.length > 0 && (
                   <div style={{ marginTop: "1rem", display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
                     {files.map((file, index) => (
-                      <div key={index} style={{ 
-                        display: "flex", alignItems: "center", gap: "0.5rem", 
-                        padding: "0.5rem 1rem", backgroundColor: "white", 
-                        border: "1px solid #E2E8F0", borderRadius: "12px",
-                        fontSize: "0.85rem", color: "#1E293B", fontWeight: "600"
-                      }}>
+                      <div key={index} className={styles.fileTag}>
                         <Package size={14} color="var(--color-accent)" />
-                        <span style={{ maxWidth: "200px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                          {file.name}
-                        </span>
-                        <button type="button" onClick={() => removeFile(index)} style={{ color: "#EF4444", display: "flex", alignItems: "center" }}>
-                          <X size={14} />
-                        </button>
+                        <span>{file.name}</span>
+                        <button type="button" onClick={() => removeFile(index)}><X size={14} /></button>
                       </div>
                     ))}
                   </div>
@@ -268,20 +260,65 @@ export default function RFQForm() {
             </div>
           </div>
 
-          {/* Akıllı Katalog Seçimi */}
+          {/* Ürün Seçimi */}
           <div className={styles.formSection}>
             <h3 className={styles.sectionTitle}>
-              <Layers size={22} style={{ color: "var(--color-accent)" }} /> Akıllı Katalog Seçimi
+              <Layers size={22} style={{ color: "var(--color-accent)" }} /> Ürün Seçimi
             </h3>
             
             <p style={{ fontSize: "0.9rem", color: "#64748B", marginBottom: "1.5rem" }}>
-              Kataloğumuzda yer alan ürünleri isme göre aratıp anında listenize ekleyebilirsiniz.
+              Katalogdan arama yapabilir veya listenize manuel ürün ekleyebilirsiniz.
             </p>
 
-            <SmartSearch onSelect={addItem} />
+            <div style={{ marginBottom: "2rem" }}>
+              <label style={{ fontSize: "0.75rem", fontWeight: "800", color: "#94A3B8", textTransform: "uppercase", marginBottom: "0.5rem", display: "block" }}>Katalogdan Arama</label>
+              <SmartSearch onSelect={addItem} />
+            </div>
+
+            {/* Manuel Ürün Ekleme */}
+            <div style={{ padding: "1.25rem", background: "#F8FAFC", borderRadius: "16px", border: "1px dashed #E2E8F0", marginBottom: "2rem" }}>
+              <label style={{ fontSize: "0.75rem", fontWeight: "800", color: "var(--color-accent)", textTransform: "uppercase", marginBottom: "1rem", display: "block" }}>Katalogda Olmayan Ürün Ekle</label>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 70px 80px auto", gap: "0.5rem", alignItems: "center" }}>
+                <input 
+                  type="text" 
+                  placeholder="Ürün Adı" 
+                  value={manualName}
+                  onChange={(e) => setManualName(e.target.value)}
+                  className={styles.input}
+                  style={{ padding: "0.6rem 0.8rem", fontSize: "0.85rem" }}
+                />
+                <input 
+                  type="number" 
+                  value={manualQty}
+                  onChange={(e) => setManualQty(parseInt(e.target.value))}
+                  className={styles.input}
+                  style={{ padding: "0.6rem 0.5rem", fontSize: "0.85rem", textAlign: "center" }}
+                />
+                <input 
+                  type="text" 
+                  placeholder="Birim" 
+                  value={manualUnit}
+                  onChange={(e) => setManualUnit(e.target.value)}
+                  className={styles.input}
+                  style={{ padding: "0.6rem 0.5rem", fontSize: "0.85rem" }}
+                />
+                <button 
+                  type="button" 
+                  onClick={handleAddManual}
+                  disabled={!manualName}
+                  style={{ 
+                    padding: "0.6rem", borderRadius: "10px", border: "none", 
+                    backgroundColor: manualName ? "var(--color-accent)" : "#CBD5E1", 
+                    color: "white", cursor: manualName ? "pointer" : "default"
+                  }}
+                >
+                  <Plus size={20} />
+                </button>
+              </div>
+            </div>
 
             {selectedItems.length > 0 && (
-              <div style={{ marginTop: "2rem" }}>
+              <div style={{ marginTop: "1rem" }}>
                 <table className={styles.selectedTable}>
                   <thead>
                     <tr>
@@ -295,12 +332,15 @@ export default function RFQForm() {
                       <tr key={item.id}>
                         <td style={{ fontWeight: "700", color: "#1E293B" }}>{item.name}</td>
                         <td style={{ textAlign: "center" }}>
-                          <input 
-                            type="number" 
-                            value={item.quantity} 
-                            onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
-                            style={{ width: "60px", padding: "0.5rem", borderRadius: "10px", border: "2px solid #E2E8F0", textAlign: "center", fontWeight: "700" }}
-                          />
+                          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem" }}>
+                            <input 
+                              type="number" 
+                              value={item.quantity} 
+                              onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
+                              style={{ width: "50px", padding: "0.4rem", borderRadius: "8px", border: "2px solid #E2E8F0", textAlign: "center", fontWeight: "700" }}
+                            />
+                            <span style={{ fontSize: "0.75rem", color: "#64748B" }}>{item.unit}</span>
+                          </div>
                         </td>
                         <td style={{ textAlign: "right" }}>
                           <button type="button" onClick={() => removeItem(item.id)} style={{ color: "#EF4444", background: "none", border: "none", cursor: "pointer" }}>
@@ -314,15 +354,15 @@ export default function RFQForm() {
               </div>
             )}
 
-            <div style={{ marginTop: "3rem" }}>
+            <div style={{ marginTop: "2rem" }}>
               <h3 className={styles.sectionTitle}>
                 <Info size={22} style={{ color: "var(--color-accent)" }} /> Ek Detaylar
               </h3>
               <textarea 
                 name="details"
                 className={styles.textarea} 
-                style={{ height: "120px" }}
-                placeholder="Listede olmayan ürünler veya özel notlarınız..."
+                style={{ height: "100px" }}
+                placeholder="Listede olmayan diğer ürünler veya özel notlarınız..."
                 required
               ></textarea>
             </div>
@@ -344,7 +384,7 @@ export default function RFQForm() {
         </div>
       </form>
 
-      {/* Global Modern Modal */}
+      {/* Modals remain the same... */}
       {modal.show && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
