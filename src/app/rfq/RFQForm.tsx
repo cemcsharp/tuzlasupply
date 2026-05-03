@@ -109,6 +109,22 @@ export default function RFQForm() {
       }
     };
     window.addEventListener("ADD_RFQ_ITEMS", handleAddItems);
+
+    // Check for pending items from Chatbot (localStorage)
+    const pending = localStorage.getItem("pending_rfq_items");
+    if (pending) {
+      try {
+        const items = JSON.parse(pending);
+        if (Array.isArray(items) && items.length > 0) {
+          items.forEach(item => addItem(item));
+          // Once added, clear them so they don't keep adding on every refresh
+          localStorage.removeItem("pending_rfq_items");
+        }
+      } catch (e) {
+        console.error("Storage Error:", e);
+      }
+    }
+
     return () => window.removeEventListener("ADD_RFQ_ITEMS", handleAddItems);
   }, []);
 

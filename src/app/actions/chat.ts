@@ -86,3 +86,15 @@ export async function getChatLogs(sessionId: string) {
     return { success: false, error: error.message };
   }
 }
+
+export async function logChatMessage(sessionId: string, role: "user" | "assistant", message: string) {
+  try {
+    await prisma.chatLog.create({
+      data: { sessionId, role, message }
+    });
+    return { success: true };
+  } catch (error: any) {
+    console.error("LOG ERROR:", error.message);
+    return { success: false };
+  }
+}

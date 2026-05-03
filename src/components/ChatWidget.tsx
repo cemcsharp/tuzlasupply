@@ -76,15 +76,23 @@ export default function ChatWidget() {
       reader.onload = async () => {
         const base64 = (reader.result as string).split(",")[1];
         const { parseRfqFileWithAi } = await import("@/app/actions/ai");
+        const { logChatMessage } = await import("@/app/actions/chat");
         const result = await parseRfqFileWithAi(base64, file.type);
+
+        // 1. Kullanıcı dosya yüklemesini logla
+        await logChatMessage(sessionId, "user", `📎 Dosya yüklendi: ${file.name}`);
 
         if (result.success && result.items) {
           const itemsText = result.items.map((it: any) => `- ${it.name} (${it.quantity} ${it.unit})`).join("\n");
+          const assistantMsg = `Dosyanızda şu ürünleri buldum:\n${itemsText}\n\nBu ürünleri teklif listenize ekleyeyim mi?`;
+          
           setMessages(prev => [...prev, { 
             role: "assistant", 
-            text: `Dosyanızda şu ürünleri buldum:\n${itemsText}\n\nBu ürünleri teklif listenize ekleyeyim mi?` 
+            text: assistantMsg 
           }]);
-          
+
+          // 2. Asistan cevabını logla
+          await logChatMessage(sessionId, "assistant", assistantMsg);
           
           // Akıllı Eylem Paneli (Modern Modal)
           setModal({
@@ -93,6 +101,10 @@ export default function ChatWidget() {
             message: "Dökümanınızda bulunan ürünleri teklif listenize aktarmak ister misiniz?",
             items: result.items,
             onConfirm: () => {
+              // localStorage'a kaydet (Formun her yerden görebilmesi için)
+              const existing = JSON.parse(localStorage.getItem("pending_rfq_items") || "[]");
+              localStorage.setItem("pending_rfq_items", JSON.stringify([...existing, ...result.items]));
+              
               window.dispatchEvent(new CustomEvent("ADD_RFQ_ITEMS", { detail: result.items }));
               setMessages(prev => [...prev, { role: "assistant", text: "Harika! Ürünleri listenize ekledim. Formu kontrol edip gönderebilirsiniz." }]);
               setModal(prev => ({ ...prev, show: false }));
