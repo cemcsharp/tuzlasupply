@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { sendQuoteEmail } from "@/app/actions/quote";
-import { DollarSign, Send, CheckCircle2, AlertCircle, FileText, Clock, CreditCard, Truck, Percent } from "lucide-react";
+import { DollarSign, Send, CheckCircle2, AlertCircle, FileText, Clock, CreditCard, Truck, Percent, Plus } from "lucide-react";
 
 const labelStyle = {
   display: "flex", alignItems: "center", gap: "0.5rem",
@@ -29,6 +29,38 @@ export default function QuotePanel({ rfqId, items, customerEmail }: {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  // Manuel Ürün Ekleme State'i
+  const [adding, setAdding] = useState(false);
+  const [manualName, setManualName] = useState("");
+  const [manualQty, setManualQty] = useState(1);
+  const [manualUnit, setManualUnit] = useState("Pcs");
+
+  const handleAddManual = async () => {
+    if (!manualName) return;
+    setAdding(true);
+    try {
+      const formData = new FormData();
+      formData.append("name", manualName);
+      formData.append("quantity", manualQty.toString());
+      formData.append("unit", manualUnit);
+      
+      const { addManualRfqItem } = await import("@/app/actions/rfq-manual");
+      const result = await addManualRfqItem(rfqId, formData);
+      
+      if (result.success) {
+        setManualName("");
+        setManualQty(1);
+        setManualUnit("Pcs");
+        window.location.reload();
+      } else {
+        alert(result.error);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setAdding(false);
+    }
+  };
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);
@@ -88,10 +120,74 @@ export default function QuotePanel({ rfqId, items, customerEmail }: {
         <span style={{ fontSize: "0.8rem", opacity: 0.8 }}>→ {customerEmail}</span>
       </div>
 
-      <form action={handleSubmit} style={{ padding: "1.5rem" }}>
+      <div style={{ padding: "1.5rem" }}>
+        
+        {/* Manuel Kalem Ekleme Bölümü */}
+        <div style={{ 
+          marginBottom: "2rem", 
+          padding: "1rem", 
+          backgroundColor: "#F0F9FF", 
+          borderRadius: "12px", 
+          border: "1px dashed #00A3FF",
+          display: "flex",
+          gap: "1rem",
+          alignItems: "flex-end",
+          flexWrap: "wrap"
+        }}>
+          <div style={{ flex: 2, minWidth: "200px" }}>
+            <label style={{ ...labelStyle, color: "#0369A1" }}>Manuel Ürün / Hizmet Ekle</label>
+            <input 
+              type="text" 
+              placeholder="Örn: 20lt Hidrolik Yağ veya Teknik Servis Bedeli" 
+              value={manualName}
+              onChange={(e) => setManualName(e.target.value)}
+              style={{ ...inputStyle, backgroundColor: "white" }} 
+            />
+          </div>
+          <div style={{ width: "80px" }}>
+            <label style={{ ...labelStyle, color: "#0369A1" }}>Adet</label>
+            <input 
+              type="number" 
+              value={manualQty}
+              onChange={(e) => setManualQty(parseInt(e.target.value))}
+              style={{ ...inputStyle, backgroundColor: "white", textAlign: "center" }} 
+            />
+          </div>
+          <div style={{ width: "100px" }}>
+            <label style={{ ...labelStyle, color: "#0369A1" }}>Birim</label>
+            <input 
+              type="text" 
+              placeholder="Pcs, Kg.." 
+              value={manualUnit}
+              onChange={(e) => setManualUnit(e.target.value)}
+              style={{ ...inputStyle, backgroundColor: "white" }} 
+            />
+          </div>
+          <button 
+            type="button"
+            onClick={handleAddManual}
+            disabled={adding || !manualName}
+            style={{ 
+              backgroundColor: "#00A3FF", 
+              color: "white", 
+              border: "none", 
+              padding: "0.75rem 1.5rem", 
+              borderRadius: "10px", 
+              fontWeight: "700",
+              cursor: "pointer",
+              opacity: (adding || !manualName) ? 0.6 : 1,
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem"
+            }}
+          >
+            {adding ? "..." : <Plus size={18} />} Ekle
+          </button>
+        </div>
 
-        {/* Ürün Fiyatları */}
-        {items.length > 0 && (
+        <form action={handleSubmit}>
+
+          {/* Ürün Fiyatları */}
           <table style={{ width: "100%", borderCollapse: "collapse", marginBottom: "1.5rem" }}>
             <thead>
               <tr>
@@ -101,6 +197,13 @@ export default function QuotePanel({ rfqId, items, customerEmail }: {
               </tr>
             </thead>
             <tbody>
+              {items.length === 0 && (
+                <tr>
+                  <td colSpan={3} style={{ padding: "2rem", textAlign: "center", color: "#94A3B8", fontSize: "0.9rem" }}>
+                    Henüz ürün eklenmemiş. Yukarıdaki panelden manuel ürün ekleyebilirsiniz.
+                  </td>
+                </tr>
+              )}
               {items.map((item: any) => (
                 <tr key={item.id}>
                   <td style={{ padding: "0.75rem", borderBottom: "1px solid #F1F5F9", fontWeight: "600", color: "#1E293B" }}>{item.name}</td>
@@ -114,12 +217,6 @@ export default function QuotePanel({ rfqId, items, customerEmail }: {
               ))}
             </tbody>
           </table>
-        )}
-
-        {/* Teklif Detayları Grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1.5rem", padding: "1.25rem", background: "#F8FAFC", borderRadius: "14px", border: "1px solid #E2E8F0" }}>
-          <div>
-            <label style={labelStyle}><Percent size={14} /> KDV Oranı (%)</label>
             <select name="kdvRate" defaultValue="20" style={inputStyle}>
               <option value="0">KDV Hariç (%0)</option>
               <option value="1">%1</option>
