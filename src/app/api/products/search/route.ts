@@ -14,9 +14,9 @@ export async function GET(request: Request) {
         AND: [
           ...queryWords.map(word => ({
             OR: [
-              { name: { contains: word, mode: "insensitive" } },
-              { description: { contains: word, mode: "insensitive" } },
-              { category: { contains: word, mode: "insensitive" } }
+              { name: { contains: word, mode: "insensitive" as any } },
+              { description: { contains: word, mode: "insensitive" as any } },
+              { category: { contains: word, mode: "insensitive" as any } }
             ]
           })),
           category ? { category } : {}

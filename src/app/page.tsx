@@ -11,6 +11,9 @@ import {
   Ship, Building2, Handshake, Award, Users, Package, TrendingUp,
   Cpu, HardHat, Truck, Warehouse, Briefcase
 } from "lucide-react";
+
+export const dynamic = "force-dynamic";
+
 import { submitContactForm } from "@/app/actions/contact";
 import { getActiveReferences, getActivePartners, getSectionVisibility } from "@/app/actions/showcase";
 
@@ -289,7 +292,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
                   </p>
                 </div>
 
-                <form action={submitContactForm}>
+                <form action={async (formData) => { await submitContactForm(formData); }}>
                   <div className={styles.formGrid}>
                     <div>
                       <label className={styles.premiumLabel}>{t.nameLabel}</label>

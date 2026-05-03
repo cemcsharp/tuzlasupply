@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import styles from "./rfq.module.css";
 import Link from "next/link";
 import RFQForm from "./RFQForm";

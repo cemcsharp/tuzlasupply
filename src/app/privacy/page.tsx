@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import HomeNavbar from "@/components/HomeNavbar";
 import styles from "@/app/page.module.css";
 import Link from "next/link";

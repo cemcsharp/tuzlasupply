@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/prisma";
 import styles from "./catalog.module.css";
 import HomeNavbar from "@/components/HomeNavbar";

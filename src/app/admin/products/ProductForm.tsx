@@ -77,7 +77,6 @@ export default function ProductForm() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                   <div className={styles.formGroup}>
                     <label style={{ 
-                      display: "block", 
                       fontSize: "0.75rem", 
                       fontWeight: "800", 
                       color: "#94A3B8", 
@@ -96,7 +95,6 @@ export default function ProductForm() {
 
                   <div className={styles.formGroup}>
                     <label style={{ 
-                      display: "block", 
                       fontSize: "0.75rem", 
                       fontWeight: "800", 
                       color: "#94A3B8", 
@@ -126,7 +124,6 @@ export default function ProductForm() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                   <div className={styles.formGroup}>
                     <label style={{ 
-                      display: "block", 
                       fontSize: "0.75rem", 
                       fontWeight: "800", 
                       color: "#94A3B8", 
@@ -148,7 +145,6 @@ export default function ProductForm() {
 
                   <div className={styles.formGroup}>
                     <label style={{ 
-                      display: "block", 
                       fontSize: "0.75rem", 
                       fontWeight: "800", 
                       color: "#94A3B8", 
@@ -170,7 +166,6 @@ export default function ProductForm() {
                 <div style={{ gridColumn: "1 / -1" }}>
                   <div className={styles.formGroup}>
                     <label style={{ 
-                      display: "block", 
                       fontSize: "0.75rem", 
                       fontWeight: "800", 
                       color: "#94A3B8", 
