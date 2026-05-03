@@ -17,9 +17,20 @@ model RfqRequest {
   details       String    @db.Text
   status        String    @default("pending") // pending, priced, approved, rejected
   attachmentUrls String[] @default([])
+  internalNotes String?   @db.Text
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   items         RfqItem[]
+  auditLogs     AuditLog[]
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  rfqId     String
+  rfq       RfqRequest @relation(fields: [rfqId], references: [id])
+  action    String
+  details   String?
+  createdAt DateTime @default(now())
 }
 
 model Product {
@@ -137,10 +148,11 @@ model ChatLog {
 }
 
 model ChatLead {
-  id        String   @id @default(cuid())
-  sessionId String   @unique
-  name      String
-  email     String
-  phone     String?
-  createdAt DateTime @default(now())
+  id             String   @id @default(cuid())
+  sessionId      String   @unique
+  name           String
+  email          String
+  phone          String?
+  extractedItems String?  @db.Text // JSON formatında saklanacak ürünler
+  createdAt      DateTime @default(now())
 }

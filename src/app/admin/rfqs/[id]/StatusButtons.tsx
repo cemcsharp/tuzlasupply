@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { updateRfqStatus } from "@/app/actions/rfq";
+import { updateRfqStatus } from "@/app/actions/rfq-admin";
 
 export default function StatusButtons({ id, currentStatus }: { id: string, currentStatus: string }) {
   const [loading, setLoading] = useState(false);

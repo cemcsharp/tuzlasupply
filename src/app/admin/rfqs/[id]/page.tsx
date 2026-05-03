@@ -9,7 +9,12 @@ export default async function RFQDetailPage({ params }: { params: Promise<{ id: 
   const { id } = await params;
   const rfq = await prisma.rfqRequest.findUnique({
     where: { id },
-    include: { items: true }
+    include: { 
+      items: true,
+      auditLogs: {
+        orderBy: { createdAt: 'desc' }
+      }
+    }
   });
 
   if (!rfq) {
@@ -58,6 +63,34 @@ export default async function RFQDetailPage({ params }: { params: Promise<{ id: 
         </div>
         
         <StatusButtons id={rfq.id} currentStatus={rfq.status} />
+      </div>
+
+      {/* Summary Cards */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "2rem" }}>
+        <div className={styles.statCard} style={{ padding: "1.25rem", border: "none", boxShadow: "0 4px 6px -1px rgba(0,0,0,0.05)" }}>
+          <span style={{ fontSize: "0.75rem", fontWeight: "800", color: "#94A3B8", textTransform: "uppercase" }}>Talep Yaşı</span>
+          <div style={{ fontSize: "1.25rem", fontWeight: "800", marginTop: "0.25rem" }}>
+            {Math.floor((new Date().getTime() - new Date(rfq.createdAt).getTime()) / (1000 * 60 * 60 * 24))} Gün
+          </div>
+        </div>
+        <div className={styles.statCard} style={{ padding: "1.25rem", border: "none", boxShadow: "0 4px 6px -1px rgba(0,0,0,0.05)" }}>
+          <span style={{ fontSize: "0.75rem", fontWeight: "800", color: "#94A3B8", textTransform: "uppercase" }}>Toplam Kalem</span>
+          <div style={{ fontSize: "1.25rem", fontWeight: "800", marginTop: "0.25rem" }}>
+            {rfq.items.length} Ürün
+          </div>
+        </div>
+        <div className={styles.statCard} style={{ padding: "1.25rem", border: "none", boxShadow: "0 4px 6px -1px rgba(0,0,0,0.05)" }}>
+          <span style={{ fontSize: "0.75rem", fontWeight: "800", color: "#94A3B8", textTransform: "uppercase" }}>Dosya Sayısı</span>
+          <div style={{ fontSize: "1.25rem", fontWeight: "800", marginTop: "0.25rem" }}>
+            {rfq.attachmentUrls.length} Ek
+          </div>
+        </div>
+        <div className={styles.statCard} style={{ padding: "1.25rem", border: "none", boxShadow: "0 4px 6px -1px rgba(0,0,0,0.05)" }}>
+          <span style={{ fontSize: "0.75rem", fontWeight: "800", color: "#94A3B8", textTransform: "uppercase" }}>Son Güncelleme</span>
+          <div style={{ fontSize: "1rem", fontWeight: "700", marginTop: "0.25rem" }}>
+            {new Date(rfq.updatedAt).toLocaleDateString('tr-TR')}
+          </div>
+        </div>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "2rem" }}>
@@ -155,6 +188,60 @@ export default async function RFQDetailPage({ params }: { params: Promise<{ id: 
             fontSize: "0.95rem"
           }}>
             {rfq.details}
+          </div>
+        </div>
+
+        <div style={{ gridColumn: "1 / -1", marginTop: "2rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
+          {/* Internal Notes */}
+          <div className={styles.tableCard} style={{ padding: "1.5rem" }}>
+            <h3 style={{ color: "var(--color-primary)", marginBottom: "1.5rem", fontSize: "1.1rem" }}>İç Notlar (Admin Sadece)</h3>
+            <form action={async (formData) => {
+              "use server";
+              const { updateInternalNotes } = await import("@/app/actions/rfq-admin");
+              await updateInternalNotes(rfq.id, formData.get("notes") as string);
+            }}>
+              <textarea 
+                name="notes"
+                defaultValue={rfq.internalNotes || ""}
+                placeholder="Bu talep hakkında ekip arkadaşlarınız için not bırakın..."
+                style={{ 
+                  width: "100%", height: "150px", padding: "1rem", borderRadius: "12px",
+                  border: "1.5px solid #E2E8F0", backgroundColor: "#F8FAFC",
+                  resize: "none", marginBottom: "1rem", fontSize: "0.95rem"
+                }}
+              />
+              <button type="submit" className="btn-primary" style={{ width: "100%" }}>Notu Kaydet</button>
+            </form>
+          </div>
+
+          {/* Audit Log / History */}
+          <div className={styles.tableCard} style={{ padding: "1.5rem" }}>
+            <h3 style={{ color: "var(--color-primary)", marginBottom: "1.5rem", fontSize: "1.1rem" }}>İşlem Geçmişi</h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem", maxHeight: "250px", overflowY: "auto", paddingRight: "0.5rem" }}>
+              {rfq.auditLogs.length === 0 ? (
+                <div style={{ textAlign: "center", color: "var(--color-text-muted)", padding: "2rem" }}>Kayıt bulunmuyor.</div>
+              ) : (
+                rfq.auditLogs.map((log: any) => (
+                  <div key={log.id} style={{ display: "flex", gap: "1rem", borderLeft: "2px solid #E2E8F0", paddingLeft: "1rem", position: "relative" }}>
+                    <div style={{ 
+                      position: "absolute", left: "-6px", top: "0", width: "10px", height: "10px", 
+                      borderRadius: "50%", backgroundColor: "#CBD5E1" 
+                    }} />
+                    <div>
+                      <div style={{ fontSize: "0.75rem", color: "var(--color-text-muted)", fontWeight: "700" }}>
+                        {new Date(log.createdAt).toLocaleString('tr-TR')}
+                      </div>
+                      <div style={{ fontSize: "0.85rem", fontWeight: "800", color: "var(--color-primary)", marginTop: "0.1rem" }}>
+                        {log.action}
+                      </div>
+                      <div style={{ fontSize: "0.85rem", color: "var(--color-text-main)", marginTop: "0.1rem" }}>
+                        {log.details}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
 

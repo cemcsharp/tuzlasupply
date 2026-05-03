@@ -20,7 +20,8 @@
 
 .heroContent {
   position: relative;
-  z-index: 10; /* Above overlay */
+  z-index: 10;
+  /* Above overlay */
   text-align: center;
   max-width: 900px;
   padding: 0 2rem;
@@ -33,7 +34,8 @@
   width: 100%;
   height: 100%;
   z-index: 1;
-  background-color: #0F172A; /* Fallback dark navy */
+  background-color: #0F172A;
+  /* Fallback dark navy */
 }
 
 .slideImage {
@@ -49,7 +51,8 @@
 }
 
 .slideActive {
-  opacity: 0.6; /* Semi-transparent image */
+  opacity: 0.6;
+  /* Semi-transparent image */
 }
 
 .heroOverlay {
@@ -250,7 +253,8 @@
 .footer {
   background: #0F172A;
   color: #fff;
-  padding: 5rem 0 0; /* No bottom padding here, handled by footerBottom */
+  padding: 5rem 0 0;
+  /* No bottom padding here, handled by footerBottom */
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -532,15 +536,17 @@
     padding: 0 1rem;
     line-height: 1.5;
   }
-  
+
   .heroActions {
     flex-direction: column;
     width: 100%;
     padding: 0 1.5rem;
     gap: 1.25rem;
   }
-  
-  .categoriesGrid, .categoryGrid, .refGrid {
+
+  .categoriesGrid,
+  .categoryGrid,
+  .refGrid {
     grid-template-columns: 1fr !important;
     gap: 1.5rem;
     width: 100% !important;
@@ -613,7 +619,7 @@
     padding-top: 3rem;
     margin-top: 3rem;
   }
-  
+
   .legalLeft {
     justify-content: center;
     flex-wrap: wrap;
@@ -805,7 +811,8 @@
   overflow-x: auto;
   padding: 1rem 0.5rem 3rem;
   scroll-snap-type: x mandatory;
-  scrollbar-width: none; /* Hide scrollbar for clean look */
+  scrollbar-width: none;
+  /* Hide scrollbar for clean look */
   -ms-overflow-style: none;
 }
 
@@ -814,7 +821,8 @@
 }
 
 .refCard {
-  flex: 0 0 350px; /* Fixed width for slider items */
+  flex: 0 0 350px;
+  /* Fixed width for slider items */
   scroll-snap-align: center;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -898,13 +906,15 @@
   background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-background) 100%);
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
-  overflow: hidden; /* Important for carousel */
+  overflow: hidden;
+  /* Important for carousel */
 }
 
 .partnersTrack {
   display: flex;
   gap: 2rem;
-  width: max-content; /* Needed for infinite scroll */
+  width: max-content;
+  /* Needed for infinite scroll */
   animation: scroll 40s linear infinite;
   padding: 1rem 0;
 }
@@ -914,8 +924,13 @@
 }
 
 @keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .partnerBadge {
@@ -929,7 +944,7 @@
   transition: all 0.3s;
   cursor: default;
   min-width: 240px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
 .partnerBadge:hover {
@@ -998,36 +1013,222 @@
 
 
 /* PREMIUM CATEGORY STYLES - SAFE ENCODING */
-.sectionHeaderCenter { text-align: center; max-width: 800px; margin: 0 auto 4rem; }
-.sectionSubtitle { display: block; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--color-accent); letter-spacing: 2px; margin-bottom: 1rem; }
-.sectionDescCenter { font-size: 1.1rem; color: #64748B; line-height: 1.6; }
-.categoryGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-.categoryCardPremium { background: white; padding: 3rem; border-radius: 30px; border: 1px solid #f1f5f9; transition: all 0.4s ease; display: flex; flex-direction: column; gap: 1.5rem; }
-.categoryCardPremium:hover { transform: translateY(-10px); box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.1); border-color: var(--color-accent); }
-.categoryIconMain { width: 64px; height: 64px; background: #f8fafc; border-radius: 18px; display: flex; align-items: center; justify-content: center; color: var(--color-accent); }
-.categoryCardPremium h3 { font-size: 1.5rem; font-weight: 800; color: #0f172a; }
-.categorySubList { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; margin-top: auto; padding-top: 1.5rem; border-top: 1px solid #f1f5f9; }
-.categorySubList li { font-size: 0.85rem; font-weight: 600; color: #0f172a; display: flex; align-items: center; gap: 0.5rem; }
-.categorySubList li::before { content: "> "; color: var(--color-accent); font-weight: 800; }
+.sectionHeaderCenter {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 4rem;
+}
+
+.sectionSubtitle {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.sectionDescCenter {
+  font-size: 1.1rem;
+  color: #64748B;
+  line-height: 1.6;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.categoryCardPremium {
+  background: white;
+  padding: 3rem;
+  border-radius: 30px;
+  border: 1px solid #f1f5f9;
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.categoryCardPremium:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 30px 60px -15px rgba(15, 23, 42, 0.1);
+  border-color: var(--color-accent);
+}
+
+.categoryIconMain {
+  width: 64px;
+  height: 64px;
+  background: #f8fafc;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+}
+
+.categoryCardPremium h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.categorySubList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.categorySubList li {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.categorySubList li::before {
+  content: "> ";
+  color: var(--color-accent);
+  font-weight: 800;
+}
 
 /* ULTRA MODERN FOOTER */
-.ultraFooter { background: #050505; padding: 8rem 0 4rem; color: #fff; border-top: 1px solid rgba(255, 255, 255, 0.05); }
-.footerMain { display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 6rem; margin-bottom: 6rem; }
-.footerBrandName { font-size: 2.3rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -1px; }
-.footerBrandName span { color: var(--color-accent); }
-.footerBrandDesc { color: rgba(255, 255, 255, 0.5); line-height: 1.8; font-size: 1rem; margin-bottom: 2.5rem; max-width: 400px; }
-.footerSocials { display: flex; gap: 1rem; }
-.footerSocials a { width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: rgba(255, 255, 255, 0.5); text-decoration: none; }
-.footerNavGroup { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-.footerNavCol h5, .footerAction h5 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.3); margin-bottom: 2rem; }
-.footerNavCol { display: flex; flex-direction: column; gap: 1rem; }
-.footerNavCol a { color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 1rem; }
-.locationTag { display: flex; align-items: center; gap: 0.5rem; color: var(--color-accent); font-size: 0.9rem; font-weight: 600; margin-bottom: 2rem; }
-.newsletterMinimal { display: flex; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 0.5rem; }
-.newsletterMinimal input { background: transparent; border: none; color: #fff; flex: 1; outline: none; }
-.newsletterMinimal button { background: transparent; border: none; color: var(--color-accent); cursor: pointer; }
-.footerLegal { padding-top: 4rem; border-top: 1px solid rgba(255, 255, 255, 0.05); display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: rgba(255, 255, 255, 0.3); }
-.legalLeft { display: flex; gap: 2rem; }
-.adminPortalLink { color: rgba(255, 255, 255, 0.3); text-decoration: none; font-weight: 600; }
+.ultraFooter {
+  background: #050505;
+  padding: 8rem 0 4rem;
+  color: #fff;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
 
+.footerMain {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr;
+  gap: 6rem;
+  margin-bottom: 6rem;
+}
 
+.footerBrandName {
+  font-size: 2.3rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+}
+
+.footerBrandName span {
+  color: var(--color-accent);
+}
+
+.footerBrandDesc {
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.8;
+  font-size: 1rem;
+  margin-bottom: 2.5rem;
+  max-width: 400px;
+}
+
+.footerSocials {
+  display: flex;
+  gap: 1rem;
+}
+
+.footerSocials a {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+}
+
+.footerNavGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.footerNavCol h5,
+.footerAction h5 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 2rem;
+}
+
+.footerNavCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.footerNavCol a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.locationTag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.newsletterMinimal {
+  display: flex;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.newsletterMinimal input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  flex: 1;
+  outline: none;
+}
+
+.newsletterMinimal button {
+  background: transparent;
+  border: none;
+  color: var(--color-accent);
+  cursor: pointer;
+}
+
+.footerLegal {
+  padding-top: 4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.legalLeft {
+  display: flex;
+  gap: 2rem;
+}
+
+.adminPortalLink {
+  color: rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+  font-weight: 600;
+}
