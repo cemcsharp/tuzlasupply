@@ -77,6 +77,16 @@ export default function RFQForm() {
     setFiles(files.filter((_, i) => i !== index));
   };
 
+  useEffect(() => {
+    const handleAddItems = (e: any) => {
+      if (e.detail && Array.isArray(e.detail)) {
+        e.detail.forEach((item: any) => addItem(item));
+      }
+    };
+    window.addEventListener("ADD_RFQ_ITEMS", handleAddItems);
+    return () => window.removeEventListener("ADD_RFQ_ITEMS", handleAddItems);
+  }, []);
+
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setError("");

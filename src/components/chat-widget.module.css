@@ -176,6 +176,7 @@
   border-radius: 20px;
   font-size: 0.95rem;
   line-height: 1.5;
+  white-space: pre-wrap;
 }
 
 .assistant .messageContent {
@@ -192,14 +193,22 @@
 }
 
 .inputArea {
-  padding: 1.25rem 1.5rem;
+  padding: 1rem 1.5rem;
   background: white;
   border-top: 1px solid #F1F5F9;
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-.inputArea input {
+.inputForm {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.inputForm input {
   flex: 1;
   border: none;
   font-size: 0.95rem;
@@ -207,28 +216,43 @@
   color: #1E293B;
 }
 
-.inputArea button {
+.inputForm button, .attachmentBtn {
   background: var(--color-accent);
   color: white;
   border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s;
+  flex-shrink: 0;
 }
 
-.inputArea button:hover:not(:disabled) {
+.attachmentBtn {
+  background: #F1F5F9;
+  color: #64748B;
+}
+
+.attachmentBtn:hover {
+  background: #E2E8F0;
+  color: #1E293B;
+}
+
+.inputForm button:hover:not(:disabled) {
   transform: scale(1.1);
   box-shadow: 0 10px 20px -5px rgba(0, 163, 255, 0.4);
 }
 
-.inputArea button:disabled {
+.inputForm button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.hiddenInput {
+  display: none;
 }
 
 .typingIndicator {

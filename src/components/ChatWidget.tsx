@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { MessageSquare, X, Send, Bot, User, Minimize2, Maximize2 } from "lucide-react";
+import { MessageSquare, X, Send, Bot, User, Minimize2, Maximize2, Paperclip } from "lucide-react";
 import styles from "./chat-widget.module.css";
 import { chatWithAi } from "@/app/actions/chat";
 
@@ -52,6 +52,44 @@ export default function ChatWidget() {
       setMessages(prev => [...prev, { role: "assistant", text: "Hata: " + (result.error || "Bilinmeyen bir sorun oluştu.") }]);
     }
     setLoading(false);
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setLoading(true);
+    setMessages(prev => [...prev, { role: "user", text: `📎 Dosya yüklendi: ${file.name}` }]);
+    
+    try {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async () => {
+        const base64 = (reader.result as string).split(",")[1];
+        const { parseRfqFileWithAi } = await import("@/app/actions/ai");
+        const result = await parseRfqFileWithAi(base64, file.type);
+
+        if (result.success && result.items) {
+          const itemsText = result.items.map((it: any) => `- ${it.name} (${it.quantity} ${it.unit})`).join("\n");
+          setMessages(prev => [...prev, { 
+            role: "assistant", 
+            text: `Dosyanızda şu ürünleri buldum:\n${itemsText}\n\nBu ürünleri teklif listenize ekleyeyim mi?` 
+          }]);
+          
+          // Akıllı Eylem Butonu (Basitleştirilmiş simülasyon)
+          const confirmAdd = confirm("Bulunan ürünleri listenize eklemek ister misiniz?");
+          if (confirmAdd) {
+            window.dispatchEvent(new CustomEvent("ADD_RFQ_ITEMS", { detail: result.items }));
+            setMessages(prev => [...prev, { role: "assistant", text: "Harika! Ürünleri listenize ekledim. Formu kontrol edip gönderebilirsiniz." }]);
+          }
+        } else {
+          setMessages(prev => [...prev, { role: "assistant", text: "Dosyayı okurken bir hata oluştu, lütfen tekrar deneyin." }]);
+        }
+        setLoading(false);
+      };
+    } catch (err) {
+      setLoading(false);
+    }
   };
 
   if (!isOpen) {
@@ -111,19 +149,31 @@ export default function ChatWidget() {
             )}
           </div>
 
-          {/* Input */}
-          <form className={styles.inputArea} onSubmit={handleSend}>
+          {/* Input Area */}
+          <div className={styles.inputArea}>
             <input 
-              type="text" 
-              placeholder="Bir şeyler yazın..." 
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              autoFocus
+              type="file" 
+              id="chat-file-upload" 
+              className={styles.hiddenInput} 
+              onChange={handleFileUpload}
+              accept="image/*,.pdf,.xlsx,.xls,.csv,.docx,.doc"
             />
-            <button type="submit" disabled={!input.trim() || loading}>
-              <Send size={18} />
-            </button>
-          </form>
+            <label htmlFor="chat-file-upload" className={styles.attachmentBtn}>
+              <Paperclip size={18} />
+            </label>
+            <form className={styles.inputForm} onSubmit={handleSend}>
+              <input 
+                type="text" 
+                placeholder="Bir şeyler yazın..." 
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                autoFocus
+              />
+              <button type="submit" disabled={!input.trim() || loading}>
+                <Send size={18} />
+              </button>
+            </form>
+          </div>
         </>
       )}
     </div>
