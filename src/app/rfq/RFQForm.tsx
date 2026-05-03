@@ -18,6 +18,14 @@ export default function RFQForm() {
   const [error, setError] = useState("");
 
   const [aiLoading, setAiLoading] = useState(false);
+  const [modal, setModal] = useState<{
+    show: boolean;
+    title: string;
+    message: string;
+    items?: any[];
+    onConfirm?: () => void;
+    type: "info" | "error" | "success";
+  }>({ show: false, title: "", message: "", type: "info" });
 
   const addItem = (product: any) => {
     setSelectedItems(prev => {
@@ -57,16 +65,33 @@ export default function RFQForm() {
           const result = await parseRfqFileWithAi(fileData, file.type);
           
           if (result.success && result.items) {
-            result.items.forEach((item: any) => {
-              addItem(item);
+            setModal({
+              show: true,
+              title: "Ürünler Ayıklandı",
+              message: "Yapay zeka dökümanınızda aşağıdaki ürünleri buldu. Listenize eklemek istiyor musunuz?",
+              items: result.items,
+              type: "success",
+              onConfirm: () => {
+                result.items.forEach((item: any) => addItem(item));
+                setModal(prev => ({ ...prev, show: false }));
+              }
             });
           } else if (!result.success) {
-            alert("AI Tarama Hatası: " + result.error);
+            setModal({
+              show: true,
+              title: "Tarama Hatası",
+              message: result.error || "Dosya işlenirken bir sorun oluştu.",
+              type: "error"
+            });
           }
         }
       } catch (err) {
-        console.error("AI Scan Error:", err);
-        alert("Tarama sırasında bir hata oluştu.");
+        setModal({
+          show: true,
+          title: "Sistem Hatası",
+          message: "Dosya okuma sırasında teknik bir aksaklık yaşandı.",
+          type: "error"
+        });
       } finally {
         setAiLoading(false);
       }
@@ -302,6 +327,46 @@ export default function RFQForm() {
           </button>
         </div>
       </form>
+
+      {/* Global Modern Modal */}
+      {modal.show && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <div className={`${styles.modalIcon} ${modal.type === 'error' ? styles.bgError : styles.bgSuccess}`}>
+              {modal.type === 'success' ? <Check size={40} color="#059669" /> : <X size={40} color="#DC2626" />}
+            </div>
+            <h2 className={styles.modalTitle}>{modal.title}</h2>
+            <p className={styles.modalMessage}>{modal.message}</p>
+            
+            {modal.items && modal.items.length > 0 && (
+              <div className={styles.modalList}>
+                {modal.items.map((item, idx) => (
+                  <div key={idx} className={styles.modalListItem}>
+                    • {item.name} ({item.quantity} {item.unit})
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className={styles.modalActions}>
+              {modal.onConfirm && (
+                <button 
+                  onClick={modal.onConfirm}
+                  className={`${styles.modalBtn} ${styles.modalBtnConfirm}`}
+                >
+                  Hepsini Ekle
+                </button>
+              )}
+              <button 
+                onClick={() => setModal({ ...modal, show: false })}
+                className={`${styles.modalBtn} ${styles.modalBtnCancel}`}
+              >
+                {modal.onConfirm ? "Vazgeç" : "Tamam"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

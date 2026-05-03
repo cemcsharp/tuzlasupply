@@ -21,6 +21,13 @@ export default function ChatWidget() {
     setSessionId(Math.random().toString(36).substring(2, 15));
   }, []);
   const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState<{
+    show: boolean;
+    title: string;
+    message: string;
+    items?: any[];
+    onConfirm?: () => void;
+  }>({ show: false, title: "", message: "" });
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -78,12 +85,19 @@ export default function ChatWidget() {
             text: `Dosyanızda şu ürünleri buldum:\n${itemsText}\n\nBu ürünleri teklif listenize ekleyeyim mi?` 
           }]);
           
-          // Akıllı Eylem Butonu (Basitleştirilmiş simülasyon)
-          const confirmAdd = confirm("Bulunan ürünleri listenize eklemek ister misiniz?");
-          if (confirmAdd) {
-            window.dispatchEvent(new CustomEvent("ADD_RFQ_ITEMS", { detail: result.items }));
-            setMessages(prev => [...prev, { role: "assistant", text: "Harika! Ürünleri listenize ekledim. Formu kontrol edip gönderebilirsiniz." }]);
-          }
+          
+          // Akıllı Eylem Paneli (Modern Modal)
+          setModal({
+            show: true,
+            title: "Ürünler Eklensin mi?",
+            message: "Dökümanınızda bulunan ürünleri teklif listenize aktarmak ister misiniz?",
+            items: result.items,
+            onConfirm: () => {
+              window.dispatchEvent(new CustomEvent("ADD_RFQ_ITEMS", { detail: result.items }));
+              setMessages(prev => [...prev, { role: "assistant", text: "Harika! Ürünleri listenize ekledim. Formu kontrol edip gönderebilirsiniz." }]);
+              setModal(prev => ({ ...prev, show: false }));
+            }
+          });
         } else {
           setMessages(prev => [...prev, { role: "assistant", text: "Dosyayı okurken bir hata oluştu, lütfen tekrar deneyin." }]);
         }
@@ -235,6 +249,41 @@ export default function ChatWidget() {
             </>
           )}
         </>
+      )}
+
+      {/* Modern Chat Modal */}
+      {modal.show && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modal}>
+            <h3 className={styles.modalTitle}>{modal.title}</h3>
+            <p className={styles.modalMessage}>{modal.message}</p>
+            
+            {modal.items && (
+              <div className={styles.modalList}>
+                {modal.items.map((it: any, idx: number) => (
+                  <div key={idx} className={styles.modalListItem}>
+                    • {it.name} ({it.quantity} {it.unit})
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className={styles.modalActions}>
+              <button 
+                onClick={modal.onConfirm}
+                className={`${styles.modalBtn} ${styles.modalBtnConfirm}`}
+              >
+                Ekle
+              </button>
+              <button 
+                onClick={() => setModal({ ...modal, show: false })}
+                className={`${styles.modalBtn} ${styles.modalBtnCancel}`}
+              >
+                Vazgeç
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
