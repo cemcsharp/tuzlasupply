@@ -47,7 +47,7 @@ export default function ChatWidget() {
     if (result.success && result.text) {
       setMessages(prev => [...prev, { role: "assistant", text: result.text! }]);
     } else {
-      setMessages(prev => [...prev, { role: "assistant", text: "Üzgünüm, şu an bağlantı kuramıyorum. Lütfen birazdan tekrar deneyin." }]);
+      setMessages(prev => [...prev, { role: "assistant", text: "Hata: " + (result.error || "Bilinmeyen bir sorun oluştu.") }]);
     }
     setLoading(false);
   };
