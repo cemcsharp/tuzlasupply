@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { 
   MessageSquare, X, Send, Bot, User, Minimize2, Maximize2, 
-  Paperclip, ShieldCheck, Search, CheckCircle2, Loader2, Sparkles 
+  Paperclip, CheckCircle2, Sparkles 
 } from "lucide-react";
 import styles from "./chat-widget.module.css";
 import { chatWithAi } from "@/app/actions/chat";
@@ -14,7 +14,7 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [sessionId, setSessionId] = useState("");
   const [leadCollected, setLeadCollected] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1); // 1: Lead, 2: Chat/Upload, 3: Confirm
+  const [currentStep, setCurrentStep] = useState(1);
   const [isScanning, setIsScanning] = useState(false);
   
   const [leadForm, setLeadForm] = useState({ name: "", email: "", phone: "" });
@@ -35,7 +35,6 @@ export default function ChatWidget() {
     onConfirm?: () => void;
   }>({ show: false, title: "", message: "" });
   
-  const scrollRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -77,32 +76,15 @@ export default function ChatWidget() {
     if (!file) return;
 
     setIsScanning(true);
-    setCurrentStep(2);
-    
     try {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = async () => {
         const base64 = (reader.result as string).split(",")[1];
         const { parseRfqFileWithAi } = await import("@/app/actions/ai");
-        const { logChatMessage, uploadChatFile } = await import("@/app/actions/chat");
-        
-        const formData = new FormData();
-        formData.append("file", file);
-        const uploadResult = await uploadChatFile(formData);
-        const fileUrl = uploadResult.success ? uploadResult.url : undefined;
-
         const result = await parseRfqFileWithAi(base64, file.type);
-        await logChatMessage(sessionId, "user", `📎 Dosya yüklendi: ${file.name}`, fileUrl);
-
         if (result.success && result.items) {
           setCurrentStep(3);
-          const itemsText = result.items.map((it: any) => `- ${it.name} (${it.quantity} ${it.unit})`).join("\n");
-          const assistantMsg = `Dosyanızda şu ürünleri buldum:\n${itemsText}\n\nBu ürünleri teklif listenize ekleyeyim mi?`;
-          
-          setMessages(prev => [...prev, { role: "assistant", text: assistantMsg }]);
-          await logChatMessage(sessionId, "assistant", assistantMsg);
-          
           setModal({
             show: true,
             title: "Ürünler Eklensin mi?",
@@ -112,13 +94,11 @@ export default function ChatWidget() {
               const existing = JSON.parse(localStorage.getItem("pending_rfq_items") || "[]");
               localStorage.setItem("pending_rfq_items", JSON.stringify([...existing, ...result.items]));
               window.dispatchEvent(new CustomEvent("ADD_RFQ_ITEMS", { detail: result.items }));
-              setMessages(prev => [...prev, { role: "assistant", text: "Harika! Ürünleri listenize ekledim. Formu kontrol edip gönderebilirsiniz." }]);
+              setMessages(prev => [...prev, { role: "assistant", text: "Ürünleri listenize ekledim!" }]);
               setModal(prev => ({ ...prev, show: false }));
               setCurrentStep(2);
             }
           });
-        } else {
-          setMessages(prev => [...prev, { role: "assistant", text: "Dosyayı okurken bir hata oluştu, lütfen tekrar deneyin." }]);
         }
         setIsScanning(false);
       };
@@ -129,8 +109,6 @@ export default function ChatWidget() {
 
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!leadForm.name || !leadForm.email) return;
-
     setLoading(true);
     const { saveChatLead } = await import("@/app/actions/chat");
     await saveChatLead({ ...leadForm, sessionId });
@@ -154,141 +132,72 @@ export default function ChatWidget() {
       <div className={styles.header}>
         <div className={styles.headerInfo}>
           <div className={styles.aiAvatar}>
-            <Bot size={20} />
-            <span className={styles.onlineIndicator} />
+            <Bot size={20} /><span className={styles.onlineIndicator} />
           </div>
-          <div>
-            <h4>Tuzla AI Asistan</h4>
-            <span>War Room Monitoring</span>
-          </div>
+          <div><h4>Tuzla AI</h4><span>Çevrimiçi</span></div>
         </div>
         <div className={styles.headerActions}>
-          <button onClick={() => setIsMinimized(!isMinimized)}>
-            {isMinimized ? <Maximize2 size={18} /> : <Minimize2 size={18} />}
-          </button>
-          <button onClick={() => setIsOpen(false)}>
-            <X size={18} />
-          </button>
+          <button onClick={() => setIsMinimized(!isMinimized)}>{isMinimized ? <Maximize2 size={18} /> : <Minimize2 size={18} />}</button>
+          <button onClick={() => setIsOpen(false)}><X size={18} /></button>
         </div>
       </div>
 
       {!isMinimized && (
-        <>
-          {/* Progress Stepper */}
+        <div className={styles.body}>
           <div className={styles.stepper}>
-            <div className={`${styles.step} ${currentStep >= 1 ? styles.stepActive : ""}`}>
-              <div className={styles.stepIcon}>{currentStep > 1 ? <CheckCircle2 size={12} /> : "1"}</div> Bilgi
-            </div>
-            <div className={`${styles.step} ${currentStep >= 2 ? styles.stepActive : ""}`}>
-              <div className={styles.stepIcon}>{currentStep > 2 ? <CheckCircle2 size={12} /> : "2"}</div> Danışma
-            </div>
-            <div className={`${styles.step} ${currentStep >= 3 ? styles.stepActive : ""}`}>
-              <div className={styles.stepIcon}>3</div> Onay
-            </div>
+            <div className={`${styles.step} ${currentStep >= 1 ? styles.stepActive : ""}`}><div className={styles.stepIcon}>1</div> Bilgi</div>
+            <div className={`${styles.step} ${currentStep >= 2 ? styles.stepActive : ""}`}><div className={styles.stepIcon}>2</div> Danışma</div>
+            <div className={`${styles.step} ${currentStep >= 3 ? styles.stepActive : ""}`}><div className={styles.stepIcon}>3</div> Onay</div>
           </div>
 
-          <div style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column" }}>
-            
-            {/* AI Scan Overlay */}
+          <div className={styles.contentArea}>
             {isScanning && (
               <div className={styles.scanOverlay}>
                 <div className={styles.scanRadar} />
-                <div className={styles.scanText}>Yapay Zeka Tarıyor...</div>
-                <div className={styles.scanSubtext}>Dökümanınızdaki kalemler tek tek ayıklanıyor.</div>
+                <div className={styles.scanText}>Taranıyor...</div>
               </div>
             )}
 
             {!leadCollected ? (
               <div className={styles.leadFormContainer}>
-                <div className={styles.leadWelcome}>
-                  <Sparkles size={40} color="var(--color-accent)" style={{ marginBottom: "1rem" }} />
-                  <h3>Akıllı Asistan Devrede</h3>
-                  <p>Hizmet kalitemizi korumak için kısa bir bilgi rica ediyoruz.</p>
-                </div>
+                <div className={styles.leadWelcome}><Sparkles size={32} /><h3>Hoş Geldiniz</h3></div>
                 <form onSubmit={handleLeadSubmit} className={styles.leadForm}>
-                  <div className={styles.leadInputGroup}>
-                    <input 
-                      type="text" placeholder="Adınız Soyadınız" required 
-                      value={leadForm.name} onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })}
-                    />
-                  </div>
-                  <div className={styles.leadInputGroup}>
-                    <input 
-                      type="email" placeholder="Kurumsal E-posta" required 
-                      value={leadForm.email} onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })}
-                    />
-                  </div>
-                  <button type="submit" disabled={loading} className={styles.leadSubmitBtn}>
-                    {loading ? "Bağlanıyor..." : "Sohbeti Başlat"}
-                  </button>
+                  <div className={styles.leadInputGroup}><input type="text" placeholder="Ad Soyad" required value={leadForm.name} onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })} /></div>
+                  <div className={styles.leadInputGroup}><input type="email" placeholder="E-posta" required value={leadForm.email} onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })} /></div>
+                  <button type="submit" disabled={loading} className={styles.leadSubmitBtn}>Başla</button>
                 </form>
               </div>
             ) : (
-              <>
-                <div className={styles.messageList} ref={scrollRef}>
+              <div className={styles.chatArea}>
+                <div className={styles.messageList}>
                   {messages.map((m, i) => (
                     <div key={i} className={`${styles.messageWrapper} ${m.role === "assistant" ? styles.assistant : styles.user}`}>
-                      <div className={styles.avatar}>
-                        {m.role === "assistant" ? <Bot size={16} /> : <User size={16} />}
-                      </div>
-                      <div className={styles.messageContent}>
-                        {m.text}
-                      </div>
+                      <div className={styles.messageContent}>{m.text}</div>
                     </div>
                   ))}
-                  {loading && (
-                    <div className={`${styles.messageWrapper} ${styles.assistant}`}>
-                      <div className={styles.avatar}><Bot size={16} /></div>
-                      <div className={styles.typingIndicator}>
-                        <span></span><span></span><span></span>
-                      </div>
-                    </div>
-                  )}
+                  {loading && <div className={styles.typingIndicator}><span></span><span></span><span></span></div>}
                   <div ref={messagesEndRef} />
                 </div>
-
                 <div className={styles.inputArea}>
-                  <input 
-                    type="file" id="chat-file-upload" className={styles.hiddenInput} 
-                    onChange={handleFileUpload} accept="image/*,.pdf,.xlsx,.xls,.csv,.docx,.doc"
-                  />
-                  <label htmlFor="chat-file-upload" className={styles.attachmentBtn}>
-                    <Paperclip size={20} />
-                  </label>
+                  <input type="file" id="chat-file" className={styles.hiddenInput} onChange={handleFileUpload} />
+                  <label htmlFor="chat-file" className={styles.attachmentBtn}><Paperclip size={20} /></label>
                   <form className={styles.inputForm} onSubmit={handleSend}>
-                    <input 
-                      type="text" placeholder="Mesajınızı yazın..." 
-                      value={input} onChange={(e) => setInput(e.target.value)}
-                    />
-                    <button type="submit" disabled={!input.trim() || loading}>
-                      <Send size={18} />
-                    </button>
+                    <input type="text" placeholder="Yazın..." value={input} onChange={(e) => setInput(e.target.value)} />
+                    <button type="submit" disabled={!input.trim() || loading}><Send size={18} /></button>
                   </form>
                 </div>
-              </>
+              </div>
             )}
           </div>
-        </>
+        </div>
       )}
-
-      {/* Modal - same but with better styles from CSS */}
       {modal.show && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
-            <h3 className={styles.modalTitle}>{modal.title}</h3>
-            <p className={styles.modalMessage}>{modal.message}</p>
-            {modal.items && (
-              <div className={styles.modalList}>
-                {modal.items.map((it: any, idx: number) => (
-                  <div key={idx} className={styles.modalListItem}>
-                    • {it.name} ({it.quantity} {it.unit})
-                  </div>
-                ))}
-              </div>
-            )}
+            <h3>{modal.title}</h3><p>{modal.message}</p>
             <div className={styles.modalActions}>
               <button onClick={modal.onConfirm} className={styles.modalBtnConfirm}>Ekle</button>
-              <button onClick={() => setModal({ ...modal, show: false })} className={styles.modalBtnCancel}>Vazgeç</button>
+              <button onClick={() => setModal({ ...modal, show: false })} className={styles.modalBtnCancel}>Kapat</button>
             </div>
           </div>
         </div>
