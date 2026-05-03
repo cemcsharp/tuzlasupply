@@ -1,6 +1,3 @@
-"use client"; // Note: This will be called from components, but usually actions are 'use server'. 
-// Wait, I should make it 'use server'.
-
 "use server";
 
 import { prisma } from "@/lib/prisma";
