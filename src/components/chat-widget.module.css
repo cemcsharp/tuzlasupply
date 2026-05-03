@@ -233,11 +233,30 @@
 .messageList {
   flex: 1;
   padding: 1.5rem;
-  overflow-y: auto;
+  overflow-y: overlay; /* Allows scrollbar to be visible without shifting layout */
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   background: linear-gradient(180deg, rgba(248, 250, 252, 0) 0%, rgba(248, 250, 252, 1) 100%);
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar Styling */
+.messageList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messageList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messageList::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.1);
+  border-radius: 10px;
+}
+
+.messageList:hover::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.2);
 }
 
 .messageWrapper {
