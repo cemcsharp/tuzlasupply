@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function chatWithAi(message: string, history: any[] = [], sessionId?: string) {
-  const modelsToTry = ["gemini-flash-latest", "gemini-1.5-flash", "gemini-1.5-pro"];
+  const modelsToTry = ["gemini-1.5-flash", "gemini-1.5-flash-latest", "gemini-2.0-flash-exp"];
   let lastError = "";
 
   const systemContext = "Sen Tuzla Supply asistanı Tuzla AI'sın. Profesyonel ve yardımsever ol. ";
