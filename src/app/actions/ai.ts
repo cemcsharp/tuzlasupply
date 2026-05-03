@@ -7,7 +7,7 @@ import mammoth from "mammoth";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function parseRfqFileWithAi(fileBase64: string, mimeType: string) {
-  const modelsToTry = ["gemini-1.5-flash", "gemini-1.5-flash-latest", "gemini-2.0-flash-exp"];
+  const modelsToTry = ["gemini-1.5-flash", "gemini-flash-latest"];
   let lastError = "";
 
   try {
