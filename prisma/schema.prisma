@@ -68,6 +68,7 @@ model Settings {
   
   updatedAt     DateTime @updatedAt
 }
+
 model ContactMessage {
   id        String   @id @default(cuid())
   name      String
@@ -123,5 +124,13 @@ model Partner {
   logoUrl   String?
   isActive  Boolean  @default(true)
   order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model ChatLog {
+  id        String   @id @default(cuid())
+  message   String   @db.Text
+  role      String   // user or assistant
+  sessionId String?  // Görüşmeleri gruplamak için
   createdAt DateTime @default(now())
 }

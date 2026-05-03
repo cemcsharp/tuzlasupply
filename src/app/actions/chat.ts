@@ -1,6 +1,7 @@
 "use server";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { prisma } from "@/lib/prisma";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -12,14 +13,25 @@ GÖREVLERİN:
 1. Kullanıcılara Tuzla Supply hizmetleri hakkında bilgi ver.
 2. Teknik soruları (pompa, vana, yedek parça vb.) bir uzman gibi yanıtla.
 3. Yanıtlarını kısa, öz ve kurumsal bir dille yaz.
-4. Mümkünse denizcilik ve tedarik terimlerini doğru kullan.
-5. Adın: Tuzla AI.
+4. Adın: Tuzla AI.
 `;
 
-export async function chatWithAi(message: string, history: any[] = []) {
-  // Sizin anahtarınızın çalıştığı o özel model listesi
+export async function chatWithAi(message: string, history: any[] = [], sessionId?: string) {
   const modelsToTry = ["gemini-flash-latest", "gemini-1.5-flash", "gemini-1.5-pro"];
   let lastError = "";
+
+  // 1. Kullanıcı Mesajını Kaydet (Sessizce)
+  try {
+    await prisma.chatLog.create({
+      data: {
+        message: message,
+        role: "user",
+        sessionId: sessionId || "global"
+      }
+    });
+  } catch (logError) {
+    console.error("LOGGING ERROR (USER):", logError);
+  }
 
   for (const modelName of modelsToTry) {
     try {
@@ -34,11 +46,26 @@ export async function chatWithAi(message: string, history: any[] = []) {
 
       const result = await chat.sendMessage(message);
       const response = await result.response;
-      return { success: true, text: response.text() };
+      const aiText = response.text();
+
+      // 2. Asistan Yanıtını Kaydet (Sessizce)
+      try {
+        await prisma.chatLog.create({
+          data: {
+            message: aiText,
+            role: "assistant",
+            sessionId: sessionId || "global"
+          }
+        });
+      } catch (logError) {
+        console.error("LOGGING ERROR (AI):", logError);
+      }
+
+      return { success: true, text: aiText };
     } catch (error: any) {
       console.error(`Chat Error with ${modelName}:`, error.message);
       lastError = error.message;
-      continue; // Bir sonraki modeli dene
+      continue;
     }
   }
 

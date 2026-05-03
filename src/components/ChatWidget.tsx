@@ -9,9 +9,15 @@ export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [input, setInput] = useState("");
+  const [sessionId, setSessionId] = useState("");
   const [messages, setMessages] = useState<{ role: string, text: string }[]>([
     { role: "assistant", text: "Merhaba! Ben Tuzla AI. Size nasıl yardımcı olabilirim?" }
   ]);
+
+  useEffect(() => {
+    // Generate a simple session ID for this visit
+    setSessionId(Math.random().toString(36).substring(2, 15));
+  }, []);
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -36,7 +42,7 @@ export default function ChatWidget() {
       parts: [{ text: m.text }]
     }));
 
-    const result = await chatWithAi(userMessage, history as any);
+    const result = await chatWithAi(userMessage, history as any, sessionId);
 
     if (result.success && result.text) {
       setMessages(prev => [...prev, { role: "assistant", text: result.text! }]);
