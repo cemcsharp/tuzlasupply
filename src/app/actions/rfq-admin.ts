@@ -1,5 +1,7 @@
 "use server";
 
+// DB sync verified, triggering redeploy.
+
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
