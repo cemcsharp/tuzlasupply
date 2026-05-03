@@ -67,10 +67,20 @@ export async function submitRfq(formData: FormData) {
       const items = JSON.parse(itemsJson);
       console.log(`Adding ${items.length} items to RFQ...`);
       for (const item of items) {
+        // Check if item.id is a valid product in the database
+        let validProductId = null;
+        if (item.id && item.id.length > 20) { // Simple check for UUID-like strings
+          const productExists = await prisma.product.findUnique({
+            where: { id: item.id },
+            select: { id: true }
+          });
+          if (productExists) validProductId = item.id;
+        }
+
         await prisma.rfqItem.create({
           data: {
             rfqId: rfq.id,
-            productId: item.id,
+            productId: validProductId,
             name: item.name,
             quantity: Number(item.quantity),
             unit: item.unit || "Adet"
