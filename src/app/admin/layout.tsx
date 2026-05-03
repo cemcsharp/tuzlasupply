@@ -12,6 +12,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Dashboard", href: "/admin" },
     { name: "Gelen Talepler (RFQ)", href: "/admin/rfqs" },
     { name: "Gelen Mesajlar", href: "/admin/messages" },
+    { name: "Chatbot Kayıtları", href: "/admin/chat" },
     { name: "Müşteriler", href: "/admin/customers" },
     { name: "Ürün Kataloğu", href: "/admin/products" },
     { name: "Referanslar & Partnerlar", href: "/admin/showcase" },

@@ -388,3 +388,133 @@
 .premiumInput:focus + .searchIcon {
   color: var(--color-accent);
 }
+
+/* Chat Monitoring Specifics */
+.chatGrid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 2rem;
+  height: calc(100vh - 200px);
+}
+
+.chatSidebar {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.chatSidebarHeader {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-surface-hover);
+}
+
+.leadList {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.leadItem {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.leadItem:hover {
+  background: var(--color-surface-hover);
+}
+
+.leadItemActive {
+  background: #F0F9FF;
+  border-left: 4px solid var(--color-accent);
+}
+
+.leadName {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.leadMeta {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.chatContent {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.chatHistory {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: #F8FAFC;
+}
+
+.chatMessage {
+  max-width: 80%;
+  padding: 1rem 1.25rem;
+  border-radius: 18px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  position: relative;
+}
+
+.userMessage {
+  align-self: flex-end;
+  background: var(--color-primary);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.aiMessage {
+  align-self: flex-start;
+  background: white;
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
+  border-bottom-left-radius: 4px;
+}
+
+.messageTime {
+  font-size: 0.7rem;
+  opacity: 0.6;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.noSelection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--color-text-muted);
+  gap: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .chatGrid {
+    grid-template-columns: 1fr;
+  }
+  .chatSidebar {
+    height: 300px;
+  }
+}

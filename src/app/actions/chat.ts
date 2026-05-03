@@ -63,3 +63,26 @@ export async function saveChatLead(data: { name: string, email: string, phone?: 
     return { success: false, error: error.message };
   }
 }
+
+export async function getChatLeads() {
+  try {
+    const leads = await prisma.chatLead.findMany({
+      orderBy: { createdAt: 'desc' }
+    });
+    return { success: true, leads };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+}
+
+export async function getChatLogs(sessionId: string) {
+  try {
+    const logs = await prisma.chatLog.findMany({
+      where: { sessionId },
+      orderBy: { createdAt: 'asc' }
+    });
+    return { success: true, logs };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+}
