@@ -11,6 +11,7 @@ import {
 
 export default function RFQForm() {
   const [selectedItems, setSelectedItems] = useState<any[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -28,12 +29,29 @@ export default function RFQForm() {
     setSelectedItems(selectedItems.map(item => item.id === id ? { ...item, quantity: Math.max(1, qty) } : item));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      setFiles(prev => [...prev, ...newFiles]);
+    }
+  };
+
+  const removeFile = (index: number) => {
+    setFiles(files.filter((_, i) => i !== index));
+  };
+
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setError("");
 
     // Inject selected items into formData
     formData.set("itemsJson", JSON.stringify(selectedItems));
+    
+    // Add our state files to the formData
+    formData.delete("attachment"); // clear initial single select
+    files.forEach(file => {
+      formData.append("attachment", file);
+    });
 
     try {
       const result = await submitRfq(formData);
@@ -110,26 +128,41 @@ export default function RFQForm() {
                 <div className={styles.fileUploadZone}>
                   <input 
                     type="file" 
-                    name="attachment" 
                     className={styles.fileInput} 
                     id="file-upload" 
                     multiple
-                    onChange={(e) => {
-                      const files = e.target.files;
-                      if (files && files.length > 0) {
-                        const label = document.getElementById('file-label');
-                        if (label) label.innerText = `${files.length} dosya seçildi.`;
-                      }
-                    }}
+                    onChange={handleFileChange}
                   />
                   <label htmlFor="file-upload" className={styles.fileLabel}>
                     <div className={styles.uploadIcon}><Package size={32} /></div>
-                    <div id="file-label">
-                      <strong>Dökümanlarınızı Buraya Ekleyin</strong>
-                      <span>Excel, PDF veya Resimler</span>
+                    <div>
+                      <strong>Dosyalarınızı Ekleyin</strong>
+                      <span>Excel, PDF veya Resimler (Birden fazla seçilebilir)</span>
                     </div>
                   </label>
                 </div>
+
+                {/* Seçilen Dosya Listesi */}
+                {files.length > 0 && (
+                  <div style={{ marginTop: "1rem", display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+                    {files.map((file, index) => (
+                      <div key={index} style={{ 
+                        display: "flex", alignItems: "center", gap: "0.5rem", 
+                        padding: "0.5rem 1rem", backgroundColor: "white", 
+                        border: "1px solid #E2E8F0", borderRadius: "12px",
+                        fontSize: "0.85rem", color: "#1E293B", fontWeight: "600"
+                      }}>
+                        <Package size={14} color="var(--color-accent)" />
+                        <span style={{ maxWidth: "200px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          {file.name}
+                        </span>
+                        <button type="button" onClick={() => removeFile(index)} style={{ color: "#EF4444", display: "flex", alignItems: "center" }}>
+                          <X size={14} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
