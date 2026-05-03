@@ -11,6 +11,8 @@ import {
   Ship, Building2, Handshake, Award, Users, Package, TrendingUp,
   Cpu, HardHat, Truck, Warehouse, Briefcase
 } from "lucide-react";
+import Counter from "@/components/Counter";
+import MaritimeMap from "@/components/MaritimeMap";
 
 export const dynamic = "force-dynamic";
 
@@ -156,7 +158,12 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
               </div>
             </div>
           </div>
+            </div>
+          </div>
         </section>
+
+        {/* Global Maritime Map */}
+        <MaritimeMap lang={t.lang} />
 
         {/* Stats Bar — conditionally rendered */}
         {sectionVis.showStats ? (
@@ -164,19 +171,27 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
             <div className="container">
               <div className={styles.statsBar}>
                 <div className={styles.statItem}>
-                  <div className={styles.statNumber}>{sectionVis.statOrders}</div>
+                  <div className={styles.statNumber}>
+                    <Counter end={sectionVis.statOrders} />
+                  </div>
                   <div className={styles.statLabel}>{t.statOrders}</div>
                 </div>
                 <div className={styles.statItem}>
-                  <div className={styles.statNumber}>{sectionVis.statCustomers}</div>
+                  <div className={styles.statNumber}>
+                    <Counter end={sectionVis.statCustomers} />
+                  </div>
                   <div className={styles.statLabel}>{t.statCustomers}</div>
                 </div>
                 <div className={styles.statItem}>
-                  <div className={styles.statNumber}>{sectionVis.statExperience}</div>
+                  <div className={styles.statNumber}>
+                    <Counter end={sectionVis.statExperience} />
+                  </div>
                   <div className={styles.statLabel}>{t.statExperience}</div>
                 </div>
                 <div className={styles.statItem}>
-                  <div className={styles.statNumber}>{sectionVis.statSupport}</div>
+                  <div className={styles.statNumber}>
+                    <Counter end={sectionVis.statSupport} />
+                  </div>
                   <div className={styles.statLabel}>{t.statSupport}</div>
                 </div>
               </div>
