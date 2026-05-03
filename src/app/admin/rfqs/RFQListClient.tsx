@@ -108,7 +108,7 @@ export default function RFQListClient({ initialRfqs }: { initialRfqs: any[] }) {
              <button 
               className="btn-primary" 
               style={{ padding: "0.6rem 1.25rem", fontSize: "0.9rem", borderRadius: "10px" }}
-              onClick={() => alert('Manuel RFQ oluşturma formu yakında eklenecek. Şimdilik ana sayfadaki formu kullanabilirsiniz.')}
+              onClick={() => window.location.href = '/admin/rfqs/new'}
              >
                Yeni RFQ Ekle (Manuel)
              </button>
