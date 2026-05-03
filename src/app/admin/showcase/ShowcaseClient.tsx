@@ -194,6 +194,10 @@ export default function ShowcaseClient({ references, partners, visibility }: Pro
                   {iconOptions.map(i => <option key={i} value={i}>{i}</option>)}
                 </select>
               </div>
+              <div style={{ flexGrow: 1 }}>
+                <label style={labelStyle}>Logo Görseli Yükle</label>
+                <input name="logoFile" type="file" accept="image/*" style={inputStyle} />
+              </div>
               <button type="submit" style={btnPrimary}>Kaydet</button>
             </div>
           </form>
@@ -282,6 +286,10 @@ export default function ShowcaseClient({ references, partners, visibility }: Pro
               <div>
                 <label style={labelStyle}>Renk</label>
                 <input name="color" type="color" defaultValue="#0072CE" style={{ ...inputStyle, height: "42px", padding: "4px" }} />
+              </div>
+              <div style={{ flexGrow: 1 }}>
+                <label style={labelStyle}>Logo Görseli Yükle</label>
+                <input name="logoFile" type="file" accept="image/*" style={inputStyle} />
               </div>
             </div>
             <button type="submit" style={btnPrimary}>Kaydet</button>

@@ -2,8 +2,27 @@
 
 import { prisma } from "@/lib/prisma";
 // Action forced refresh
-
 import { revalidatePath } from "next/cache";
+import { writeFile, mkdir } from "node:fs/promises";
+import { join } from "node:path";
+
+async function uploadFile(file: File | null): Promise<string | null> {
+  if (!file || file.size === 0) return null;
+  
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+  
+  const uploadDir = join(process.cwd(), "public", "uploads", "logos");
+  try {
+    await mkdir(uploadDir, { recursive: true });
+  } catch (e) {}
+
+  const filename = `${Date.now()}-${file.name.replace(/\s+/g, "_")}`;
+  const path = join(uploadDir, filename);
+  await writeFile(path, buffer);
+  
+  return `/uploads/logos/${filename}`;
+}
 
 // ── REFERENCES ──
 
@@ -17,12 +36,16 @@ export async function getActiveReferences() {
 
 export async function createReference(formData: FormData) {
   const count = await prisma.reference.count();
+  const logoFile = formData.get("logoFile") as File;
+  const logoUrl = await uploadFile(logoFile);
+
   await prisma.reference.create({
     data: {
       name: formData.get("name") as string,
       type: formData.get("type") as string,
       description: formData.get("description") as string || "",
       icon: formData.get("icon") as string || "Ship",
+      logoUrl: logoUrl || "",
       order: count,
     },
   });
@@ -31,14 +54,21 @@ export async function createReference(formData: FormData) {
 }
 
 export async function updateReference(id: string, formData: FormData) {
+  const logoFile = formData.get("logoFile") as File;
+  const logoUrl = await uploadFile(logoFile);
+
+  const updateData: any = {
+    name: formData.get("name") as string,
+    type: formData.get("type") as string,
+    description: formData.get("description") as string || "",
+    icon: formData.get("icon") as string || "Ship",
+  };
+
+  if (logoUrl) updateData.logoUrl = logoUrl;
+
   await prisma.reference.update({
     where: { id },
-    data: {
-      name: formData.get("name") as string,
-      type: formData.get("type") as string,
-      description: formData.get("description") as string || "",
-      icon: formData.get("icon") as string || "Ship",
-    },
+    data: updateData,
   });
   revalidatePath("/admin/references");
   revalidatePath("/");
@@ -70,11 +100,15 @@ export async function getActivePartners() {
 
 export async function createPartner(formData: FormData) {
   const count = await prisma.partner.count();
+  const logoFile = formData.get("logoFile") as File;
+  const logoUrl = await uploadFile(logoFile);
+
   await prisma.partner.create({
     data: {
       name: formData.get("name") as string,
       role: formData.get("role") as string,
       color: formData.get("color") as string || "#0072CE",
+      logoUrl: logoUrl || "",
       order: count,
     },
   });
@@ -83,13 +117,20 @@ export async function createPartner(formData: FormData) {
 }
 
 export async function updatePartner(id: string, formData: FormData) {
+  const logoFile = formData.get("logoFile") as File;
+  const logoUrl = await uploadFile(logoFile);
+
+  const updateData: any = {
+    name: formData.get("name") as string,
+    role: formData.get("role") as string,
+    color: formData.get("color") as string || "#0072CE",
+  };
+
+  if (logoUrl) updateData.logoUrl = logoUrl;
+
   await prisma.partner.update({
     where: { id },
-    data: {
-      name: formData.get("name") as string,
-      role: formData.get("role") as string,
-      color: formData.get("color") as string || "#0072CE",
-    },
+    data: updateData,
   });
   revalidatePath("/admin/partners");
   revalidatePath("/");

@@ -19,8 +19,14 @@ export default function HomeNavbar() {
     <nav className={styles.navbar}>
       <div className={`${styles.navContainer} container`}>
         <Link href="/" className={styles.logoContainer}>
-          <div className={styles.logo}>Tuzla <span>Supply</span></div>
-          <div className={styles.sloganSmall}>Global Corporate Supply & Industrial Excellence</div>
+          <div className={styles.brandColumn}>
+            <div className={styles.logoText}>
+              Tuzla <span>Supply</span>
+            </div>
+            <div className={styles.navSlogan}>
+              {lang === "tr" ? "Endüstriyel Tedarik Ağı" : "Industrial Supply Network"}
+            </div>
+          </div>
         </Link>
         
         <div className={styles.navRight}>
@@ -38,9 +44,6 @@ export default function HomeNavbar() {
               EN
             </button>
           </div>
-          <Link href="/login" style={{ fontSize: "0.9rem", color: "var(--color-primary)", fontWeight: "600" }}>
-            Admin Girişi
-          </Link>
           <Link href="/rfq" className="btn-primary" style={{ padding: "0.5rem 1.25rem", fontSize: "0.9rem" }}>
             Teklif İste
           </Link>

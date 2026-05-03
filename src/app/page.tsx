@@ -40,7 +40,45 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
       nameLabel: lang === "tr" ? "Adınız" : "Full Name",
       emailLabel: lang === "tr" ? "E-posta" : "Email Address",
       messageLabel: lang === "tr" ? "Mesajınız" : "Your Message",
-      sendBtn: lang === "tr" ? "Gönder" : "Send Message"
+      sendBtn: lang === "tr" ? "Gönder" : "Send Message",
+      catSubtitle: lang === "tr" ? "Çözüm Alanlarımız" : "Our Solution Areas",
+      catMarineTitle: lang === "tr" ? "Denizcilik & Filo" : "Marine & Fleet",
+      catMarineDesc: lang === "tr" ? "Global gemi ikmal, teknik malzeme ve tersane operasyon çözümleri." : "Global ship supply, technical materials, and shipyard solutions.",
+      catMarineItems: lang === "tr" ? ["Güverte & Makine", "Kumanya & İkmal", "Tersane Ekipmanları"] : ["Deck & Engine", "Provisions & Supply", "Shipyard Equipment"],
+      catIndTitle: lang === "tr" ? "Endüstri & Fabrika" : "Industry & Factory",
+      catIndDesc: lang === "tr" ? "Üretim tesisleri ve ağır sanayi için kesintisiz yedek parça ve sarf malzeme." : "Uninterrupted spare parts and consumables for production plants.",
+      catIndItems: lang === "tr" ? ["Hidrolik & Pnömatik", "Güç Aktarım", "Üretim Hattı Destek"] : ["Hydraulic & Pneumatic", "Power Transmission", "Production Line Support"],
+      catTechTitle: lang === "tr" ? "Kurumsal & Teknoloji" : "Corporate & Tech",
+      catTechDesc: lang === "tr" ? "Modern iş dünyası için IT altyapısı, iş güvenliği ve ofis çözümleri." : "IT infrastructure, occupational safety, and office solutions.",
+      catTechItems: lang === "tr" ? ["IT Donanım & Yazılım", "İş Sağlığı ve Güvenliği", "Kurumsal Sarf Malzeme"] : ["IT Hardware & Software", "Health & Safety", "Corporate Consumables"],
+      footerDesc: lang === "tr" ? "Yeni nesil dijital tedarik ekosistemi. Endüstriyel ve kurumsal ihtiyaçlarınızı teknolojiyle optimize ediyoruz." : "Next-gen digital supply ecosystem. We optimize your industrial and corporate needs with technology.",
+      footerRegion: lang === "tr" ? "Hizmet Bölgesi" : "Service Region",
+      footerNewsletter: lang === "tr" ? "Haber bülteni için e-posta" : "Email for newsletter",
+      // Stats Labels
+      statOrders: lang === "tr" ? "Tamamlanan Sipariş" : "Completed Orders",
+      statCustomers: lang === "tr" ? "Aktif Müşteri" : "Active Customers",
+      statExperience: lang === "tr" ? "Yıllık Deneyim" : "Years of Experience",
+      statSupport: lang === "tr" ? "Kesintisiz Hizmet" : "24/7 Support",
+      // References & Partners
+      refTitle: lang === "tr" ? "Referanslarımız" : "Our References",
+      refSwipe: lang === "tr" ? "YANA KAYDIR" : "SWIPE LEFT",
+      refSub: lang === "tr" ? "Endüstriyel ve kurumsal sektörde güvenilir çözüm ortağı olarak hizmet verdiğimiz bazı referanslarımız." : "Some of our references where we serve as a reliable solution partner in the industrial and corporate sectors.",
+      partnerTitle: lang === "tr" ? "İş Ortaklarımız & Distribütörlükler" : "Our Business Partners & Distributorships",
+      partnerSub: lang === "tr" ? "Global markalarla distribütörlük, bayilik ve stratejik ortaklık anlaşmalarımız." : "Our distributorship, dealership and strategic partnership agreements with global brands.",
+      // Form placeholders
+      formNamePl: lang === "tr" ? "Ad Soyad" : "Your Full Name",
+      formEmailPl: lang === "tr" ? "ornek@firma.com" : "example@company.com",
+      formMsgPl: lang === "tr" ? "Size nasıl yardımcı olabiliriz?" : "How can we help you?",
+      formSuccess: lang === "tr" ? "Mesaj Bırakın" : "Leave a Message",
+      formSuccessSub: lang === "tr" ? "Ekibimiz 24 saat içinde size geri dönüş yapacaktır." : "Our team will get back to you within 24 hours.",
+      contactEmail: lang === "tr" ? "E-posta" : "Email",
+      contactPhone: lang === "tr" ? "Telefon" : "Phone",
+      contactOffice: lang === "tr" ? "Merkez Ofis" : "Headquarters",
+      contactHours: lang === "tr" ? "Çalışma Saatleri" : "Working Hours",
+      contactHoursVal: lang === "tr" ? "7 Gün / 24 Saat Kesintisiz Hizmet" : "24/7 Uninterrupted Service",
+      privacy: lang === "tr" ? "Gizlilik Politikası" : "Privacy Policy",
+      terms: lang === "tr" ? "Kullanım Şartları" : "Terms of Use",
+      lang: lang
     };
 
     const getIcon = (title: string) => {
@@ -69,25 +107,50 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
           t={t}
         />
 
-        {/* Categories Section */}
-        <section className={`${styles.categories} section`} id="services">
+        {/* Categories Section - Industry & Marine Balance */}
+        <section id="categories" className="section" style={{ backgroundColor: "#f8fafc" }}>
           <div className="container">
-            <div className={styles.categoriesHeader}>
-              <h2 className="title-section">{t.catTitle}</h2>
-              <p className="text-muted" style={{ maxWidth: "600px", margin: "1rem auto 0" }}>{content.aboutText}</p>
+            <div className={styles.sectionHeaderCenter}>
+              <span className={styles.sectionSubtitle}>{t.catSubtitle}</span>
+              <h2 className={styles.sectionTitle}>{t.catTitle}</h2>
+              <p className={styles.sectionDescCenter}>
+                {lang === "tr" 
+                  ? "Denizcilikten ağır sanayiye, kurumsal ofislerden teknoloji merkezlerine kadar tüm sektörler için dijital ve fiziksel tedarik çözümleri sunuyoruz."
+                  : "We offer digital and physical supply solutions for all sectors, from maritime to heavy industry, corporate offices to technology centers."
+                }
+              </p>
             </div>
-            
-            <div className={styles.categoriesGrid}>
-              {categories.map((cat: any) => (
-                <div key={cat.id} className={styles.categoryCard}>
-                  <div className={styles.categoryBadge}>Global Standards</div>
-                  <div className={styles.categoryIcon}>
-                    {getIcon(cat.title)}
-                  </div>
-                  <h3 className={styles.categoryTitle}>{cat.title}</h3>
-                  <p className={styles.categoryDesc}>{cat.description}</p>
-                </div>
-              ))}
+
+            <div className={styles.categoryGrid}>
+              {/* Marine Block */}
+              <div className={styles.categoryCardPremium}>
+                <div className={styles.categoryIconMain}><Ship size={32} /></div>
+                <h3>{t.catMarineTitle}</h3>
+                <p>{t.catMarineDesc}</p>
+                <ul className={styles.categorySubList}>
+                  {t.catMarineItems.map((item: string) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+
+              {/* Industrial Block */}
+              <div className={styles.categoryCardPremium}>
+                <div className={styles.categoryIconMain}><Building2 size={32} /></div>
+                <h3>{t.catIndTitle}</h3>
+                <p>{t.catIndDesc}</p>
+                <ul className={styles.categorySubList}>
+                  {t.catIndItems.map((item: string) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
+
+              {/* Technology & Safety Block */}
+              <div className={styles.categoryCardPremium}>
+                <div className={styles.categoryIconMain}><Zap size={32} /></div>
+                <h3>{t.catTechTitle}</h3>
+                <p>{t.catTechDesc}</p>
+                <ul className={styles.categorySubList}>
+                  {t.catTechItems.map((item: string) => <li key={item}>{item}</li>)}
+                </ul>
+              </div>
             </div>
           </div>
         </section>
@@ -99,19 +162,19 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
               <div className={styles.statsBar}>
                 <div className={styles.statItem}>
                   <div className={styles.statNumber}>{sectionVis.statOrders}</div>
-                  <div className={styles.statLabel}>Tamamlanan Sipariş</div>
+                  <div className={styles.statLabel}>{t.statOrders}</div>
                 </div>
                 <div className={styles.statItem}>
                   <div className={styles.statNumber}>{sectionVis.statCustomers}</div>
-                  <div className={styles.statLabel}>Aktif Müşteri</div>
+                  <div className={styles.statLabel}>{t.statCustomers}</div>
                 </div>
                 <div className={styles.statItem}>
                   <div className={styles.statNumber}>{sectionVis.statExperience}</div>
-                  <div className={styles.statLabel}>Yıllık Deneyim</div>
+                  <div className={styles.statLabel}>{t.statExperience}</div>
                 </div>
                 <div className={styles.statItem}>
                   <div className={styles.statNumber}>{sectionVis.statSupport}</div>
-                  <div className={styles.statLabel}>Kesintisiz Hizmet</div>
+                  <div className={styles.statLabel}>{t.statSupport}</div>
                 </div>
               </div>
             </div>
@@ -123,11 +186,11 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
           <section className={`${styles.references} section`} id="references">
             <div className="container">
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <h2 className="title-section">Referanslarımız</h2>
-                <div style={{ fontSize: "0.8rem", color: "var(--color-accent)", fontWeight: 700 }}>YANA KAYDIR &rarr;</div>
+                <h2 className="title-section">{t.refTitle}</h2>
+                <div style={{ fontSize: "0.8rem", color: "var(--color-accent)", fontWeight: 700 }}>{t.refSwipe} &rarr;</div>
               </div>
               <p className="text-muted" style={{ maxWidth: "600px", margin: "1rem 0 0" }}>
-                Endüstriyel ve kurumsal sektörde güvenilir çözüm ortağı olarak hizmet verdiğimiz bazı referanslarımız.
+                {t.refSub}
               </p>
             </div>
             <div className={styles.refGrid}>
@@ -152,9 +215,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
           <section className={`${styles.partners} section`} id="partners">
             <div className="container">
               <div className={styles.categoriesHeader}>
-                <h2 className="title-section">İş Ortaklarımız & Distribütörlükler</h2>
+                <h2 className="title-section">{t.partnerTitle}</h2>
                 <p className="text-muted" style={{ maxWidth: "600px", margin: "1rem auto 0" }}>
-                  Global markalarla distribütörlük, bayilik ve stratejik ortaklık anlaşmalarımız.
+                  {t.partnerSub}
                 </p>
               </div>
               <div className={styles.partnersTrack}>
@@ -188,29 +251,29 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
                 <div className={styles.infoItem}>
                   <div className={styles.infoIcon}><Mail size={24} /></div>
                   <div>
-                    <span className={styles.infoLabel}>E-posta</span>
+                    <span className={styles.infoLabel}>{t.contactEmail}</span>
                     <div className={styles.infoValue}>info@tuzlasupply.com</div>
                   </div>
                 </div>
                 <div className={styles.infoItem}>
                   <div className={styles.infoIcon}><Phone size={24} /></div>
                   <div>
-                    <span className={styles.infoLabel}>Telefon</span>
+                    <span className={styles.infoLabel}>{t.contactPhone}</span>
                     <div className={styles.infoValue}>+90 (216) 123 45 67</div>
                   </div>
                 </div>
                 <div className={styles.infoItem}>
                   <div className={styles.infoIcon}><MapPin size={24} /></div>
                   <div>
-                    <span className={styles.infoLabel}>Merkez Ofis</span>
+                    <span className={styles.infoLabel}>{t.contactOffice}</span>
                     <div className={styles.infoValue}>Aydınlı, Tuzla / İstanbul</div>
                   </div>
                 </div>
                 <div className={styles.infoItem}>
                   <div className={styles.infoIcon}><Clock size={24} /></div>
                   <div>
-                    <span className={styles.infoLabel}>Çalışma Saatleri</span>
-                    <div className={styles.infoValue}>7 Gün / 24 Saat Kesintisiz Hizmet</div>
+                    <span className={styles.infoLabel}>{t.contactHours}</span>
+                    <div className={styles.infoValue}>{t.contactHoursVal}</div>
                   </div>
                 </div>
               </div>
@@ -219,10 +282,10 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
               <div className={styles.contactForm}>
                 <div style={{ marginBottom: "2rem" }}>
                   <h3 style={{ fontSize: "1.5rem", fontWeight: "800", color: "#0F172A", marginBottom: "0.5rem" }}>
-                    Mesaj Bırakın
+                    {t.formSuccess}
                   </h3>
                   <p style={{ fontSize: "0.9rem", color: "#64748B" }}>
-                    Ekibimiz 24 saat içinde size geri dönüş yapacaktır.
+                    {t.formSuccessSub}
                   </p>
                 </div>
 
@@ -230,11 +293,11 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
                   <div className={styles.formGrid}>
                     <div>
                       <label className={styles.premiumLabel}>{t.nameLabel}</label>
-                      <input type="text" name="name" required className={styles.premiumInput} placeholder="Ad Soyad" />
+                      <input type="text" name="name" required className={styles.premiumInput} placeholder={t.formNamePl} />
                     </div>
                     <div>
                       <label className={styles.premiumLabel}>{t.emailLabel}</label>
-                      <input type="email" name="email" required className={styles.premiumInput} placeholder="ornek@firma.com" />
+                      <input type="email" name="email" required className={styles.premiumInput} placeholder={t.formEmailPl} />
                     </div>
                   </div>
                   <div style={{ marginBottom: "2.5rem" }}>
@@ -244,7 +307,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
                       required 
                       className={styles.premiumInput} 
                       style={{ height: "140px", resize: "none" }}
-                      placeholder="Size nasıl yardımcı olabiliriz?"
+                      placeholder={t.formMsgPl}
                     ></textarea>
                   </div>
                   <button type="submit" className={styles.submitBtn}>
@@ -271,52 +334,54 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
           </div>
         </section>
 
-        {/* Professional Footer */}
-        <footer className={styles.footer}>
+        <footer className={styles.ultraFooter}>
           <div className="container">
-            <div className={styles.footerGrid}>
-              <div className={styles.footerAbout}>
-                <div className={styles.footerLogo}>Tuzla <span>Supply</span></div>
-                <p className={styles.footerText}>
-                  Global Kurumsal Tedarik ve Endüstriyel Çözümler alanında güvenilir ortağınız. 
-                  Yüksek standartlarda ikmal ve profesyonel lojistik ağımızla hizmetinizdeyiz.
+            <div className={styles.footerMain}>
+              <div className={styles.footerBrand}>
+                <h3 className={styles.footerBrandName}>Tuzla <span>Supply</span></h3>
+                <p className={styles.footerBrandDesc}>
+                  {t.footerDesc}
                 </p>
-                <p className={styles.footerSlogan}>"Global Corporate Supply & Industrial Excellence"</p>
+                <div className={styles.footerSocials}>
+                  <a href="#">LN</a>
+                  <a href="#">TW</a>
+                  <a href="#">IG</a>
+                  <a href="#">BE</a>
+                </div>
               </div>
 
-              <div className={styles.footerLinks}>
-                <h4 className={styles.footerTitle}>Hızlı Erişim</h4>
-                <ul className={styles.footerList}>
-                  <li><Link href="/">Anasayfa</Link></li>
-                  <li><Link href="#categories">Hizmetlerimiz</Link></li>
-                  <li><Link href="#references">Referanslar</Link></li>
-                  <li><Link href="#partners">İş Ortaklarımız</Link></li>
-                  <li><Link href="/rfq">Teklif İste</Link></li>
-                </ul>
+              <div className={styles.footerNavGroup}>
+                <div className={styles.footerNavCol}>
+                  <h5>Platform</h5>
+                  <Link href="/catalog">{lang === "tr" ? "Katalog" : "Catalog"}</Link>
+                  <Link href="/rfq">{lang === "tr" ? "Hızlı Teklif" : "Quick Quote"}</Link>
+                  <Link href="/services">{lang === "tr" ? "Çözümler" : "Solutions"}</Link>
+                </div>
+                <div className={styles.footerNavCol}>
+                  <h5>{lang === "tr" ? "Şirket" : "Company"}</h5>
+                  <Link href="#about">{lang === "tr" ? "Biz kimiz?" : "Who are we?"}</Link>
+                  <Link href="/contact">{lang === "tr" ? "İletişim" : "Contact"}</Link>
+                  <Link href="/careers">{lang === "tr" ? "Kariyer" : "Careers"}</Link>
+                </div>
               </div>
 
-              <div className={styles.footerContact}>
-                <h4 className={styles.footerTitle}>İletişim</h4>
-                <div className={styles.footerContactItem}>
-                  <strong>Adres:</strong> Aydınlı, Tuzla / İstanbul
+              <div className={styles.footerAction}>
+                <h5>{t.footerRegion}</h5>
+                <div className={styles.locationTag}>
+                  <Globe size={14} /> Global / İstanbul, TR
                 </div>
-                <div className={styles.footerContactItem}>
-                  <strong>Telefon:</strong> +90 (216) 123 45 67
-                </div>
-                <div className={styles.footerContactItem}>
-                  <strong>E-posta:</strong> info@tuzlasupply.com
-                </div>
-                <div className={styles.footerContactItem}>
-                  <strong>Çalışma Saatleri:</strong> 7/24 Kesintisiz Hizmet
+                <div className={styles.newsletterMinimal}>
+                  <input type="email" placeholder={t.footerNewsletter} />
+                  <button><Send size={18} /></button>
                 </div>
               </div>
             </div>
 
-            <div className={styles.footerBottom}>
-              <p>&copy; {new Date().getFullYear()} Tuzla Supply. Tüm hakları saklıdır.</p>
-              <div className={styles.footerBottomLinks}>
-                <Link href="/privacy">Gizlilik Politikası</Link>
-                <Link href="/terms">Kullanım Şartları</Link>
+            <div className={styles.footerLegal}>
+              <div className={styles.legalLeft}>
+                <span>&copy; {new Date().getFullYear()} Tuzla Supply Platform.</span>
+                <Link href="/privacy">{lang === "tr" ? "Gizlilik" : "Privacy"}</Link>
+                <Link href="/terms">{lang === "tr" ? "Şartlar" : "Terms"}</Link>
               </div>
             </div>
           </div>

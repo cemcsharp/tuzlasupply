@@ -109,6 +109,7 @@ model Reference {
   type        String
   description String?
   icon        String   @default("Ship")
+  logoUrl     String?
   isActive    Boolean  @default(true)
   order       Int      @default(0)
   createdAt   DateTime @default(now())
@@ -119,6 +120,7 @@ model Partner {
   name      String
   role      String
   color     String   @default("#0072CE")
+  logoUrl   String?
   isActive  Boolean  @default(true)
   order     Int      @default(0)
   createdAt DateTime @default(now())

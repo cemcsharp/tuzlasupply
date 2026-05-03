@@ -32,8 +32,31 @@ export default function HeroCarousel({
     return () => clearInterval(timer);
   }, [slides.length]);
 
-  const activeTitle = slides.length > 0 ? slides[current].title : initialTitle;
-  const activeSub = slides.length > 0 ? slides[current].subtitle : initialSub;
+  // Translation Helper for slides (database content)
+  const translateSlide = (text: string) => {
+    if (t.lang === "tr") return text;
+    const dict: any = {
+      // Titles
+      "Global Tedarik Zinciri Yönetimi": "Global Supply Chain Management",
+      "Kurumsal İş Ortaklığı": "Corporate Business Partnership",
+      "Industrial Excellence": "Industrial Excellence",
+      "Global Tedarik Ağı": "Global Supply Network",
+      "Gemi İkmal Çözümleri": "Marine Supply Solutions",
+      "Endüstriyel Mükemmellik": "Industrial Excellence",
+      
+      // Subtitles / Descriptions
+      "Endüstriyel tesisler için kesintisiz ve hızlı ikmal çözümleri.": "Uninterrupted and fast supply solutions for industrial facilities.",
+      "Profesyonel kadromuzla işletmenizin stratejik çözüm ortağıyız.": "We are your strategic solution partner with our professional team.",
+      "En zorlu teknik malzeme taleplerinde global standartlar.": "Global standards for the most demanding technical material requests.",
+      "Endüstriyel ve kurumsal ihtiyaçlarınızı teknolojiyle optimize ediyoruz.": "We optimize your industrial and corporate needs with technology.",
+      "Denizcilik sektöründe global standartlarda teknik malzeme ve kumanya tedariki.": "Global standards for technical materials and provisions in the maritime sector.",
+      "Tüm sektörler için kesintisiz ve dijitalleştirilmiş tedarik zinciri yönetimi.": "Seamless and digitized supply chain management for all industries."
+    };
+    return dict[text] || text;
+  };
+
+  const activeTitle = slides.length > 0 ? translateSlide(slides[current].title) : initialTitle;
+  const activeSub = slides.length > 0 ? translateSlide(slides[current].subtitle) : initialSub;
 
   return (
     <section className={styles.hero}>
