@@ -20,13 +20,15 @@ export default function RFQForm() {
   const [aiLoading, setAiLoading] = useState(false);
 
   const addItem = (product: any) => {
-    if (selectedItems.find(item => item.id === product.id || item.name === product.name)) return;
-    setSelectedItems([...selectedItems, { 
-      id: product.id || Math.random().toString(36).substr(2, 9), 
-      name: product.name, 
-      quantity: product.quantity || 1,
-      unit: product.unit || "Pcs"
-    }]);
+    setSelectedItems(prev => {
+      if (prev.find(item => item.id === product.id || item.name === product.name)) return prev;
+      return [...prev, { 
+        id: product.id || Math.random().toString(36).substr(2, 9), 
+        name: product.name, 
+        quantity: product.quantity || 1,
+        unit: product.unit || "Pcs"
+      }];
+    });
   };
 
   const removeItem = (id: string) => {
