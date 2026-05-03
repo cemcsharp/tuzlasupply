@@ -36,11 +36,13 @@ export default function ChatWidget() {
     setMessages(prev => [...prev, { role: "user", text: userMessage }]);
     setLoading(true);
 
-    // AI'ya gönderilecek geçmişi hazırla
-    const history = messages.map(m => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.text }]
-    }));
+    // AI'ya gönderilecek geçmişi hazırla (İlk karşılama mesajını hariç tut çünkü Gemini ilk mesajın 'user' olmasını şart koşuyor)
+    const history = messages
+      .filter((m, i) => i > 0) // İlk mesajı (Merhaba...) atla
+      .map(m => ({
+        role: m.role === "assistant" ? "model" : "user",
+        parts: [{ text: m.text }]
+      }));
 
     const result = await chatWithAi(userMessage, history as any, sessionId);
 
