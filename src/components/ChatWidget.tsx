@@ -11,7 +11,7 @@ export default function ChatWidget() {
   const [input, setInput] = useState("");
   const [sessionId, setSessionId] = useState("");
   const [leadCollected, setLeadCollected] = useState(false);
-  const [leadForm, setLeadForm] = useState({ name: "", email: "" });
+  const [leadForm, setLeadForm] = useState({ name: "", email: "", phone: "" });
   const [messages, setMessages] = useState<{ role: string, text: string }[]>([
     { role: "assistant", text: "Merhaba! Ben Tuzla AI. Size nasıl yardımcı olabilirim?" }
   ]);
@@ -166,6 +166,16 @@ export default function ChatWidget() {
                     required 
                     value={leadForm.email}
                     onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })}
+                  />
+                </div>
+                <div className={styles.leadInputGroup}>
+                  <label>Telefon Numarası *</label>
+                  <input 
+                    type="tel" 
+                    placeholder="Örn: +90 5XX XXX XX XX" 
+                    required 
+                    value={leadForm.phone}
+                    onChange={(e) => setLeadForm({ ...leadForm, phone: e.target.value })}
                   />
                 </div>
                 <button type="submit" disabled={loading} className={styles.leadSubmitBtn}>
