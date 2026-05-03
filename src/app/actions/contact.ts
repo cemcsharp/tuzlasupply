@@ -54,10 +54,8 @@ export async function submitContactForm(formData: FormData) {
     await transporter.sendMail(mailOptions);
     
     revalidatePath("/");
-    return { success: true };
   } catch (error) {
     console.error("Contact Form Error:", error);
-    return { success: false, error: "Mesaj iletilemedi, lütfen daha sonra tekrar deneyiniz." };
   }
 }
 

@@ -292,7 +292,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
                   </p>
                 </div>
 
-                <form action={async (formData) => { await submitContactForm(formData); }}>
+                <form action={submitContactForm}>
                   <div className={styles.formGrid}>
                     <div>
                       <label className={styles.premiumLabel}>{t.nameLabel}</label>
