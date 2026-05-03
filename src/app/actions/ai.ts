@@ -5,8 +5,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function parseRfqFileWithAi(fileBase64: string, mimeType: string) {
-  // Sizin CURL komutunuzda çalışan 'gemini-flash-latest' ismini en başa aldım
-  const modelsToTry = ["gemini-flash-latest", "gemini-1.5-flash", "gemini-1.5-flash-latest", "gemini-pro-vision"];
+  const modelsToTry = ["gemini-flash-latest", "gemini-1.5-flash", "gemini-1.5-pro"];
   let lastError = "";
 
   for (const modelName of modelsToTry) {
@@ -14,10 +13,19 @@ export async function parseRfqFileWithAi(fileBase64: string, mimeType: string) {
       const model = genAI.getGenerativeModel({ model: modelName });
 
       const prompt = `
-        Sen bir tedarik uzmanısın. Ekli dökümandaki ürünleri bul.
-        Yanıtı SADECE şu formatta bir JSON dizisi olarak ver:
-        [{"name": "Ürün Adı", "quantity": 1, "unit": "Adet"}]
-        Dil: Türkçe.
+        Sen çok titiz bir endüstriyel tedarik uzmanısın. Ekli dökümanda bir tablo/liste var.
+        
+        GÖREVİN:
+        1. Listedeki HER BİR satırı ayrı bir ürün olarak ayıkla.
+        2. Kırmızı başlıklar (Örn: GRİ SU POMPALARI için) altında listelenen maddeleri, başlıkla ilişkilendirerek ama AYRI SATIRLAR olarak yaz.
+        3. Örnek: "750 LT. 10 BAR GENLEŞME TANKI", "KL01ACD-Kit mechanical seal", "RULMAN KİT" gibi her şeyi tek tek al.
+        4. Miktarları ve birimleri (Adet, Kg vb.) yan sütunlardan oku.
+
+        YANIT FORMATI:
+        Sadece şu JSON formatında bir dizi döndür:
+        [{"name": "Tam Ürün Açıklaması", "quantity": 1, "unit": "Adet"}]
+        
+        HİÇBİR açıklama yapma, sadece JSON döndür. Listenin tamamını çıkardığından emin ol.
       `;
 
       const result = await model.generateContent([
@@ -35,7 +43,8 @@ export async function parseRfqFileWithAi(fileBase64: string, mimeType: string) {
       
       try {
         const items = JSON.parse(text);
-        return { success: true, items };
+        if (items.length > 0) return { success: true, items };
+        continue;
       } catch (e) {
         continue;
       }
@@ -45,5 +54,5 @@ export async function parseRfqFileWithAi(fileBase64: string, mimeType: string) {
     }
   }
 
-  return { success: false, error: "Model erişilemedi (CURL'deki ismi denedim): " + lastError };
+  return { success: false, error: "Liste okuma başarısız: " + lastError };
 }
