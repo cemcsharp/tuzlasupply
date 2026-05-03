@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./rfq.module.css";
 import { submitRfq } from "@/app/actions/rfq";
 import { parseRfqFileWithAi } from "@/app/actions/ai";
