@@ -20,18 +20,14 @@ export async function chatWithAi(message: string, history: any[] = [], sessionId
   const modelsToTry = ["gemini-flash-latest", "gemini-1.5-flash", "gemini-1.5-pro"];
   let lastError = "";
 
-  // 1. Kullanıcı Mesajını Kaydet (Sessizce)
-  try {
-    await prisma.chatLog.create({
-      data: {
-        message: message,
-        role: "user",
-        sessionId: sessionId || "global"
-      }
-    });
-  } catch (logError) {
-    console.error("LOGGING ERROR (USER):", logError);
-  }
+  // 1. Kullanıcı Mesajını Kaydet (ARKA PLANDA - AWAIT YOK)
+  prisma.chatLog.create({
+    data: {
+      message: message,
+      role: "user",
+      sessionId: sessionId || "global"
+    }
+  }).catch(e => console.error("DB Log Error (User):", e.message));
 
   for (const modelName of modelsToTry) {
     try {
@@ -48,18 +44,14 @@ export async function chatWithAi(message: string, history: any[] = [], sessionId
       const response = await result.response;
       const aiText = response.text();
 
-      // 2. Asistan Yanıtını Kaydet (Sessizce)
-      try {
-        await prisma.chatLog.create({
-          data: {
-            message: aiText,
-            role: "assistant",
-            sessionId: sessionId || "global"
-          }
-        });
-      } catch (logError) {
-        console.error("LOGGING ERROR (AI):", logError);
-      }
+      // 2. Asistan Yanıtını Kaydet (ARKA PLANDA - AWAIT YOK)
+      prisma.chatLog.create({
+        data: {
+          message: aiText,
+          role: "assistant",
+          sessionId: sessionId || "global"
+        }
+      }).catch(e => console.error("DB Log Error (AI):", e.message));
 
       return { success: true, text: aiText };
     } catch (error: any) {
