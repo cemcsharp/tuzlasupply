@@ -158,8 +158,6 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
               </div>
             </div>
           </div>
-            </div>
-          </div>
         </section>
 
         {/* Global Maritime Map */}
