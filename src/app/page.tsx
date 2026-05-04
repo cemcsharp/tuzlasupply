@@ -15,6 +15,7 @@ import Counter from "@/components/Counter";
 import MaritimeMap from "@/components/MaritimeMap";
 import BentoFeatures from "@/components/BentoFeatures";
 import Waves from "@/components/Waves";
+import SupplyProcess from "@/components/SupplyProcess";
 
 export const dynamic = "force-dynamic";
 
@@ -114,49 +115,41 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
           t={t}
         />
 
-        {/* Categories Section - Industry & Marine Balance */}
-        <section id="categories" className="section" style={{ backgroundColor: "#f8fafc" }}>
+        {/* Supply Process Flow */}
+        <SupplyProcess lang={t.lang} />
+
+        {/* Categories Section - Replaced with Physical Supply Cards */}
+        <section className="section" id="catalog">
           <div className="container">
-            <div className={styles.sectionHeaderCenter}>
+            <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
               <span className={styles.sectionSubtitle}>{t.catSubtitle}</span>
               <h2 className={styles.sectionTitle}>{t.catTitle}</h2>
-              <p className={styles.sectionDescCenter}>
-                {lang === "tr" 
-                  ? "Denizcilikten ağır sanayiye, kurumsal ofislerden teknoloji merkezlerine kadar tüm sektörler için dijital ve fiziksel tedarik çözümleri sunuyoruz."
-                  : "We offer digital and physical supply solutions for all sectors, from maritime to heavy industry, corporate offices to technology centers."
-                }
-              </p>
             </div>
 
-            <div className={styles.categoryGrid}>
-              {/* Marine Block */}
-              <div className={styles.categoryCardPremium}>
-                <div className={styles.categoryIconMain}><Ship size={32} /></div>
-                <h3>{t.catMarineTitle}</h3>
-                <p>{t.catMarineDesc}</p>
-                <ul className={styles.categorySubList}>
-                  {t.catMarineItems.map((item: string) => <li key={item}>{item}</li>)}
-                </ul>
+            <div className={styles.imgCategoryGrid}>
+              <div className={styles.imgCategoryCard}>
+                <img src="/assets/parts.png" alt="Marine Parts" />
+                <div className={styles.imgCategoryBadge}>Premium</div>
+                <div className={styles.imgCategoryOverlay}>
+                  <h3>Gemi Makine & Parça</h3>
+                  <p>Ana makine, pompalar, valfler ve orijinal yedek parçalar.</p>
+                </div>
               </div>
-
-              {/* Industrial Block */}
-              <div className={styles.categoryCardPremium}>
-                <div className={styles.categoryIconMain}><Building2 size={32} /></div>
-                <h3>{t.catIndTitle}</h3>
-                <p>{t.catIndDesc}</p>
-                <ul className={styles.categorySubList}>
-                  {t.catIndItems.map((item: string) => <li key={item}>{item}</li>)}
-                </ul>
+              <div className={styles.imgCategoryCard}>
+                <img src="/assets/industrial.png" alt="Industrial Supplies" />
+                <div className={styles.imgCategoryBadge}>Stokta Hazır</div>
+                <div className={styles.imgCategoryOverlay}>
+                  <h3>Teknik & Endüstriyel</h3>
+                  <p>Hırdavat, teknik malzemeler, iş güvenliği ve elektrik ekipmanları.</p>
+                </div>
               </div>
-
-              {/* Technology & Safety Block */}
-              <div className={styles.categoryCardPremium}>
-                <div className={styles.categoryIconMain}><Zap size={32} /></div>
-                <h3>{t.catTechTitle}</h3>
-                <p>{t.catTechDesc}</p>
-                <ul className={styles.categorySubList}>
-                  {t.catTechItems.map((item: string) => <li key={item}>{item}</li>)}
-                </ul>
+              <div className={styles.imgCategoryCard}>
+                <img src="/assets/logistics.png" alt="Logistics" />
+                <div className={styles.imgCategoryBadge}>Global Erişim</div>
+                <div className={styles.imgCategoryOverlay}>
+                  <h3>Lojistik & Teslimat</h3>
+                  <p>Dünya çapında liman teslimatı ve güvenilir ikmal ağı.</p>
+                </div>
               </div>
             </div>
           </div>
