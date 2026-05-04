@@ -979,6 +979,273 @@
   font-weight: 600;
 }
 
+/* Technical Finder Styles */
+.techFinderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 4rem;
+}
+
+.techSubtitle {
+  color: var(--color-accent);
+  font-weight: 800;
+  letter-spacing: 3px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.techTitle {
+  font-size: 2.5rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.techDesc {
+  font-size: 1.1rem;
+  opacity: 0.7;
+  line-height: 1.6;
+}
+
+.techStats {
+  display: flex;
+  gap: 3rem;
+}
+
+.techStatItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.techStatItem strong {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--color-accent);
+}
+
+.techStatItem span {
+  font-size: 0.85rem;
+  opacity: 0.5;
+  text-transform: uppercase;
+}
+
+.techSearchBox {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3rem;
+  border-radius: 32px;
+  margin-bottom: 4rem;
+}
+
+.techSearchForm {
+  display: flex;
+  gap: 1rem;
+  background: white;
+  padding: 0.5rem;
+  border-radius: 16px;
+  align-items: center;
+}
+
+.searchIcon {
+  color: #94a3b8;
+  margin-left: 1rem;
+}
+
+.techSearchForm input {
+  flex: 1;
+  border: none;
+  padding: 1rem;
+  font-size: 1.1rem;
+  outline: none;
+  color: #1e293b;
+}
+
+.techSearchForm button {
+  background: var(--color-accent);
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.techSearchForm button:hover {
+  background: #0088cc;
+  transform: translateY(-2px);
+}
+
+.searchResult {
+  margin-top: 2rem;
+  animation: fadeIn 0.4s ease;
+}
+
+.resultCard {
+  background: rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 4px solid #22c55e;
+}
+
+.resultInfo {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.resultInfo div {
+  display: flex;
+  flex-direction: column;
+}
+
+.resultInfo strong {
+  font-size: 1.1rem;
+}
+
+.resultInfo span {
+  font-size: 0.85rem;
+  opacity: 0.5;
+}
+
+.resultStatus {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+  padding: 0.4rem 1rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.addBtn {
+  background: white;
+  color: #0f172a;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.techPreviewGrid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.techVisualSide {
+  background: white;
+  padding: 2rem;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.diagramImg {
+  width: 100%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
+.diagramBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: #0f172a;
+  color: white;
+  padding: 0.4rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  border-radius: 30px;
+}
+
+.hotspot {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(0, 163, 255, 0.4);
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 163, 255, 0.7); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(0, 163, 255, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 163, 255, 0); }
+}
+
+.techStep {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.stepNum {
+  width: 48px;
+  height: 48px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.techStep h4 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.techStep p {
+  font-size: 0.95rem;
+  opacity: 0.6;
+  line-height: 1.5;
+}
+
+.fullLibraryBtn {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  width: 100%;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.fullLibraryBtn:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: white;
+}
+
+@media (max-width: 992px) {
+  .techPreviewGrid {
+    grid-template-columns: 1fr;
+  }
+  .techFinderHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+}
+
 /* Process Grid Styles */
 .processGrid {
   display: grid;

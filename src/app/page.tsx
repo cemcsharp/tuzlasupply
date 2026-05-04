@@ -16,6 +16,7 @@ import MaritimeMap from "@/components/MaritimeMap";
 import BentoFeatures from "@/components/BentoFeatures";
 import Waves from "@/components/Waves";
 import SupplyProcess from "@/components/SupplyProcess";
+import TechnicalFinder from "@/components/TechnicalFinder";
 
 export const dynamic = "force-dynamic";
 
@@ -117,6 +118,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
 
         {/* Supply Process Flow */}
         <SupplyProcess lang={t.lang} />
+
+        {/* Technical Data Hub & Part Finder */}
+        <TechnicalFinder lang={t.lang} />
 
         {/* Categories Section - Replaced with Physical Supply Cards */}
         <section className="section" id="catalog">
