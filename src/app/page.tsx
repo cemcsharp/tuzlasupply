@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import Counter from "@/components/Counter";
 import MaritimeMap from "@/components/MaritimeMap";
+import BentoFeatures from "@/components/BentoFeatures";
+import Waves from "@/components/Waves";
 
 export const dynamic = "force-dynamic";
 
@@ -162,6 +164,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
 
         {/* Global Maritime Map */}
         <MaritimeMap lang={t.lang} />
+
+        {/* Modern Bento Features */}
+        <BentoFeatures lang={t.lang} />
 
         {/* Stats Bar — conditionally rendered */}
         {sectionVis.showStats ? (
@@ -349,6 +354,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
             </div>
           </div>
         </section>
+
+        {/* Nautical Waves Transition */}
+        <Waves />
 
         <footer className={styles.ultraFooter}>
           <div className="container">
