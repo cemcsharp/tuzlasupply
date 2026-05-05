@@ -54,6 +54,36 @@ const solutionData: any = {
     descTr: "Gümrüklü parça transferi, depolama çözümleri ve liman teslimatı.",
     features: ["Customs Part Transfer", "Marine Part Storage", "Express Port Delivery", "Inventory Management"],
     featuresTr: ["Gümrüklü Parça Transferi", "Gemi Parçası Depolama", "Ekspres Liman Teslimatı", "Envanter Yönetimi"]
+  },
+  "technical-supply": {
+    color: "#1e293b",
+    icon: <Settings size={40} />,
+    title: "Technical Ship Supply Tuzla",
+    titleTr: "Teknik Gemi İkmali Tuzla",
+    desc: "Comprehensive deck, engine, and cabin stores for all vessel types.",
+    descTr: "Tüm gemi tipleri için kapsamlı güverte, makine ve kamarot malzemeleri.",
+    features: ["Deck Stores", "Engine Stores", "Cabin & Galley", "Technical Tools"],
+    featuresTr: ["Güverte Malzemeleri", "Makine Malzemeleri", "Kamarot & Mutfak", "Teknik El Aletleri"]
+  },
+  "marine-provisions": {
+    color: "#0f172a",
+    icon: <Package size={40} />,
+    title: "Marine Provisions Tuzla",
+    titleTr: "Gemi Kumanyası Tuzla",
+    desc: "Fresh, frozen, and dry provisions with global logistics reach.",
+    descTr: "Global lojistik erişimi ile taze, dondurulmuş ve kuru gıda ikmali.",
+    features: ["Fresh Vegetables", "Frozen Meats", "Dry Goods", "Bonded Stores"],
+    featuresTr: ["Taze Sebze & Meyve", "Dondurulmuş Et Ürünleri", "Kuru Gıdalar", "Gümrüklü Kumanya"]
+  },
+  "spare-parts": {
+    color: "#075985",
+    icon: <Anchor size={40} />,
+    title: "Genuine Spare Parts Tuzla",
+    titleTr: "Orijinal Yedek Parça Tuzla",
+    desc: "Specialized sourcing for MAN B&W, Wärtsilä, and Alfa Laval components.",
+    descTr: "MAN B&W, Wärtsilä ve Alfa Laval bileşenleri için uzman tedarik.",
+    features: ["Main Engine Parts", "Auxiliary Engine Parts", "Separator Components", "Purifier Spares"],
+    featuresTr: ["Ana Makine Parçaları", "Yardımcı Makine Parçaları", "Separatör Bileşenleri", "Purifier Yedekleri"]
   }
 };
 

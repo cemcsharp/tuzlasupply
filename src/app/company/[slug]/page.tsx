@@ -108,7 +108,7 @@ export default async function CompanyPage({ params, searchParams }: { params: Pr
               <div key={s.slug} style={{ padding: "3rem", background: "white", borderRadius: "2rem", textAlign: "center", border: "1px solid #e2e8f0" }}>
                 <div style={{ color: "#38bdf8", marginBottom: "1.5rem" }}>{s.icon}</div>
                 <h3 style={{ marginBottom: "1rem" }}>{isTr ? s.titleTr : s.title}</h3>
-                <Link href={`/services/${s.slug}`} style={{ color: "#38bdf8", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
+                <Link href={`/solutions/${s.slug}`} style={{ color: "#38bdf8", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
                   {isTr ? "İncele" : "Explore"} <ChevronRight size={18} />
                 </Link>
               </div>
