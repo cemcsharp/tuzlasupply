@@ -431,10 +431,11 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
 
               <div className={styles.footerNavGroup}>
                 <div className={styles.footerNavCol}>
-                  <h5>Platform</h5>
-                  <Link href="/catalog">{lang === "tr" ? "Katalog" : "Catalog"}</Link>
-                  <Link href="/rfq">{lang === "tr" ? "Hızlı Teklif" : "Quick Quote"}</Link>
-                  <Link href="/services">{lang === "tr" ? "Çözümler" : "Solutions"}</Link>
+                  <h5>Solutions</h5>
+                  <Link href="/solutions/ship-electrical">{lang === "tr" ? "Gemi Elektriği" : "Ship Electrical"}</Link>
+                  <Link href="/solutions/ship-mechanical">{lang === "tr" ? "Gemi Mekanik" : "Ship Mechanical"}</Link>
+                  <Link href="/services/spare-parts">{lang === "tr" ? "Yedek Parça" : "Spare Parts"}</Link>
+                  <Link href="/services/marine-provisions">{lang === "tr" ? "Kumanya" : "Provisions"}</Link>
                 </div>
                 <div className={styles.footerNavCol}>
                   <h5>{lang === "tr" ? "Şirket" : "Company"}</h5>
