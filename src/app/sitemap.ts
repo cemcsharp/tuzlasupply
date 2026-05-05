@@ -65,7 +65,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/services/spare-parts`,
+      url: `${baseUrl}/company/services`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,

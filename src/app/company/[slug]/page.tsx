@@ -1,6 +1,6 @@
 import styles from "@/app/page.module.css";
 import HomeNavbar from "@/components/HomeNavbar";
-import { ShieldCheck, Target, Award, Users, Zap, Heart, Star } from "lucide-react";
+import { ShieldCheck, Target, Award, Users, Zap, Heart, Star, Settings, Package, Anchor, ChevronRight } from "lucide-react";
 import { Suspense } from "react";
 
 const companyData: any = {
@@ -24,6 +24,13 @@ const companyData: any = {
     subtitle: "Follow the latest developments in the maritime industry.",
     subtitleTr: "Denizcilik sektöründeki son gelişmeleri takip edin.",
     type: "insights"
+  },
+  "services": {
+    title: "Our Services",
+    titleTr: "Hizmetlerimiz",
+    subtitle: "Professional and fast solutions in every field of the maritime sector.",
+    subtitleTr: "Denizcilik sektörünün her alanında profesyonel ve hızlı çözümler.",
+    type: "services"
   }
 };
 
@@ -90,6 +97,22 @@ export default async function CompanyPage({ params, searchParams }: { params: Pr
               <h3>{isTr ? "Bize Katılın" : "Join Us"}</h3>
               <p>hr@tuzlasupply.com</p>
             </div>
+          </div>
+        ) : data.type === "services" ? (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2.5rem" }}>
+            {[
+              { slug: "technical-supply", title: "Technical Ship Supply", titleTr: "Teknik Gemi İkmali", icon: <Settings size={40} /> },
+              { slug: "marine-provisions", title: "Marine Provisions", titleTr: "Gemi Kumanyası", icon: <Package size={40} /> },
+              { slug: "spare-parts", title: "Genuine Spare Parts", titleTr: "Orijinal Yedek Parça", icon: <Anchor size={40} /> }
+            ].map((s) => (
+              <div key={s.slug} style={{ padding: "3rem", background: "white", borderRadius: "2rem", textAlign: "center", border: "1px solid #e2e8f0" }}>
+                <div style={{ color: "#38bdf8", marginBottom: "1.5rem" }}>{s.icon}</div>
+                <h3 style={{ marginBottom: "1rem" }}>{isTr ? s.titleTr : s.title}</h3>
+                <Link href={`/services/${s.slug}`} style={{ color: "#38bdf8", fontWeight: 700, textDecoration: "none", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
+                  {isTr ? "İncele" : "Explore"} <ChevronRight size={18} />
+                </Link>
+              </div>
+            ))}
           </div>
         ) : (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "2.5rem" }}>
