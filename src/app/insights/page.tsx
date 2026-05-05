@@ -2,6 +2,7 @@ import styles from "@/app/page.module.css";
 import HomeNavbar from "@/components/HomeNavbar";
 import { Search, ArrowRight, BookOpen, Clock, Tag } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 const insights = [
   {
@@ -38,7 +39,9 @@ export default function InsightsPage() {
 
   return (
     <main className={styles.main} style={{ background: "#f8fafc" }}>
-      <HomeNavbar />
+      <Suspense fallback={null}>
+        <HomeNavbar />
+      </Suspense>
       
       <div className={styles.serviceDetailHero} style={{ background: "linear-gradient(135deg, #0f172a 0%, #075985 100%)" }}>
         <div className="container" style={{ textAlign: "center" }}>

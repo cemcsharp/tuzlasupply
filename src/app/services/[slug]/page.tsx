@@ -2,6 +2,7 @@ import styles from "@/app/page.module.css";
 import HomeNavbar from "@/components/HomeNavbar";
 import { ChevronRight, ShieldCheck, Clock, Globe, Anchor, Settings, Package } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 
 const serviceData: any = {
   "technical-supply": {
@@ -46,7 +47,9 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
 
   return (
     <main className={styles.main}>
-      <HomeNavbar />
+      <Suspense fallback={null}>
+        <HomeNavbar />
+      </Suspense>
       
       <div className={styles.serviceDetailHero}>
         <div className="container">
