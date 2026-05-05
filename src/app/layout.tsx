@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import ChatWidget from "@/components/ChatWidget";
 
@@ -95,8 +96,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body className={inter.className}>
         {children}
+        <Analytics />
         <ChatWidget />
       </body>
     </html>

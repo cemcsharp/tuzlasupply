@@ -12,6 +12,7 @@
     "@google/generative-ai": "^0.24.1",
     "@prisma/adapter-pg": "^7.8.0",
     "@types/pdfkit": "^0.17.6",
+    "@vercel/analytics": "^2.0.1",
     "bcryptjs": "^3.0.3",
     "html2canvas": "^1.4.1",
     "jose": "^6.2.3",
