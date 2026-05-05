@@ -2,6 +2,7 @@ import styles from "@/app/page.module.css";
 import HomeNavbar from "@/components/HomeNavbar";
 import { ShieldCheck, Target, Award, Users, Zap, Heart, Star, Settings, Package, Anchor, ChevronRight } from "lucide-react";
 import { Suspense } from "react";
+import Link from "next/link";
 
 const companyData: any = {
   "about": {
