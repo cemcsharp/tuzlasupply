@@ -17,6 +17,13 @@ const companyData: any = {
     subtitle: "Build the future of maritime technologies with us.",
     subtitleTr: "Geleceğin denizcilik teknolojilerini bizimle inşa edin.",
     type: "careers"
+  },
+  "insights": {
+    title: "Maritime Insights",
+    titleTr: "Sektörel Bakış",
+    subtitle: "Follow the latest developments in the maritime industry.",
+    subtitleTr: "Denizcilik sektöründeki son gelişmeleri takip edin.",
+    type: "insights"
   }
 };
 
@@ -65,7 +72,7 @@ export default async function CompanyPage({ params, searchParams }: { params: Pr
               <p>{isTr ? "Dünya denizcilik sektöründe dijital dönüşümün öncüsü olmak." : "To be the pioneer of digital transformation in the global maritime sector."}</p>
             </div>
           </div>
-        ) : (
+        ) : data.type === "careers" ? (
           <div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "3rem" }}>
               <div style={{ textAlign: "center", padding: "2rem", background: "#f8fafc", borderRadius: "2rem" }}>
@@ -82,6 +89,18 @@ export default async function CompanyPage({ params, searchParams }: { params: Pr
             <div style={{ marginTop: "4rem", background: "#0f172a", borderRadius: "2rem", padding: "4rem", color: "white", textAlign: "center" }}>
               <h3>{isTr ? "Bize Katılın" : "Join Us"}</h3>
               <p>hr@tuzlasupply.com</p>
+            </div>
+          </div>
+        ) : (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "2.5rem" }}>
+            {/* Insights Cards - Simulating the previous grid */}
+            <div style={{ padding: "2rem", background: "white", borderRadius: "1.5rem", border: "1px solid #e2e8f0" }}>
+              <h3 style={{ color: "#0f172a", marginBottom: "1rem" }}>{isTr ? "Tuzla'da Dijital İkmal" : "Digital Supply in Tuzla"}</h3>
+              <p style={{ color: "#64748b", fontSize: "0.9rem" }}>{isTr ? "Tersane operasyonlarında yeni nesil çözümler." : "Next-gen solutions in shipyard operations."}</p>
+            </div>
+            <div style={{ padding: "2rem", background: "white", borderRadius: "1.5rem", border: "1px solid #e2e8f0" }}>
+              <h3 style={{ color: "#0f172a", marginBottom: "1rem" }}>{isTr ? "IMPA 2026 Trendleri" : "IMPA 2026 Trends"}</h3>
+              <p style={{ color: "#64748b", fontSize: "0.9rem" }}>{isTr ? "Geleceğin ikmal standartları." : "Future supply standards."}</p>
             </div>
           </div>
         )}

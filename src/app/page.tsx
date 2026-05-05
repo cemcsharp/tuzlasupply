@@ -443,6 +443,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
                   <Link href="/company/about">{lang === "tr" ? "Biz kimiz?" : "Who are we?"}</Link>
                   <Link href="#contact">{lang === "tr" ? "İletişim" : "Contact"}</Link>
                   <Link href="/company/careers">{lang === "tr" ? "Kariyer" : "Careers"}</Link>
+                  <Link href="/company/insights">{lang === "tr" ? "Haberler" : "Insights"}</Link>
                 </div>
               </div>
 
@@ -451,9 +452,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
                 <div className={styles.locationTag}>
                   <Globe size={14} /> Global / İstanbul, TR
                 </div>
-                <div className={styles.newsletterMinimal}>
-                  <input type="email" placeholder={t.footerNewsletter} />
-                  <button><Send size={18} /></button>
+                <div className={styles.footerLegal}>
+                  <Link href="/legal/privacy">{lang === "tr" ? "Gizlilik" : "Privacy"}</Link>
+                  <Link href="/legal/terms">{lang === "tr" ? "Şartlar" : "Terms"}</Link>
                 </div>
               </div>
             </div>
