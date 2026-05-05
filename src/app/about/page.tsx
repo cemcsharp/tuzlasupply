@@ -3,8 +3,9 @@ import HomeNavbar from "@/components/HomeNavbar";
 import { ShieldCheck, Target, Award, Users } from "lucide-react";
 import { Suspense } from "react";
 
-export default function AboutPage() {
-  const isTr = true;
+export default async function AboutPage({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
+  const { lang = "tr" } = await searchParams;
+  const isTr = lang === "tr";
 
   return (
     <main className={styles.main}>

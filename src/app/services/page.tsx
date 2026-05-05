@@ -4,8 +4,9 @@ import { Anchor, Settings, Package, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 
-export default function ServicesIndex() {
-  const isTr = true; // Temporary
+export default async function ServicesIndex({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
+  const { lang = "tr" } = await searchParams;
+  const isTr = lang === "tr";
 
   const services = [
     {

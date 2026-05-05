@@ -34,8 +34,9 @@ const insights = [
   }
 ];
 
-export default function InsightsPage() {
-  const isTr = true; // Temporary simplification
+export default async function InsightsPage({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
+  const { lang = "tr" } = await searchParams;
+  const isTr = lang === "tr";
 
   return (
     <main className={styles.main} style={{ background: "#f8fafc" }}>

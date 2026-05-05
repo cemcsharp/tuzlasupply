@@ -4,8 +4,9 @@ import { Briefcase, Zap, Heart, Star, ChevronRight } from "lucide-react";
 import { Suspense } from "react";
 import Link from "next/link";
 
-export default function CareersPage() {
-  const isTr = true;
+export default async function CareersPage({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
+  const { lang = "tr" } = await searchParams;
+  const isTr = lang === "tr";
 
   return (
     <main className={styles.main}>
