@@ -158,18 +158,6 @@ export default async function CompanyPage({ params, searchParams }: { params: Pr
               </div>
             ))}
           </div>
-        ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "2.5rem" }}>
-            {/* Insights Cards - Simulating the previous grid */}
-            <div style={{ padding: "2rem", background: "white", borderRadius: "1.5rem", border: "1px solid #e2e8f0" }}>
-              <h3 style={{ color: "#0f172a", marginBottom: "1rem" }}>{isTr ? "Tuzla'da Dijital İkmal" : "Digital Supply in Tuzla"}</h3>
-              <p style={{ color: "#64748b", fontSize: "0.9rem" }}>{isTr ? "Tersane operasyonlarında yeni nesil çözümler." : "Next-gen solutions in shipyard operations."}</p>
-            </div>
-            <div style={{ padding: "2rem", background: "white", borderRadius: "1.5rem", border: "1px solid #e2e8f0" }}>
-              <h3 style={{ color: "#0f172a", marginBottom: "1rem" }}>{isTr ? "IMPA 2026 Trendleri" : "IMPA 2026 Trends"}</h3>
-              <p style={{ color: "#64748b", fontSize: "0.9rem" }}>{isTr ? "Geleceğin ikmal standartları." : "Future supply standards."}</p>
-            </div>
-          </div>
         )}
       </div>
     </main>
