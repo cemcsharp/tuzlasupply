@@ -10,14 +10,14 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Tuzla Supply | Global Corporate Supply & Industrial Excellence",
+    default: "Tuzla Supply | Ship Supply Tuzla & Marine Spare Parts Istanbul",
     template: "%s | Tuzla Supply"
   },
-  description: "Global Kurumsal Tedarik ve Endüstriyel Mükemmellik. Denizcilik, Teknik, Elektronik ve IT altyapı çözümlerinde güvenilir partneriniz.",
+  description: "Tuzla Supply is your premier partner for Ship Supply in Tuzla & Istanbul. We provide MAN B&W, Wärtsilä spare parts, maritime provisions, and technical ship stores with global delivery.",
   keywords: [
-    "Tuzla Supply", "Global Corporate Supply", "Industrial Excellence", "Marine Supply Turkey", 
-    "Endüstriyel Tedarik Çözümleri", "Gemi İkmal", "IT Altyapı Tedarik", "Teknik Malzeme İkmal",
-    "Global Procurement", "Tuzla Shipyard Supply"
+    "Tuzla Supply", "Ship Supply Tuzla", "Marine Spare Parts Istanbul", "Ship Chandler Turkey", 
+    "MAN B&W spare parts", "Wartsila parts Turkey", "Maritime Procurement Istanbul", "Technical Ship Stores",
+    "Gemi İkmal Tuzla", "Yedek Parça Tedarik", "Port of Tuzla supply", "Ship Provisions Turkey"
   ],
   authors: [{ name: "Tuzla Supply Team" }],
   creator: "Tuzla Supply",
@@ -28,17 +28,17 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "Tuzla Supply | Global Corporate Supply & Industrial Excellence",
-    description: "Kurumsal ve endüstriyel ihtiyaçlarınız için dünya standartlarında tedarik ağı.",
+    title: "Tuzla Supply | Premium Ship Supply & Marine Spare Parts",
+    description: "Reliable maritime procurement and technical ship stores in Tuzla & Istanbul. Global logistics for engine parts and provisions.",
     url: "https://tuzlasupply.com",
     siteName: "Tuzla Supply",
-    locale: "tr_TR",
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tuzla Supply | Global Corporate Supply",
-    description: "Endüstriyel ve Kurumsal Tedarik Çözümleri",
+    title: "Tuzla Supply | Maritime Supply Excellence",
+    description: "Your technical partner for ship supply and spare parts in Turkey.",
   },
   robots: {
     index: true,
@@ -59,37 +59,38 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr" className={`${inter.variable}`}>
+    <html lang="en" className={`${inter.variable}`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Organization",
+              "@type": "WholesaleStore",
               "name": "Tuzla Supply",
               "url": "https://tuzlasupply.com",
               "logo": "https://tuzlasupply.com/logo.png",
-              "slogan": "Global Corporate Supply & Industrial Excellence",
-              "description": "Global Kurumsal Tedarik ve Endüstriyel Mükemmellik alanında uzmanlaşmış, denizcilik ve sanayi odaklı tedarik platformu.",
+              "image": "https://tuzlasupply.com/og-image.jpg",
+              "description": "Premium Ship Supply and Marine Spare Parts provider in Tuzla, Istanbul. Specializing in MAN B&W, Wärtsilä engine parts and technical maritime stores.",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Aydınlı",
+                "streetAddress": "Tuzla Shipyards Area",
                 "addressLocality": "Tuzla",
-                "addressRegion": "İstanbul",
+                "addressRegion": "Istanbul",
+                "postalCode": "34944",
                 "addressCountry": "TR"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 40.8436,
+                "longitude": 29.3086
               },
               "contactPoint": {
                 "@type": "ContactPoint",
-                "telephone": "+90-216-123-45-67",
-                "contactType": "customer service",
+                "contactType": "Sales",
                 "email": "info@tuzlasupply.com",
-                "availableLanguage": ["Turkish", "English"]
-              },
-              "sameAs": [
-                "https://www.linkedin.com/company/tuzlasupply",
-                "https://twitter.com/tuzlasupply"
-              ]
+                "availableLanguage": ["English", "Turkish"]
+              }
             })
           }}
         />

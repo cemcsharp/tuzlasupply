@@ -37,7 +37,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
     const categories = content.categories;
 
     const t = {
-      heroSubtitle: lang === "tr" ? "Tuzla Supply • Global Kurumsal Tedarik & Endüstriyel Mükemmelik" : "Tuzla Supply • Global Corporate Supply & Industrial Excellence",
+      heroSubtitle: lang === "tr" ? "Tuzla Supply • Gemi İkmal, Yedek Parça & Global Denizcilik Çözümleri" : "Tuzla Supply • Ship Supply Tuzla, Marine Spare Parts & Global Maritime Logistics",
       ctaBtn: lang === "tr" ? "Hemen Teklif İste" : "Request Quote Now",
       catalogBtn: lang === "tr" ? "Katalog İncele" : "View Catalog",
       catTitle: lang === "tr" ? "Tedarik Kategorilerimiz" : "Our Supply Categories",
@@ -52,15 +52,15 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
       sendBtn: lang === "tr" ? "Gönder" : "Send Message",
       catSubtitle: lang === "tr" ? "Çözüm Alanlarımız" : "Our Solution Areas",
       catMarineTitle: lang === "tr" ? "Denizcilik & Filo" : "Marine & Fleet",
-      catMarineDesc: lang === "tr" ? "Global gemi ikmal, teknik malzeme ve tersane operasyon çözümleri." : "Global ship supply, technical materials, and shipyard solutions.",
+      catMarineDesc: lang === "tr" ? "Tuzla tersaneler bölgesinde global gemi ikmal, orijinal yedek parça ve teknik malzeme çözümleri." : "Global ship supply, genuine marine spare parts, and shipyard solutions in Tuzla, Istanbul.",
       catMarineItems: lang === "tr" ? ["Güverte & Makine", "Kumanya & İkmal", "Tersane Ekipmanları"] : ["Deck & Engine", "Provisions & Supply", "Shipyard Equipment"],
       catIndTitle: lang === "tr" ? "Endüstri & Fabrika" : "Industry & Factory",
-      catIndDesc: lang === "tr" ? "Üretim tesisleri ve ağır sanayi için kesintisiz yedek parça ve sarf malzeme." : "Uninterrupted spare parts and consumables for production plants.",
+      catIndDesc: lang === "tr" ? "Ağır sanayi ve gemi makineleri için kesintisiz yedek parça, lojistik ve sarf malzeme ikmali." : "Uninterrupted marine spare parts, logistics, and consumables for heavy industry and ship engines.",
       catIndItems: lang === "tr" ? ["Hidrolik & Pnömatik", "Güç Aktarım", "Üretim Hattı Destek"] : ["Hydraulic & Pneumatic", "Power Transmission", "Production Line Support"],
       catTechTitle: lang === "tr" ? "Kurumsal & Teknoloji" : "Corporate & Tech",
       catTechDesc: lang === "tr" ? "Modern iş dünyası için IT altyapısı, iş güvenliği ve ofis çözümleri." : "IT infrastructure, occupational safety, and office solutions.",
       catTechItems: lang === "tr" ? ["IT Donanım & Yazılım", "İş Sağlığı ve Güvenliği", "Kurumsal Sarf Malzeme"] : ["IT Hardware & Software", "Health & Safety", "Corporate Consumables"],
-      footerDesc: lang === "tr" ? "Yeni nesil dijital tedarik ekosistemi. Endüstriyel ve kurumsal ihtiyaçlarınızı teknolojiyle optimize ediyoruz." : "Next-gen digital supply ecosystem. We optimize your industrial and corporate needs with technology.",
+      footerDesc: lang === "tr" ? "Tuzla merkezli yeni nesil dijital ship supply ekosistemi. Denizcilik ve teknik ikmal ihtiyaçlarınızı AI teknolojisiyle optimize ediyoruz." : "Next-gen digital ship supply ecosystem in Tuzla. We optimize your maritime and technical procurement with AI technology.",
       footerRegion: lang === "tr" ? "Hizmet Bölgesi" : "Service Region",
       footerNewsletter: lang === "tr" ? "Haber bülteni için e-posta" : "Email for newsletter",
       // Stats Labels
