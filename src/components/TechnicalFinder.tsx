@@ -3,29 +3,29 @@
 import { useState } from "react";
 import { Search, FileText, Settings, ShieldCheck, ArrowRight, CheckCircle } from "lucide-react";
 import styles from "../app/page.module.css";
+import { searchTechnicalPart } from "@/app/actions/technical";
 
 export default function TechnicalFinder({ lang = "tr" }: { lang?: string }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [results, setResults] = useState<any[]>([]);
+  const [hasSearched, setHasSearched] = useState(false);
 
-  const mockData = [
-    { id: "601.02.04", name: "Fuel Pump Impeller", brand: "MAN B&W", model: "L23/30H", status: "In Stock" },
-    { id: "WR-99-AF", name: "Cylinder Liner Gasket", brand: "Wartsila", model: "W32", status: "Available" },
-    { id: "S-55421", name: "Sealing Ring", brand: "Alfa Laval", model: "S-Type", status: "In Stock" }
-  ];
-
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchTerm) return;
     setIsSearching(true);
+    setHasSearched(true);
     
-    // Simulate search
-    setTimeout(() => {
-      const found = mockData.find(item => item.id.includes(searchTerm) || item.name.toLowerCase().includes(searchTerm.toLowerCase()));
-      setResult(found || "not_found");
+    try {
+      const found = await searchTechnicalPart(searchTerm);
+      setResults(found || []);
+    } catch (err) {
+      console.error(err);
+      setResults([]);
+    } finally {
       setIsSearching(false);
-    }, 800);
+    }
   };
 
   return (
@@ -72,21 +72,25 @@ export default function TechnicalFinder({ lang = "tr" }: { lang?: string }) {
             </button>
           </form>
 
-          {result && (
+          {hasSearched && (
             <div className={styles.searchResult}>
-              {result === "not_found" ? (
-                <p>{lang === "tr" ? "Sonuç bulunamadı, ancak uzman ekibimiz sizin için araştırabilir." : "No results found, but our expert team can research for you."}</p>
+              {results.length === 0 ? (
+                <p style={{ padding: "1rem", opacity: 0.6 }}>{lang === "tr" ? "Sonuç bulunamadı, ancak uzman ekibimiz sizin için araştırabilir." : "No results found, but our expert team can research for you."}</p>
               ) : (
-                <div className={styles.resultCard}>
-                  <div className={styles.resultInfo}>
-                    <CheckCircle color="#22c55e" size={20} />
-                    <div>
-                      <strong>{result.name}</strong>
-                      <span>{result.brand} - {result.model} (PN: {result.id})</span>
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  {results.map((result) => (
+                    <div key={result.id} className={styles.resultCard}>
+                      <div className={styles.resultInfo}>
+                        <CheckCircle color="#22c55e" size={20} />
+                        <div>
+                          <strong>{result.name}</strong>
+                          <span>{result.brand} - {result.model} (PN: {result.partNumber})</span>
+                        </div>
+                      </div>
+                      <div className={styles.resultStatus}>{lang === "tr" ? "Stokta" : "In Stock"}</div>
+                      <button className={styles.addBtn}>{lang === "tr" ? "Talebe Ekle" : "Add to RFQ"}</button>
                     </div>
-                  </div>
-                  <div className={styles.resultStatus}>{result.status}</div>
-                  <button className={styles.addBtn}>{lang === "tr" ? "Talebe Ekle" : "Add to RFQ"}</button>
+                  ))}
                 </div>
               )}
             </div>

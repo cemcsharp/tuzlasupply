@@ -156,3 +156,22 @@ model ChatLead {
   extractedItems String?  @db.Text // JSON formatında saklanacak ürünler
   createdAt      DateTime @default(now())
 }
+
+model TechnicalPart {
+  id             String   @id @default(cuid())
+  partNumber     String   @unique
+  name           String
+  brand          String
+  model          String?
+  description    String?  @db.Text
+  impaCode       String?
+  technicalSpecs String?  @db.Text // JSON metadata
+  diagramUrl     String?
+  manualUrl      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([partNumber])
+  @@index([impaCode])
+  @@index([brand, model])
+}
