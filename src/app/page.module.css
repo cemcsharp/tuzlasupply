@@ -1107,6 +1107,34 @@
     grid-template-columns: 1fr;
     margin-top: 2rem;
   }
+  
+  .serviceDetailGrid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .serviceDetailHero h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .serviceMainCard {
+    padding: 2rem !important;
+  }
+
+  .serviceMainCard div {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.responsiveH1 {
+  font-size: 4rem;
+  line-height: 1.1;
+}
+
+@media (max-width: 768px) {
+  .responsiveH1 {
+    font-size: 2.5rem;
+  }
 }
 
 /* Technical Finder Styles */

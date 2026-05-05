@@ -41,10 +41,10 @@ export default async function ServicesIndex({ searchParams }: { searchParams: Pr
         <HomeNavbar />
       </Suspense>
       
-      <div className={styles.serviceDetailHero} style={{ padding: "10rem 0 10rem" }}>
+      <div className={styles.serviceDetailHero} style={{ padding: "8rem 0 6rem" }}>
         <div className="container" style={{ textAlign: "center" }}>
-          <h1 style={{ color: "white", fontSize: "4rem" }}>{isTr ? "Hizmetlerimiz" : "Our Services"}</h1>
-          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.2rem", maxWidth: "700px", margin: "1.5rem auto 0" }}>
+          <h1 className={styles.responsiveH1} style={{ color: "white" }}>{isTr ? "Hizmetlerimiz" : "Our Services"}</h1>
+          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem", maxWidth: "700px", margin: "1.5rem auto 0" }}>
             {isTr ? "Tuzla Supply olarak denizcilik sektörünün her alanında profesyonel ve hızlı çözümler sunuyoruz." : "As Tuzla Supply, we provide professional and fast solutions in every field of the maritime sector."}
           </p>
         </div>

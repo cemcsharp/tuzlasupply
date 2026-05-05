@@ -44,16 +44,11 @@ export default async function InsightsPage({ searchParams }: { searchParams: Pro
         <HomeNavbar />
       </Suspense>
       
-      <div className={styles.serviceDetailHero} style={{ background: "linear-gradient(135deg, #0f172a 0%, #075985 100%)" }}>
+      <div className={styles.serviceDetailHero} style={{ padding: "8rem 0 6rem" }}>
         <div className="container" style={{ textAlign: "center" }}>
-          <span style={{ color: "#38bdf8", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase" }}>
-            {isTr ? "DENİZCİLİK BİLGİ MERKEZİ" : "MARITIME KNOWLEDGE HUB"}
-          </span>
-          <h1 style={{ color: "white", fontSize: "3.5rem", marginTop: "1rem" }}>
-            {isTr ? "Maritime Insights" : "Industry Insights"}
-          </h1>
-          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1.2rem", maxWidth: "600px", margin: "1.5rem auto 0" }}>
-            {isTr ? "Sektörel trendler, teknik makaleler ve gemi ikmal dünyasından en son haberler." : "Sector trends, technical articles, and latest news from the world of ship supply."}
+          <h1 className={styles.responsiveH1} style={{ color: "white" }}>{isTr ? "Maritime Insights" : "Maritime Insights"}</h1>
+          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem", maxWidth: "700px", margin: "1.5rem auto 0" }}>
+            {isTr ? "Denizcilik sektöründeki son gelişmeleri ve teknik rehberleri takip edin." : "Follow the latest developments and technical guides in the maritime industry."}
           </p>
         </div>
       </div>

@@ -13,11 +13,11 @@ export default async function AboutPage({ searchParams }: { searchParams: Promis
         <HomeNavbar />
       </Suspense>
       
-      <div className={styles.serviceDetailHero} style={{ background: "linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), url('/assets/maritime_logistics_delivery_port_1777865482404.png')", backgroundSize: 'cover' }}>
+      <div className={styles.serviceDetailHero} style={{ padding: "8rem 0 6rem" }}>
         <div className="container" style={{ textAlign: "center" }}>
-          <h1 style={{ color: "white", fontSize: "4rem" }}>{isTr ? "Biz Kimiz?" : "Who Are We?"}</h1>
-          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1.2rem", maxWidth: "800px", margin: "1.5rem auto 0" }}>
-            {isTr ? "Tuzla'nın kalbinden tüm dünyaya uzanan, denizcilik sektöründe dijital dönüşümün ve güvenilir tedariğin öncüsüyüz." : "From the heart of Tuzla to the whole world, we are the pioneers of digital transformation and reliable supply in the maritime sector."}
+          <h1 className={styles.responsiveH1} style={{ color: "white" }}>{isTr ? "Hakkımızda" : "About Us"}</h1>
+          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem", maxWidth: "700px", margin: "1.5rem auto 0" }}>
+            {isTr ? "Tuzla Supply, denizcilik sektöründe güven ve kaliteyi temsil eder." : "Tuzla Supply represents trust and quality in the maritime industry."}
           </p>
         </div>
       </div>

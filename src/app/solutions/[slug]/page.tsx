@@ -80,16 +80,16 @@ export default async function SolutionPage({ params, searchParams }: { params: P
         </div>
       </div>
 
-      <div className="container" style={{ padding: "6rem 0" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "4rem" }}>
+      <div className="container" style={{ padding: "4rem 0" }}>
+        <div className={styles.serviceDetailGrid} style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "4rem" }}>
           <div className={styles.serviceMainCard}>
             <div style={{ color: "#38bdf8", marginBottom: "2rem" }}>{data.icon}</div>
-            <h2>{isTr ? "Uzmanlık Alanlarımız" : "Our Expertise Areas"}</h2>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", marginTop: "2rem" }}>
+            <h2 style={{ marginBottom: "2rem" }}>{isTr ? "Uzmanlık Alanlarımız" : "Our Expertise Areas"}</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
               {(isTr ? data.featuresTr : data.features).map((f: string, i: number) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.5rem", background: "#f8fafc", borderRadius: "1.5rem" }}>
-                  <ShieldCheck color="#38bdf8" />
-                  <span style={{ fontWeight: 600, color: "#0f172a" }}>{f}</span>
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "1.2rem", background: "#f8fafc", borderRadius: "1rem", border: "1px solid #e2e8f0" }}>
+                  <ShieldCheck color="#38bdf8" size={20} />
+                  <span style={{ fontWeight: 600, color: "#0f172a", fontSize: "0.95rem" }}>{f}</span>
                 </div>
               ))}
             </div>

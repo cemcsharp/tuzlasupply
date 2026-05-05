@@ -14,11 +14,11 @@ export default async function CareersPage({ searchParams }: { searchParams: Prom
         <HomeNavbar />
       </Suspense>
       
-      <div className={styles.serviceDetailHero} style={{ background: "linear-gradient(135deg, #1e293b 0%, #334155 100%)" }}>
+      <div className={styles.serviceDetailHero} style={{ padding: "8rem 0 6rem" }}>
         <div className="container" style={{ textAlign: "center" }}>
-          <h1 style={{ color: "white", fontSize: "4rem" }}>{isTr ? "Kariyer" : "Careers"}</h1>
-          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "1.2rem", maxWidth: "800px", margin: "1.5rem auto 0" }}>
-            {isTr ? "Denizcilik dünyasını dijitalleştiren ekibin bir parçası olun." : "Become part of the team that digitalizes the maritime world."}
+          <h1 className={styles.responsiveH1} style={{ color: "white" }}>{isTr ? "Kariyer" : "Careers"}</h1>
+          <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem", maxWidth: "700px", margin: "1.5rem auto 0" }}>
+            {isTr ? "Geleceğin denizcilik teknolojilerini bizimle inşa edin." : "Build the future of maritime technologies with us."}
           </p>
         </div>
       </div>
