@@ -434,8 +434,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
                   <h5>Solutions</h5>
                   <Link href="/solutions/ship-electrical">{lang === "tr" ? "Gemi Elektriği" : "Ship Electrical"}</Link>
                   <Link href="/solutions/ship-mechanical">{lang === "tr" ? "Gemi Mekanik" : "Ship Mechanical"}</Link>
-                  <Link href="/services/spare-parts">{lang === "tr" ? "Yedek Parça" : "Spare Parts"}</Link>
-                  <Link href="/services/marine-provisions">{lang === "tr" ? "Kumanya" : "Provisions"}</Link>
+                  <Link href="/solutions/ship-painting">{lang === "tr" ? "Gemi Boya" : "Ship Painting"}</Link>
+                  <Link href="/solutions/ship-safety">{lang === "tr" ? "Gemi Güvenlik" : "Ship Safety"}</Link>
+                  <Link href="/solutions/shipyard-logistics">{lang === "tr" ? "Lojistik" : "Logistics"}</Link>
                 </div>
                 <div className={styles.footerNavCol}>
                   <h5>{lang === "tr" ? "Şirket" : "Company"}</h5>
