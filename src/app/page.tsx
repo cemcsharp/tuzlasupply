@@ -440,9 +440,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
                 </div>
                 <div className={styles.footerNavCol}>
                   <h5>{lang === "tr" ? "Şirket" : "Company"}</h5>
-                  <Link href="/about">{lang === "tr" ? "Biz kimiz?" : "Who are we?"}</Link>
+                  <Link href="/company/about">{lang === "tr" ? "Biz kimiz?" : "Who are we?"}</Link>
                   <Link href="#contact">{lang === "tr" ? "İletişim" : "Contact"}</Link>
-                  <Link href="/careers">{lang === "tr" ? "Kariyer" : "Careers"}</Link>
+                  <Link href="/company/careers">{lang === "tr" ? "Kariyer" : "Careers"}</Link>
                 </div>
               </div>
 
