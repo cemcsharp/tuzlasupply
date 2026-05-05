@@ -1,6 +1,6 @@
 import styles from "@/app/page.module.css";
 import HomeNavbar from "@/components/HomeNavbar";
-import { Zap, ShieldCheck, Clock, Settings, Cpu, Wrench, Droplets, LifeBuoy, Truck, Layers, Wind, Flame, Warehouse } from "lucide-react";
+import { Zap, ShieldCheck, Clock, Settings, Cpu, Wrench, Droplets, LifeBuoy, Truck, Layers, Wind, Flame, Warehouse, Package, Anchor } from "lucide-react";
 import { Suspense } from "react";
 import Link from "next/link";
 
