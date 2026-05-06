@@ -338,12 +338,17 @@ export default async function SolutionPage({ params, searchParams }: { params: P
             </div>
             <Link href="/company/insights" style={{ color: "#38bdf8", fontWeight: 700, textDecoration: "none" }}>{isTr ? "Tümünü Gör" : "View All"}</Link>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem" }}>
-            {[1, 2, 3].map(i => (
-              <div key={i} style={{ borderRadius: "1.5rem", overflow: "hidden", background: "#f1f5f9", aspectRatio: "16/10", position: "relative" }}>
-                <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", right: "1.5rem", background: "rgba(15, 23, 42, 0.8)", backdropFilter: "blur(10px)", padding: "1rem", borderRadius: "1rem", color: "white" }}>
-                  <p style={{ fontSize: "0.7rem", fontWeight: 800, color: "#38bdf8", marginBottom: "0.3rem" }}>TUZLA / İSTANBUL</p>
-                  <p style={{ fontSize: "0.9rem", fontWeight: 600 }}>{isTr ? "Gemi İkmal ve Teknik Servis" : "Vessel Supply & Tech Service"}</p>
+          <div className={styles.insightGrid} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem" }}>
+            {[
+              { img: "https://images.unsplash.com/photo-1590579491624-f98f36d4c763?q=80&w=800", title: isTr ? "Ana Makine Parça Teslimatı" : "Main Engine Part Delivery" },
+              { img: "https://images.unsplash.com/photo-1540946484063-a40da2134fe0?q=80&w=800", title: isTr ? "Gemi Güverte İkmali" : "Vessel Deck Supply" },
+              { img: "https://images.unsplash.com/photo-1454165833222-38d722578571?q=80&w=800", title: isTr ? "Teknik Servis Operasyonu" : "Technical Service Operation" }
+            ].map((op, i) => (
+              <div key={i} style={{ borderRadius: "1.5rem", overflow: "hidden", background: "#f1f5f9", aspectRatio: "16/10", position: "relative", boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)" }}>
+                <img src={op.img} alt={op.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", right: "1.5rem", background: "rgba(15, 23, 42, 0.85)", backdropFilter: "blur(8px)", padding: "1.2rem", borderRadius: "1.2rem", color: "white" }}>
+                  <p style={{ fontSize: "0.7rem", fontWeight: 800, color: "#38bdf8", marginBottom: "0.3rem", textTransform: "uppercase" }}>TUZLA / ISTANBUL</p>
+                  <p style={{ fontSize: "0.95rem", fontWeight: 700 }}>{op.title}</p>
                 </div>
               </div>
             ))}

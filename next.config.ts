@@ -8,6 +8,35 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '500mb',
     },
   },
+  async redirects() {
+    return [
+      {
+        source: '/insights',
+        destination: '/company/insights',
+        permanent: true,
+      },
+      {
+        source: '/services/:slug',
+        destination: '/solutions/:slug',
+        permanent: true,
+      },
+      {
+        source: '/services',
+        destination: '/company/services',
+        permanent: true,
+      },
+      {
+        source: '/privacy',
+        destination: '/legal/privacy',
+        permanent: true,
+      },
+      {
+        source: '/terms',
+        destination: '/legal/terms',
+        permanent: true,
+      }
+    ]
+  }
 };
 
 export default nextConfig;

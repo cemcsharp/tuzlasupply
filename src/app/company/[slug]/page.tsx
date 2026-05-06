@@ -60,32 +60,66 @@ export default async function CompanyPage({ params, searchParams }: { params: Pr
 
       <div className="container" style={{ padding: "6rem 0" }}>
         {data.type === "about" ? (
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }} className={styles.serviceDetailGrid}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "flex-start" }} className={styles.serviceDetailGrid}>
             <div>
-              <h2 style={{ fontSize: "2.5rem", color: "#0f172a", marginBottom: "2rem" }}>
-                {isTr ? "Denizcilikte Yeni Nesil Tedarik Ekosistemi" : "Next Generation Supply Ecosystem"}
+              <h2 style={{ fontSize: "2.8rem", color: "#0f172a", marginBottom: "2rem", lineHeight: "1.1" }}>
+                {isTr ? "Denizcilikte Dijital Dönüşümün Öncüsü" : "Leading the Digital Maritime Transformation"}
               </h2>
-              <p style={{ fontSize: "1.1rem", color: "#475569", lineHeight: "1.8", marginBottom: "2rem" }}>
+              <p style={{ fontSize: "1.15rem", color: "#475569", lineHeight: "1.8", marginBottom: "2rem" }}>
                 {isTr 
-                  ? "Tuzla Supply, geleneksel gemi ikmal süreçlerini modern teknolojiyle birleştirmek amacıyla kuruldu. Onlarca yıllık sektörel tecrübemizi, yapay zeka destekli operasyonel süreçlerimizle harmanlayarak müşterilerimize sadece ürün değil, zaman ve verimlilik sunuyoruz." 
-                  : "Tuzla Supply was founded to combine traditional ship supply processes with modern technology. By blending our technical experience with digital operational processes, we offer our customers not just products, but time and reliability."}
+                  ? "Tuzla Supply, geleneksel gemi ikmal süreçlerini modern teknoloji ve yapay zeka ile yeniden tanımlamak amacıyla İstanbul, Tuzla'nın kalbinde kurulmuştur. 20 yılı aşkın sektörel tecrübemizi, dijitalleşen dünyanın hızıyla birleştirerek armatörlerimize ve teknik müdürlerimize sadece ürün değil, sürdürülebilir bir operasyonel verimlilik sunuyoruz." 
+                  : "Tuzla Supply was founded in the heart of Tuzla, Istanbul, to redefine traditional ship supply processes with modern technology and AI. By combining over 20 years of technical experience with the speed of a digitalizing world, we offer our owners and technical managers not just products, but sustainable operational efficiency."}
               </p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "2rem" }}>
-                <div style={{ padding: "1.5rem", background: "#f8fafc", borderRadius: "1.2rem", border: "1px solid #e2e8f0" }}>
-                  <ShieldCheck color="#38bdf8" style={{ marginBottom: "0.5rem" }} /> 
-                  <h4 style={{ fontSize: "0.9rem" }}>{isTr ? "Sertifikalı Tedarik" : "Certified Supply"}</h4>
-                </div>
-                <div style={{ padding: "1.5rem", background: "#f8fafc", borderRadius: "1.2rem", border: "1px solid #e2e8f0" }}>
-                  <Target color="#38bdf8" style={{ marginBottom: "0.5rem" }} /> 
-                  <h4 style={{ fontSize: "0.9rem" }}>{isTr ? "Tam Zamanında" : "Just-in-Time"}</h4>
+              
+              <div style={{ background: "#f8fafc", padding: "2.5rem", borderRadius: "2rem", border: "1px solid #e2e8f0", marginBottom: "3rem" }}>
+                <h4 style={{ marginBottom: "1.5rem", color: "#0f172a" }}>{isTr ? "Neden Biz?" : "Our Core Strengths"}</h4>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem" }}>
+                  <div>
+                    <div style={{ color: "#38bdf8", fontWeight: 800, fontSize: "1.2rem", marginBottom: "0.5rem" }}>7/24</div>
+                    <p style={{ fontSize: "0.85rem", color: "#64748b" }}>{isTr ? "Kesintisiz operasyon ve anlık destek hattı." : "Uninterrupted operations and instant support."}</p>
+                  </div>
+                  <div>
+                    <div style={{ color: "#38bdf8", fontWeight: 800, fontSize: "1.2rem", marginBottom: "0.5rem" }}>100%</div>
+                    <p style={{ fontSize: "0.85rem", color: "#64748b" }}>{isTr ? "Orijinal yedek parça ve sertifikalı ürün garantisi." : "Guarantee of genuine parts and certified products."}</p>
+                  </div>
+                  <div>
+                    <div style={{ color: "#38bdf8", fontWeight: 800, fontSize: "1.2rem", marginBottom: "0.5rem" }}>FAST</div>
+                    <p style={{ fontSize: "0.85rem", color: "#64748b" }}>{isTr ? "Tersane ve limanlara doğrudan hızlı teslimat." : "Direct fast delivery to shipyards and ports."}</p>
+                  </div>
+                  <div>
+                    <div style={{ color: "#38bdf8", fontWeight: 800, fontSize: "1.2rem", marginBottom: "0.5rem" }}>TECH</div>
+                    <p style={{ fontSize: "0.85rem", color: "#64748b" }}>{isTr ? "AI destekli RFQ ve tedarik zinciri takibi." : "AI-driven RFQ and supply chain tracking."}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div style={{ background: "#0f172a", borderRadius: "2rem", padding: "4rem", color: "white", boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}>
-              <h3 style={{ fontSize: "1.8rem", marginBottom: "1.5rem", color: "#38bdf8" }}>{isTr ? "Vizyonumuz" : "Our Vision"}</h3>
-              <p style={{ opacity: 0.8, lineHeight: "1.8", fontSize: "1.1rem" }}>
-                {isTr ? "Dünya denizcilik sektöründe dijital dönüşümün öncüsü olarak, Tuzla'dan tüm dünya limanlarına uzanan en güvenilir ve en hızlı tedarik ağını kurmak." : "To establish the most reliable and fastest supply network extending from Tuzla to all world ports as the pioneer of digital transformation in the global maritime sector."}
+
+              <p style={{ fontSize: "1rem", color: "#64748b", lineHeight: "1.7" }}>
+                {isTr 
+                  ? "Tedarik zincirimizin her aşamasında HACCP, ISO 9001 ve ISO 14001 standartlarını gözetiyoruz. IMPA ve ISSA üyeliklerimizle, global denizcilik ağının ayrılmaz bir parçası olarak, gemilerinizin dünya okyanuslarında güvenle seyretmesi için çalışıyoruz." 
+                  : "We adhere to HACCP, ISO 9001, and ISO 14001 standards at every stage of our supply chain. As an integral part of the global maritime network with our IMPA and ISSA memberships, we work to ensure your vessels sail safely across the world's oceans."}
               </p>
+            </div>
+            
+            <div style={{ display: "grid", gap: "2rem" }}>
+              <div style={{ background: "#0f172a", borderRadius: "2rem", padding: "3.5rem", color: "white", boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}>
+                <h3 style={{ fontSize: "1.8rem", marginBottom: "1.5rem", color: "#38bdf8" }}>{isTr ? "Vizyonumuz" : "Our Vision"}</h3>
+                <p style={{ opacity: 0.8, lineHeight: "1.8", fontSize: "1.1rem" }}>
+                  {isTr ? "Dünya denizcilik sektöründe dijital dönüşümün öncüsü olarak, Tuzla'dan tüm dünya limanlarına uzanan en güvenilir ve en hızlı tedarik ağını kurmak." : "To establish the most reliable and fastest supply network extending from Tuzla to all world ports as the pioneer of digital transformation in the global maritime sector."}
+                </p>
+              </div>
+              
+              <div style={{ background: "white", borderRadius: "2rem", padding: "3.5rem", border: "1px solid #e2e8f0" }}>
+                <h3 style={{ fontSize: "1.8rem", marginBottom: "1.5rem", color: "#0f172a" }}>{isTr ? "Misyonumuz" : "Our Mission"}</h3>
+                <p style={{ color: "#475569", lineHeight: "1.8", fontSize: "1.1rem" }}>
+                  {isTr ? "Müşterilerimize en kaliteli teknik malzemeyi, en doğru fiyat ve en yüksek hızla ulaştırarak, deniz operasyonlarının kesintisiz sürmesini sağlamak." : "To ensure uninterrupted maritime operations by delivering the highest quality technical materials to our customers with the best prices and maximum speed."}
+                </p>
+              </div>
+
+              <div style={{ padding: "2rem", background: "#f1f5f9", borderRadius: "1.5rem", textAlign: "center" }}>
+                <Users size={32} color="#38bdf8" style={{ marginBottom: "1rem" }} />
+                <h4 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>{isTr ? "Uzman Ekibimiz" : "Our Expert Team"}</h4>
+                <p style={{ fontSize: "0.85rem", color: "#64748b" }}>{isTr ? "Kaptanlar, mühendisler ve lojistik uzmanlarından oluşan dev kadro." : "A giant team consisting of captains, engineers, and logistics experts."}</p>
+              </div>
             </div>
           </div>
         ) : data.type === "careers" ? (

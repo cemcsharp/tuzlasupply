@@ -131,24 +131,24 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
             </div>
 
             <div className={styles.imgCategoryGrid}>
-              <Link href="/services/spare-parts" className={styles.imgCategoryCard}>
-                <img src="/assets/parts.png" alt="Marine Parts" />
+              <Link href="/solutions/spare-parts" className={styles.imgCategoryCard}>
+                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800" alt="Marine Parts" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 <div className={styles.imgCategoryBadge}>Premium</div>
                 <div className={styles.imgCategoryOverlay}>
                   <h3>{t.lang === "tr" ? "Gemi Makine & Parça" : "Marine Engine & Parts"}</h3>
                   <p>{t.lang === "tr" ? "Ana makine, pompalar, valfler ve orijinal yedek parçalar." : "Main engine, pumps, valves, and genuine spare parts."}</p>
                 </div>
               </Link>
-              <Link href="/services/technical-supply" className={styles.imgCategoryCard}>
-                <img src="/assets/industrial.png" alt="Industrial Supplies" />
+              <Link href="/solutions/technical-supply" className={styles.imgCategoryCard}>
+                <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=800" alt="Industrial Supplies" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 <div className={styles.imgCategoryBadge}>{t.lang === "tr" ? "Stokta Hazır" : "Ready in Stock"}</div>
                 <div className={styles.imgCategoryOverlay}>
                   <h3>{t.lang === "tr" ? "Teknik & Endüstriyel" : "Technical & Industrial"}</h3>
                   <p>{t.lang === "tr" ? "Hırdavat, teknik malzemeler, iş güvenliği ve elektrik ekipmanları." : "Hardware, technical materials, safety, and electrical equipment."}</p>
                 </div>
               </Link>
-              <Link href="/services/marine-provisions" className={styles.imgCategoryCard}>
-                <img src="/assets/logistics.png" alt="Logistics" />
+              <Link href="/solutions/marine-provisions" className={styles.imgCategoryCard}>
+                <img src="https://images.unsplash.com/photo-1494412519320-aa613dfb7738?q=80&w=800" alt="Logistics" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 <div className={styles.imgCategoryBadge}>{t.lang === "tr" ? "Global Erişim" : "Global Reach"}</div>
                 <div className={styles.imgCategoryOverlay}>
                   <h3>{t.lang === "tr" ? "Lojistik & Kumanya" : "Logistics & Provisions"}</h3>
@@ -272,39 +272,39 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
 
             <div className={styles.insightGrid}>
               <div className={styles.insightCard}>
-                <div className={styles.insightImage} style={{ backgroundImage: "url('/assets/parts.png')" }}>
+                <div className={styles.insightImage} style={{ backgroundImage: "url('https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800')" }}>
                   <div className={styles.insightCategory}>Technical</div>
                 </div>
                 <div className={styles.insightContent}>
                   <h3>{t.lang === "tr" ? "IMPA Kodlarını Anlamak" : "Understanding IMPA Codes"}</h3>
                   <p>{t.lang === "tr" ? "Verimli sipariş yönetimi için Marine Stores Guide kullanımı." : "Using the Marine Stores Guide for efficient ordering."}</p>
-                  <Link href="/insights" style={{ color: "#38bdf8", fontWeight: 700, textDecoration: "none", marginTop: "1rem", display: "inline-block" }}>
+                  <Link href="/company/insights" style={{ color: "#38bdf8", fontWeight: 700, textDecoration: "none", marginTop: "1rem", display: "inline-block" }}>
                     {t.lang === "tr" ? "Devamını Oku" : "Read More"} →
                   </Link>
                 </div>
               </div>
 
               <div className={styles.insightCard}>
-                <div className={styles.insightImage} style={{ backgroundImage: "url('/assets/maritime_pump_exploded_view_1777866638254.png')" }}>
+                <div className={styles.insightImage} style={{ backgroundImage: "url('https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=800')" }}>
                   <div className={styles.insightCategory}>Engineering</div>
                 </div>
                 <div className={styles.insightContent}>
                   <h3>{t.lang === "tr" ? "Makine Overhaul Optimizasyonu" : "Engine Overhaul Optimization"}</h3>
                   <p>{t.lang === "tr" ? "Orijinal vs OEM yedek parça seçiminin etkileri." : "The implications of Genuine vs OEM part selection."}</p>
-                  <Link href="/insights" style={{ color: "#38bdf8", fontWeight: 700, textDecoration: "none", marginTop: "1rem", display: "inline-block" }}>
+                  <Link href="/company/insights" style={{ color: "#38bdf8", fontWeight: 700, textDecoration: "none", marginTop: "1rem", display: "inline-block" }}>
                     {t.lang === "tr" ? "Devamını Oku" : "Read More"} →
                   </Link>
                 </div>
               </div>
 
               <div className={styles.insightCard}>
-                <div className={styles.insightImage} style={{ backgroundImage: "url('/assets/maritime_logistics_delivery_port_1777865482404.png')" }}>
+                <div className={styles.insightImage} style={{ backgroundImage: "url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800')" }}>
                   <div className={styles.insightCategory}>Digital</div>
                 </div>
                 <div className={styles.insightContent}>
                   <h3>{t.lang === "tr" ? "Gemi İkmalinde Yapay Zeka" : "AI in Ship Supply"}</h3>
                   <p>{t.lang === "tr" ? "Teknolojinin geleneksel tedarik sürecini dönüşümü." : "How technology is transforming the supply process."}</p>
-                  <Link href="/insights" style={{ color: "#38bdf8", fontWeight: 700, textDecoration: "none", marginTop: "1rem", display: "inline-block" }}>
+                  <Link href="/company/insights" style={{ color: "#38bdf8", fontWeight: 700, textDecoration: "none", marginTop: "1rem", display: "inline-block" }}>
                     {t.lang === "tr" ? "Devamını Oku" : "Read More"} →
                   </Link>
                 </div>
