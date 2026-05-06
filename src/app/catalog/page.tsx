@@ -4,6 +4,7 @@ import styles from "./catalog.module.css";
 import HomeNavbar from "@/components/HomeNavbar";
 import { Package } from "lucide-react";
 import CatalogClient from "./CatalogClient";
+import Footer from "@/components/Footer";
 
 export default async function CatalogPage() {
   const products = await prisma.product.findMany({
