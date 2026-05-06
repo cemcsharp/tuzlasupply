@@ -28,11 +28,7 @@ export default async function CatalogPage() {
         <CatalogClient initialProducts={products} />
       </div>
 
-      <footer style={{ marginTop: "5rem", padding: "3rem 0", borderTop: "1px solid #E2E8F0", textAlign: "center", color: "#94A3B8" }}>
-        <div className="container">
-          <p>&copy; {new Date().getFullYear()} Tuzla Supply. Tüm hakları saklıdır.</p>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

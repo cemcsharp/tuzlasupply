@@ -411,7 +411,6 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
             </div>
           </div>
         </section>
-        </section>
 
         {/* Nautical Waves Transition */}
         <Waves />
