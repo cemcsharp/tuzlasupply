@@ -31,7 +31,9 @@ const solutionData: any = {
       "Frekans Konvertörleri ve Soft Starterlar",
       "Kazan ve Purifier Otomasyon Sistemleri",
       "Pnömatik ve Hidrolik Kontrol Panoları"
-    ]
+    ],
+    brands: ["ABB", "Schneider", "Siemens", "Danfoss", "Omron", "Kongsbeg", "Noris", "Terasaki"],
+    models: ["Power Cabinets", "VFD Units", "PLC Modules", "HMI Panels"]
   },
   "ship-mechanical": {
     color: "#334155",
@@ -59,7 +61,9 @@ const solutionData: any = {
       "Turboşarj Overhaul ve Dinamik Balans",
       "Hidrolik Silindir ve Sistem Onarımı",
       "Yakıt Enjeksiyon Pompası ve Valf Zamanlaması"
-    ]
+    ],
+    brands: ["MAN B&W", "Wärtsilä", "Yanmar", "Daihatsu", "Mitsubishi", "Caterpillar", "Alfa Laval"],
+    models: ["S50MC", "L23/30", "RT-flex", "Z280", "V32", "DK-20"]
   },
   "ship-painting": {
     color: "#0369a1",
@@ -87,7 +91,9 @@ const solutionData: any = {
       "Karina Bütünlük İncelemeleri",
       "Tutya Değişimi ve ICCP Servisleri",
       "Gemi Boyası Lojistiği ve Tedariği"
-    ]
+    ],
+    brands: ["Jotun", "Hempel", "International Paint", "Chugoku", "PPG", "Sigma Coatings"],
+    models: ["SeaForce", "Hempaguard", "Intershield", "Hardtop", "Ecomax"]
   },
   "ship-safety": {
     color: "#7f1d1d",
@@ -115,7 +121,9 @@ const solutionData: any = {
       "Immersion Suit ve Termal Koruma",
       "Piroteknik ve Tehlike İşaretleri",
       "IMO Sembolleri ve Güvenlik Levhaları"
-    ]
+    ],
+    brands: ["Lalizas", "Viking", "Survitec", "Dräger", "MSA", "Honeywell", "Scott Safety"],
+    models: ["SOLAS Pack", "ISO Certified", "MED Approved", "A-Class", "B-Class"]
   },
   "shipyard-logistics": {
     color: "#065f46",
@@ -143,7 +151,9 @@ const solutionData: any = {
       "7/24 Acil Parça Gönderimi",
       "Sınır Ötesi Transit Tedarik",
       "Depolama ve Yedek Parça Muhafazası"
-    ]
+    ],
+    brands: ["Global Freight", "Customs Bonded", "Door-to-Deck", "AEO Status"],
+    models: ["24/7 Dispatch", "Air/Sea Freight", "Local Trucking"]
   },
   "technical-supply": {
     color: "#1e293b",
@@ -171,7 +181,9 @@ const solutionData: any = {
       "Ölçüm ve Hassas Aletler",
       "Navigasyon Haritaları ve Yayınları",
       "Endüstriyel Temizlik Kimyasalları"
-    ]
+    ],
+    brands: ["IMPA", "ISSA", "Unitor", "Drew Marine", "Bosch", "Makita", "3M"],
+    models: ["Deck Stores", "Engine Stores", "Cabin Stores", "Technical Spares"]
   },
   "marine-provisions": {
     color: "#0f172a",
@@ -199,7 +211,9 @@ const solutionData: any = {
       "Hijyen ve Mutfak Temizlik Ürünleri",
       "Sağlıklı Diyet Seçenekleri",
       "Son Dakika Acil Tedarik"
-    ]
+    ],
+    brands: ["HACCP", "ISO 22000", "Fresh Direct", "Global Logistics"],
+    models: ["Dry", "Frozen", "Fresh", "Bonded"]
   },
   "spare-parts": {
     color: "#075985",
@@ -227,7 +241,9 @@ const solutionData: any = {
       "Hava Kompresörü Yedek Parçaları",
       "Yenilenmiş (Recon) Ana Bileşenler",
       "OEM ve Orijinal Sertifika Desteği"
-    ]
+    ],
+    brands: ["MAN B&W", "Wärtsilä", "Yanmar", "Daihatsu", "Mitsubishi", "Alfa Laval", "Westfalia", "Cummins"],
+    models: ["L23/30", "L28/32", "S50MC", "S60MC", "RT-Flex", "EY22", "DK-20", "6N18"]
   }
 };
 
@@ -277,6 +293,72 @@ export default async function SolutionPage({ params, searchParams }: { params: P
                 {isTr ? "Teklif İsteyin" : "Request Quote"}
               </Link>
             </div>
+
+            {/* Technical Scope Widget */}
+            <div className={styles.sidebarWidget} style={{ marginTop: "2rem", background: "white", border: "1px solid #e2e8f0" }}>
+              <h4 style={{ color: "#0f172a", borderBottom: "2px solid #38bdf8", paddingBottom: "1rem" }}>{isTr ? "Teknik Kapsam" : "Technical Scope"}</h4>
+              <div style={{ marginTop: "1.5rem" }}>
+                <p style={{ fontWeight: 800, fontSize: "0.75rem", color: "#64748b", textTransform: "uppercase", marginBottom: "1rem" }}>{isTr ? "DESTEKLENEN MARKALAR" : "SUPPORTED BRANDS"}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                  {data.brands?.map((b: string) => (
+                    <span key={b} style={{ padding: "0.4rem 0.8rem", background: "#f1f5f9", borderRadius: "0.5rem", fontSize: "0.75rem", fontWeight: 700, color: "#1e293b" }}>{b}</span>
+                  ))}
+                </div>
+                
+                <p style={{ fontWeight: 800, fontSize: "0.75rem", color: "#64748b", textTransform: "uppercase", marginTop: "2rem", marginBottom: "1rem" }}>{isTr ? "POPÜLER MODELLER" : "POPULAR MODELS"}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                  {data.models?.map((m: string) => (
+                    <span key={m} style={{ padding: "0.4rem 0.8rem", border: "1px solid #e2e8f0", borderRadius: "0.5rem", fontSize: "0.75rem", fontWeight: 600, color: "#64748b" }}>{m}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Downloads Widget */}
+            <div className={styles.sidebarWidget} style={{ marginTop: "2rem", background: "#f8fafc", border: "1px dashed #cbd5e1" }}>
+              <h4 style={{ color: "#0f172a", marginBottom: "1rem" }}>{isTr ? "Dokümanlar" : "Downloads"}</h4>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+                <Link href="#" style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.85rem", color: "#334155", textDecoration: "none" }}>
+                  <Layers size={16} /> {isTr ? "Şirket Profili (PDF)" : "Company Profile (PDF)"}
+                </Link>
+                <Link href="#" style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.85rem", color: "#334155", textDecoration: "none" }}>
+                  <Layers size={16} /> {isTr ? "Teknik Kapsam (PDF)" : "Technical Scope (PDF)"}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Recent Operations Gallery */}
+        <div style={{ marginTop: "8rem" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "3rem" }}>
+            <div>
+              <p style={{ color: "#38bdf8", fontWeight: 800, fontSize: "0.8rem", letterSpacing: "2px", marginBottom: "0.5rem" }}>{isTr ? "SAHADAN KARELER" : "FROM THE FIELD"}</p>
+              <h2 style={{ fontSize: "2.2rem" }}>{isTr ? "Son Operasyonlar" : "Recent Operations"}</h2>
+            </div>
+            <Link href="/company/insights" style={{ color: "#38bdf8", fontWeight: 700, textDecoration: "none" }}>{isTr ? "Tümünü Gör" : "View All"}</Link>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "2rem" }}>
+            {[1, 2, 3].map(i => (
+              <div key={i} style={{ borderRadius: "1.5rem", overflow: "hidden", background: "#f1f5f9", aspectRatio: "16/10", position: "relative" }}>
+                <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem", right: "1.5rem", background: "rgba(15, 23, 42, 0.8)", backdropFilter: "blur(10px)", padding: "1rem", borderRadius: "1rem", color: "white" }}>
+                  <p style={{ fontSize: "0.7rem", fontWeight: 800, color: "#38bdf8", marginBottom: "0.3rem" }}>TUZLA / İSTANBUL</p>
+                  <p style={{ fontSize: "0.9rem", fontWeight: 600 }}>{isTr ? "Gemi İkmal ve Teknik Servis" : "Vessel Supply & Tech Service"}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Quality & Class Logos */}
+        <div style={{ marginTop: "6rem", paddingTop: "4rem", borderTop: "1px solid #e2e8f0" }}>
+          <p style={{ textAlign: "center", fontWeight: 800, fontSize: "0.85rem", color: "#94a3b8", letterSpacing: "2px", marginBottom: "3rem" }}>
+            {isTr ? "ULUSLARARASI KALİTE VE KLAS STANDARTLARI" : "INTERNATIONAL QUALITY & CLASS STANDARDS"}
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "4rem", opacity: 0.5, filter: "grayscale(1)" }}>
+            {["ISO 9001", "ISO 14001", "IMPA", "ISSA", "DNV", "ABS", "Lloyd's Register", "Bureau Veritas"].map(logo => (
+              <div key={logo} style={{ fontSize: "1.2rem", fontWeight: 900, color: "#475569" }}>{logo}</div>
+            ))}
           </div>
         </div>
 
