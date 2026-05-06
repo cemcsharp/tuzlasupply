@@ -247,6 +247,8 @@ const solutionData: any = {
   }
 };
 
+import Footer from "@/components/Footer";
+
 export default async function SolutionPage({ params, searchParams }: { params: Promise<{ slug: string }>, searchParams: Promise<{ lang?: string }> }) {
   const { slug } = await params;
   const { lang = "tr" } = await searchParams;
@@ -394,6 +396,7 @@ export default async function SolutionPage({ params, searchParams }: { params: P
           </div>
         </div>
       </div>
+      <Footer lang={lang} />
     </main>
   );
 }

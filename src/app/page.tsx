@@ -4,6 +4,7 @@ import { getSiteContent, getHeroSlides } from "@/app/actions/cms";
 import HomeNavbar from "@/components/HomeNavbar";
 import HeroCarousel from "@/components/HeroCarousel";
 import { Suspense } from "react";
+import Footer from "@/components/Footer";
 import { 
   Anchor, Zap, Settings, Laptop, ShieldCheck, 
   ShoppingBag, Wrench, Globe, Utensils,
@@ -410,65 +411,12 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
             </div>
           </div>
         </section>
+        </section>
 
         {/* Nautical Waves Transition */}
         <Waves />
 
-        <footer className={styles.ultraFooter}>
-          <div className="container">
-            <div className={styles.footerMain}>
-              <div className={styles.footerBrand}>
-                <h3 className={styles.footerBrandName}>Tuzla <span>Supply</span></h3>
-                <p className={styles.footerBrandDesc}>
-                  {t.footerDesc}
-                </p>
-                <div className={styles.footerSocials}>
-                  <a href="#">LN</a>
-                  <a href="#">TW</a>
-                  <a href="#">IG</a>
-                  <a href="#">BE</a>
-                </div>
-              </div>
-
-              <div className={styles.footerNavGroup}>
-                <div className={styles.footerNavCol}>
-                  <h5>Solutions</h5>
-                  <Link href="/solutions/ship-electrical">{lang === "tr" ? "Gemi Elektriği" : "Ship Electrical"}</Link>
-                  <Link href="/solutions/ship-mechanical">{lang === "tr" ? "Gemi Mekanik" : "Ship Mechanical"}</Link>
-                  <Link href="/solutions/ship-painting">{lang === "tr" ? "Gemi Boya" : "Ship Painting"}</Link>
-                  <Link href="/solutions/ship-safety">{lang === "tr" ? "Gemi Güvenlik" : "Ship Safety"}</Link>
-                  <Link href="/solutions/shipyard-logistics">{lang === "tr" ? "Lojistik" : "Logistics"}</Link>
-                </div>
-                <div className={styles.footerNavCol}>
-                  <h5>{lang === "tr" ? "Şirket" : "Company"}</h5>
-                  <Link href="/company/about">{lang === "tr" ? "Biz kimiz?" : "Who are we?"}</Link>
-                  <Link href="#contact">{lang === "tr" ? "İletişim" : "Contact"}</Link>
-                  <Link href="/company/careers">{lang === "tr" ? "Kariyer" : "Careers"}</Link>
-                  <Link href="/company/insights">{lang === "tr" ? "Haberler" : "Insights"}</Link>
-                </div>
-              </div>
-
-              <div className={styles.footerAction}>
-                <h5>{t.footerRegion}</h5>
-                <div className={styles.locationTag}>
-                  <Globe size={14} /> Global / İstanbul, TR
-                </div>
-                <div className={styles.footerLegal}>
-                  <Link href="/legal/privacy">{lang === "tr" ? "Gizlilik" : "Privacy"}</Link>
-                  <Link href="/legal/terms">{lang === "tr" ? "Şartlar" : "Terms"}</Link>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.footerLegal}>
-              <div className={styles.legalLeft}>
-                <span>&copy; {new Date().getFullYear()} Tuzla Supply Platform.</span>
-                <Link href="/privacy">{lang === "tr" ? "Gizlilik" : "Privacy"}</Link>
-                <Link href="/terms">{lang === "tr" ? "Şartlar" : "Terms"}</Link>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footer lang={lang} />
       </main>
     );
   } catch (error) {

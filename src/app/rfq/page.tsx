@@ -2,6 +2,7 @@ import styles from "./rfq.module.css";
 import Link from "next/link";
 import RFQForm from "./RFQForm";
 import HomeNavbar from "@/components/HomeNavbar";
+import Footer from "@/components/Footer";
 import { ArrowLeft, Globe, Send } from "lucide-react";
 import { Suspense } from "react";
 
@@ -42,45 +43,7 @@ export default async function RFQPage({ searchParams }: { searchParams: Promise<
         <RFQForm />
       </div>
 
-      <footer className={styles.ultraFooter}>
-        <div className="container">
-          <div className={styles.footerMain}>
-            <div className={styles.footerBrand}>
-              <h3 className={styles.footerBrandName}>Tuzla <span>Supply</span></h3>
-              <p className={styles.footerBrandDesc}>
-                {t.footerDesc}
-              </p>
-            </div>
-
-            <div className={styles.footerNavGroup}>
-              <div className={styles.footerNavCol}>
-                <h5>Platform</h5>
-                <Link href="/catalog">{lang === "tr" ? "Katalog" : "Catalog"}</Link>
-                <Link href="/rfq">{lang === "tr" ? "Hızlı Teklif" : "Quick Quote"}</Link>
-              </div>
-              <div className={styles.footerNavCol}>
-                <h5>{lang === "tr" ? "Şirket" : "Company"}</h5>
-                <Link href="/#contact">{lang === "tr" ? "İletişim" : "Contact"}</Link>
-              </div>
-            </div>
-
-            <div className={styles.footerAction}>
-              <h5>{t.footerRegion}</h5>
-              <div className={styles.locationTag}>
-                <Globe size={14} /> Global / İstanbul, TR
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.footerLegal}>
-            <div className={styles.legalLeft}>
-              <span>&copy; {new Date().getFullYear()} Tuzla Supply Platform.</span>
-              <Link href="/privacy">{t.privacy}</Link>
-              <Link href="/terms">{t.terms}</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer lang={lang} />
     </main>
   );
 }
