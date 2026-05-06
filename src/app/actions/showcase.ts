@@ -165,6 +165,15 @@ export async function getSectionVisibility() {
   };
 }
 
+export async function getSettings() {
+  return await prisma.settings.findFirst() || {
+    companyName: "Tuzla Supply",
+    email: "info@tuzlasupply.com",
+    phone: "+90 (216) 123 45 67",
+    address: "Aydınlı, Tuzla / İstanbul"
+  };
+}
+
 export async function updateStats(formData: FormData) {
   await prisma.settings.upsert({
     where: { id: 1 },

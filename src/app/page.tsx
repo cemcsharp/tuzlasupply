@@ -21,17 +21,18 @@ import TechnicalFinder from "@/components/TechnicalFinder";
 export const dynamic = "force-dynamic";
 
 import { submitContactForm } from "@/app/actions/contact";
-import { getActiveReferences, getActivePartners, getSectionVisibility } from "@/app/actions/showcase";
+import { getActiveReferences, getActivePartners, getSectionVisibility, getSettings } from "@/app/actions/showcase";
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ lang?: string }> }) {
   try {
     const { lang = "tr" } = await searchParams;
-    const [content, slides, references, partners, sectionVis] = await Promise.all([
+    const [content, slides, references, partners, sectionVis, settings] = await Promise.all([
       getSiteContent(),
       getHeroSlides(),
       getActiveReferences(),
       getActivePartners(),
       getSectionVisibility(),
+      getSettings(),
     ]);
     
     const categories = content.categories;
@@ -328,21 +329,21 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
                   <div className={styles.infoIcon}><Mail size={24} /></div>
                   <div>
                     <span className={styles.infoLabel}>{t.contactEmail}</span>
-                    <div className={styles.infoValue}>info@tuzlasupply.com</div>
+                    <div className={styles.infoValue}>{settings.email}</div>
                   </div>
                 </div>
                 <div className={styles.infoItem}>
                   <div className={styles.infoIcon}><Phone size={24} /></div>
                   <div>
                     <span className={styles.infoLabel}>{t.contactPhone}</span>
-                    <div className={styles.infoValue}>+90 (216) 123 45 67</div>
+                    <div className={styles.infoValue}>{settings.phone}</div>
                   </div>
                 </div>
                 <div className={styles.infoItem}>
                   <div className={styles.infoIcon}><MapPin size={24} /></div>
                   <div>
                     <span className={styles.infoLabel}>{t.contactOffice}</span>
-                    <div className={styles.infoValue}>Aydınlı, Tuzla / İstanbul</div>
+                    <div className={styles.infoValue}>{settings.address}</div>
                   </div>
                 </div>
                 <div className={styles.infoItem}>
