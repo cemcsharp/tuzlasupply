@@ -86,10 +86,10 @@ export default function HeroCarousel({
 
       <div className={`${styles.heroContent} container`}>
         <span className={styles.heroSubtitle}>{t.heroSubtitle}</span>
-        <h1 className="title-main" style={{ color: slides.length > 0 ? "white" : "inherit" }}>
+        <h1 className="title-main">
           {activeTitle}
         </h1>
-        <p className={styles.heroDescription} style={{ color: slides.length > 0 ? "rgba(255,255,255,0.8)" : "inherit" }}>
+        <p className={styles.heroDescription}>
           {activeSub}
         </p>
         <div className={styles.heroActions}>
