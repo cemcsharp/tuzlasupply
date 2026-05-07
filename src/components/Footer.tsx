@@ -30,7 +30,7 @@ export default async function Footer({ lang = "en" }: { lang?: string }) {
 
           <div className={styles.footerNavGroup}>
             <div className={styles.footerNavCol}>
-              <h5>{isTr ? "Çözümler" : "Solutions"}</h5>
+              <h5>{isTr ? "Hizmetler" : "Solutions"}</h5>
               <Link href="/solutions/ship-electrical">{isTr ? "Gemi Elektriği" : "Ship Electrical"}</Link>
               <Link href="/solutions/ship-mechanical">{isTr ? "Gemi Mekanik" : "Ship Mechanical"}</Link>
               <Link href="/solutions/ship-painting">{isTr ? "Gemi Boya" : "Ship Painting"}</Link>
@@ -38,11 +38,17 @@ export default async function Footer({ lang = "en" }: { lang?: string }) {
               <Link href="/solutions/shipyard-logistics">{isTr ? "Lojistik" : "Logistics"}</Link>
             </div>
             <div className={styles.footerNavCol}>
+              <h5>{isTr ? "Hızlı Erişim" : "Quick Links"}</h5>
+              <Link href="/catalog">{isTr ? "Dijital Katalog" : "Digital Catalog"}</Link>
+              <Link href="/rfq">{isTr ? "Teklif İste" : "Request Quote"}</Link>
+              <Link href="/admin/login">{isTr ? "Müşteri Paneli" : "Customer Portal"}</Link>
+              <Link href="/company/insights">{isTr ? "Insights" : "Insights"}</Link>
+            </div>
+            <div className={styles.footerNavCol}>
               <h5>{isTr ? "Şirket" : "Company"}</h5>
               <Link href="/company/about">{isTr ? "Biz kimiz?" : "Who are we?"}</Link>
               <Link href="/#contact">{isTr ? "İletişim" : "Contact"}</Link>
               <Link href="/company/careers">{isTr ? "Kariyer" : "Careers"}</Link>
-              <Link href="/company/insights">{isTr ? "Haberler" : "Insights"}</Link>
             </div>
           </div>
 

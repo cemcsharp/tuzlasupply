@@ -2032,8 +2032,8 @@
 
 .footerMain {
   display: grid;
-  grid-template-columns: 2fr 1fr 1.5fr;
-  gap: 6rem;
+  grid-template-columns: 1.5fr 3fr 1.5fr;
+  gap: 4rem;
   margin-bottom: 6rem;
 }
 
@@ -2077,8 +2077,8 @@
 
 .footerNavGroup {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
 }
 
 .footerNavCol h5,
@@ -2152,4 +2152,34 @@
   color: rgba(255, 255, 255, 0.3);
   text-decoration: none;
   font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .footerMain {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+  
+  .footerNavGroup {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .footerNavGroup {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .legalLeft {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .footerLegal {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
 }
