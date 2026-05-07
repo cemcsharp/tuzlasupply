@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import ChatWidget from "@/components/ChatWidget";
 
@@ -11,15 +12,17 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Tuzla Supply | Ship Supply Tuzla & Marine Spare Parts Istanbul",
+    default: "Tuzla Supply | Global Ship Supply & Marine Spare Parts Istanbul",
     template: "%s | Tuzla Supply"
   },
-  description: "Tuzla Supply is your premier partner for Ship Supply in Tuzla & Istanbul. We provide MAN B&W, Wärtsilä spare parts, maritime provisions, and technical ship stores with global delivery.",
+  description: "Your digital gateway to ship supply in Tuzla. Expert procurement for MAN B&W, Wärtsilä engine parts, technical stores, and maritime provisions with 24/7 global logistics.",
   keywords: [
     "Tuzla Supply", "Ship Supply Tuzla", "Marine Spare Parts Istanbul", "Ship Chandler Turkey", 
     "MAN B&W spare parts", "Wartsila parts Turkey", "Maritime Procurement Istanbul", "Technical Ship Stores",
-    "Gemi İkmal Tuzla", "Yedek Parça Tedarik", "Port of Tuzla supply", "Ship Provisions Turkey"
+    "Gemi İkmal Tuzla", "Yedek Parça Tedarik", "Port of Tuzla supply", "Ship Provisions Turkey",
+    "Technical Management Istanbul", "Marine Logistics Turkey"
   ],
+  manifest: "/manifest.json",
   authors: [{ name: "Tuzla Supply Team" }],
   creator: "Tuzla Supply",
   publisher: "Tuzla Supply",
@@ -35,11 +38,27 @@ export const metadata: Metadata = {
     siteName: "Tuzla Supply",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "https://tuzlasupply.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Tuzla Supply - Ship Supply & Spare Parts",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Tuzla Supply | Maritime Supply Excellence",
     description: "Your technical partner for ship supply and spare parts in Turkey.",
+    images: ["https://tuzlasupply.com/og-image.jpg"],
+  },
+  alternates: {
+    canonical: 'https://tuzlasupply.com',
+    languages: {
+      'en-US': 'https://tuzlasupply.com/?lang=en',
+      'tr-TR': 'https://tuzlasupply.com/?lang=tr',
+    },
   },
   robots: {
     index: true,
@@ -52,6 +71,10 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+};
+
+export const viewport = {
+  themeColor: "#0072CE",
 };
 
 export default function RootLayout({
@@ -95,10 +118,40 @@ export default function RootLayout({
             })
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://tuzlasupply.com"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Solutions",
+                  "item": "https://tuzlasupply.com/solutions"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Catalog",
+                  "item": "https://tuzlasupply.com/catalog"
+                }
+              ]
+            })
+          }}
+        />
       </head>
       <body className={inter.className}>
         {children}
         <Analytics />
+        <SpeedInsights />
         <ChatWidget />
       </body>
     </html>

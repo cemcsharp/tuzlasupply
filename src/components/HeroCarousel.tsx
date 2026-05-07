@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import styles from "@/app/page.module.css";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Slide {
   id: string;
@@ -69,8 +70,15 @@ export default function HeroCarousel({
             <div 
               key={slide.id} 
               className={`${styles.slideImage} ${index === current ? styles.slideActive : ""}`}
-              style={{ backgroundImage: `url(${slide.imageUrl})` }}
-            />
+            >
+              <Image 
+                src={slide.imageUrl} 
+                alt={slide.title} 
+                fill 
+                priority={index === 0}
+                style={{ objectFit: "cover" }} 
+              />
+            </div>
           ))
         )}
         <div className={styles.heroOverlay}></div>

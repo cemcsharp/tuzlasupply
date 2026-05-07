@@ -29,6 +29,24 @@ export default function HomeNavbar() {
           </div>
         </Link>
         
+        <div className={styles.navLinks}>
+          <Link href={`/#catalog?lang=${lang}`} className={styles.navLink}>
+            {lang === "tr" ? "Katalog" : "Catalog"}
+          </Link>
+          <Link href={`/solutions/spare-parts?lang=${lang}`} className={styles.navLink}>
+            {lang === "tr" ? "Çözümler" : "Solutions"}
+          </Link>
+          <Link href={`/#references?lang=${lang}`} className={styles.navLink}>
+            {lang === "tr" ? "Referanslar" : "References"}
+          </Link>
+          <Link href={`/company/insights?lang=${lang}`} className={styles.navLink}>
+            {lang === "tr" ? "Insights" : "Insights"}
+          </Link>
+          <Link href={`/#contact?lang=${lang}`} className={styles.navLink}>
+            {lang === "tr" ? "İletişim" : "Contact"}
+          </Link>
+        </div>
+        
         <div className={styles.navRight}>
           <div className={styles.langSwitch}>
             <button 

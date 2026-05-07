@@ -9,18 +9,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1,
+      alternates: {
+        languages: {
+          tr: `${baseUrl}/?lang=tr`,
+          en: `${baseUrl}/?lang=en`,
+        },
+      },
     },
     {
       url: `${baseUrl}/catalog`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
+      alternates: {
+        languages: {
+          tr: `${baseUrl}/catalog?lang=tr`,
+          en: `${baseUrl}/catalog?lang=en`,
+        },
+      },
     },
     {
       url: `${baseUrl}/rfq`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
+      alternates: {
+        languages: {
+          tr: `${baseUrl}/rfq?lang=tr`,
+          en: `${baseUrl}/rfq?lang=en`,
+        },
+      },
     },
     {
       url: `${baseUrl}/company/about`,
