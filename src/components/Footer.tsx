@@ -17,8 +17,8 @@ export default async function Footer({ lang = "en" }: { lang?: string }) {
             <h3 className={styles.footerBrandName}>Tuzla <span>Supply</span></h3>
             <p className={styles.footerBrandDesc}>
               {isTr 
-                ? "Tuzla merkezli yeni nesil dijital ship supply ekosistemi. Denizcilik ve teknik ikmal ihtiyaçlarınızı AI teknolojisiyle optimize ediyoruz." 
-                : "Next-gen digital ship supply ecosystem in Tuzla. We optimize your maritime and technical procurement with AI technology."}
+                ? "Tuzla merkezli yeni nesil dijital ship supply ekosistemi. Denizcilik ve teknik ikmal ihtiyaçlarınızı Navis AI teknolojisiyle optimize ediyoruz." 
+                : "Next-gen digital ship supply ecosystem in Tuzla. We optimize your maritime and technical procurement with Navis AI technology."}
             </p>
             <div className={styles.footerSocials}>
               <a href="#">LN</a>

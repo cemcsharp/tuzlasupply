@@ -19,7 +19,7 @@ export default function ChatWidget() {
   
   const [leadForm, setLeadForm] = useState({ name: "", email: "", phone: "" });
   const [messages, setMessages] = useState<{ role: string, text: string }[]>([
-    { role: "assistant", text: "Merhaba! Ben Tuzla AI. Size bugün nasıl yardımcı olabilirim?" }
+    { role: "assistant", text: "Merhaba! Ben Navis AI. Size bugün nasıl yardımcı olabilirim?" }
   ]);
 
   useEffect(() => {
@@ -148,7 +148,7 @@ export default function ChatWidget() {
     return (
       <button className={styles.launcher} onClick={() => setIsOpen(true)}>
         <MessageSquare size={28} />
-        <span className={styles.launcherBadge}>AI ACTIVE</span>
+        <span className={styles.launcherBadge}>NAVIS AI</span>
       </button>
     );
   }
@@ -161,7 +161,7 @@ export default function ChatWidget() {
           <div className={styles.aiAvatar}>
             <Bot size={20} /><span className={styles.onlineIndicator} />
           </div>
-          <div><h4>Tuzla AI</h4><span>Çevrimiçi</span></div>
+          <div><h4>Navis AI</h4><span>Çevrimiçi</span></div>
         </div>
         <div className={styles.headerActions}>
           <button onClick={() => setIsMinimized(!isMinimized)}>{isMinimized ? <Maximize2 size={18} /> : <Minimize2 size={18} />}</button>
@@ -181,14 +181,14 @@ export default function ChatWidget() {
             {isScanning && (
               <div className={styles.scanOverlay}>
                 <div className={styles.scanRadar} />
-                <div className={styles.scanText}>Zihin Okunuyor...</div>
-                <div className={styles.scanSubtext}>Sohbetinizdeki talepler ayıklanıyor.</div>
+                <div className={styles.scanText}>Navis AI Analiz Ediyor...</div>
+                <div className={styles.scanSubtext}>Talepleriniz Navis AI tarafından ayıklanıyor.</div>
               </div>
             )}
 
             {!leadCollected ? (
               <div className={styles.leadFormContainer}>
-                <div className={styles.leadWelcome}><Sparkles size={32} color="var(--color-accent)" /><h3>Akıllı Asistan</h3></div>
+                <div className={styles.leadWelcome}><Sparkles size={32} color="var(--color-accent)" /><h3>Navis AI Asistan</h3></div>
                 <form onSubmit={handleLeadSubmit} className={styles.leadForm}>
                   <div className={styles.leadInputGroup}><input type="text" placeholder="Ad Soyad" required value={leadForm.name} onChange={(e) => setLeadForm({ ...leadForm, name: e.target.value })} /></div>
                   <div className={styles.leadInputGroup}><input type="email" placeholder="E-posta" required value={leadForm.email} onChange={(e) => setLeadForm({ ...leadForm, email: e.target.value })} /></div>

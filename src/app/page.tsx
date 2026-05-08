@@ -63,7 +63,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ l
       catTechTitle: lang === "tr" ? "Kurumsal & Teknoloji" : "Corporate & Tech",
       catTechDesc: lang === "tr" ? "Modern iş dünyası için IT altyapısı, iş güvenliği ve ofis çözümleri." : "IT infrastructure, occupational safety, and office solutions.",
       catTechItems: lang === "tr" ? ["IT Donanım & Yazılım", "İş Sağlığı ve Güvenliği", "Kurumsal Sarf Malzeme"] : ["IT Hardware & Software", "Health & Safety", "Corporate Consumables"],
-      footerDesc: lang === "tr" ? "Tuzla merkezli yeni nesil dijital ship supply ekosistemi. Denizcilik ve teknik ikmal ihtiyaçlarınızı AI teknolojisiyle optimize ediyoruz." : "Next-gen digital ship supply ecosystem in Tuzla. We optimize your maritime and technical procurement with AI technology.",
+      footerDesc: lang === "tr" ? "Tuzla merkezli yeni nesil dijital ship supply ekosistemi. Denizcilik ve teknik ikmal ihtiyaçlarınızı Navis AI teknolojisiyle optimize ediyoruz." : "Next-gen digital ship supply ecosystem in Tuzla. We optimize your maritime and technical procurement with Navis AI technology.",
       footerRegion: lang === "tr" ? "Hizmet Bölgesi" : "Service Region",
       footerNewsletter: lang === "tr" ? "Haber bülteni için e-posta" : "Email for newsletter",
       // Stats Labels
