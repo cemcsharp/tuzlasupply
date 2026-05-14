@@ -433,6 +433,9 @@
 
 .navItemWithDropdown {
   position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .megaMenu {
@@ -441,14 +444,20 @@
   left: 50%;
   transform: translateX(-50%) translateY(0);
   width: 500px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
+  background: transparent; /* Invisible bridge */
+  padding-top: 15px; /* The bridge itself */
+  margin-top: -5px; /* Overlap slightly */
+  z-index: 2000;
+  animation: megaMenuFade 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.megaMenuInner {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(25px);
   border: 1px solid var(--color-border);
   border-radius: 1.5rem;
   box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.15);
   padding: 1.5rem;
-  z-index: 2000;
-  animation: megaMenuFade 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes megaMenuFade {

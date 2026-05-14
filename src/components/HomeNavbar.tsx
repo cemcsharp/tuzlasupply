@@ -85,20 +85,22 @@ export default function HomeNavbar() {
             
             {showSolutions && (
               <div className={styles.megaMenu}>
-                <div className={styles.megaMenuGrid}>
-                  {solutions.map((item) => (
-                    <Link 
-                      key={item.slug} 
-                      href={`/solutions/${item.slug}?lang=${lang}`}
-                      className={styles.megaMenuItem}
-                    >
-                      <div className={styles.megaMenuIcon}>{item.icon}</div>
-                      <div className={styles.megaMenuContent}>
-                        <div className={styles.megaMenuTitle}>{item.title}</div>
-                        <div className={styles.megaMenuDesc}>{item.desc}</div>
-                      </div>
-                    </Link>
-                  ))}
+                <div className={styles.megaMenuInner}>
+                  <div className={styles.megaMenuGrid}>
+                    {solutions.map((item) => (
+                      <Link 
+                        key={item.slug} 
+                        href={`/solutions/${item.slug}?lang=${lang}`}
+                        className={styles.megaMenuItem}
+                      >
+                        <div className={styles.megaMenuIcon}>{item.icon}</div>
+                        <div className={styles.megaMenuContent}>
+                          <div className={styles.megaMenuTitle}>{item.title}</div>
+                          <div className={styles.megaMenuDesc}>{item.desc}</div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
