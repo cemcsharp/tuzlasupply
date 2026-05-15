@@ -50,6 +50,13 @@ export default async function Footer({ lang = "en" }: { lang?: string }) {
               <Link href="/#contact">{isTr ? "İletişim" : "Contact"}</Link>
               <Link href="/company/careers">{isTr ? "Kariyer" : "Careers"}</Link>
             </div>
+            <div className={styles.footerNavCol}>
+              <h5>{isTr ? "Limanlar" : "Ports"}</h5>
+              <Link href="/ports/tuzla">Tuzla Port</Link>
+              <Link href="/ports/yalova">Yalova Port</Link>
+              <Link href="/ports/istanbul">Istanbul Port</Link>
+              <Link href="/ports/izmit">Izmit Port</Link>
+            </div>
           </div>
 
           <div className={styles.footerAction}>

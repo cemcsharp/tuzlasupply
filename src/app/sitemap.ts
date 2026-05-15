@@ -1,116 +1,55 @@
-import { MetadataRoute } from 'next'
- 
+
+import { MetadataRoute } from 'next';
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://tuzlasupply.com'
- 
-  return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-      alternates: {
-        languages: {
-          tr: `${baseUrl}/?lang=tr`,
-          en: `${baseUrl}/?lang=en`,
-        },
-      },
-    },
-    {
-      url: `${baseUrl}/catalog`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-      alternates: {
-        languages: {
-          tr: `${baseUrl}/catalog?lang=tr`,
-          en: `${baseUrl}/catalog?lang=en`,
-        },
-      },
-    },
-    {
-      url: `${baseUrl}/rfq`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+  const baseUrl = 'https://tuzlasupply.com';
+  
+  // CORE PAGES
+  const routes = [
+    '',
+    '/catalog',
+    '/company/about',
+    '/company/contact',
+    '/company/insights',
+    '/rfq',
+    '/solutions/provision',
+    '/solutions/technical',
+    '/solutions/safety',
+    '/solutions/logistics',
+  ];
+
+  // PORT SEO HUB
+  const ports = ['tuzla', 'yalova', 'istanbul', 'izmit', 'aliaga'];
+  
+  // BLOG/INSIGHTS EXPANSION (FOR SEO DEPTH)
+  const insights = [
+    'understanding-impa-codes',
+    'engine-overhaul-optimization',
+    'maritime-safety-standards',
+    'logistics-hub-turkey',
+    'provisioning-quality-control',
+  ];
+
+  const sitemapEntries: MetadataRoute.Sitemap = [
+    ...routes.map((route) => ({
+      url: `${baseUrl}${route}`,
+      lastModified: new Promise<Date>((resolve) => resolve(new Date())),
+      changeFrequency: 'weekly' as const,
+      priority: route === '' ? 1 : 0.8,
+    })),
+    ...ports.map((port) => ({
+      url: `${baseUrl}/ports/${port}`,
+      lastModified: new Promise<Date>((resolve) => resolve(new Date())),
+      changeFrequency: 'monthly' as const,
       priority: 0.7,
-      alternates: {
-        languages: {
-          tr: `${baseUrl}/rfq?lang=tr`,
-          en: `${baseUrl}/rfq?lang=en`,
-        },
-      },
-    },
-    {
-      url: `${baseUrl}/company/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/company/careers`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+    })),
+    ...insights.map((slug) => ({
+      url: `${baseUrl}/company/insights/${slug}`,
+      lastModified: new Promise<Date>((resolve) => resolve(new Date())),
+      changeFrequency: 'monthly' as const,
       priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/solutions/ship-electrical`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/solutions/ship-mechanical`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/solutions/ship-painting`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/solutions/ship-safety`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/solutions/shipyard-logistics`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/company/services`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/services/marine-provisions`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/company/insights`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/legal/privacy`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/legal/terms`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-  ]
+    })),
+  ];
+
+  return sitemapEntries;
 }
