@@ -1,0 +1,13 @@
+
+[
+  { "code": "330101", "name": "Nylon Brush, Short Handle", "category": "Deck Stores", "unit": "PCS" },
+  { "code": "330161", "name": "Deck Scrubbing Brush", "category": "Deck Stores", "unit": "PCS" },
+  { "code": "232101", "name": "Gate Valve, Cast Iron, 10K-50A", "category": "Engine Stores", "unit": "PCS" },
+  { "code": "232102", "name": "Gate Valve, Cast Iron, 10K-65A", "category": "Engine Stores", "unit": "PCS" },
+  { "code": "190101", "name": "Cotton Overall, Blue, Size L", "category": "Clothing", "unit": "PCS" },
+  { "code": "190501", "name": "Safety Boots, Steel Toe, Size 42", "category": "Clothing", "unit": "PCS" },
+  { "code": "810101", "name": "Basmati Rice, 5kg Bag", "category": "Provisions", "unit": "BAG" },
+  { "code": "810201", "name": "Frozen Beef Steak, Grass Fed", "category": "Provisions", "unit": "KG" },
+  { "code": "331101", "name": "Safety Sign: Wear Eye Protection", "category": "Deck Stores", "unit": "PCS" },
+  { "code": "230401", "name": "Ball Bearing 6204-2RS", "category": "Engine Stores", "unit": "PCS" }
+]

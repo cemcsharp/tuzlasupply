@@ -19,7 +19,9 @@ export default function CatalogClient({ initialProducts }: { initialProducts: an
   const filteredProducts = useMemo(() => {
     return initialProducts.filter(p => {
       const matchesCat = selectedCategory === "Tümü" || p.category === selectedCategory;
-      const matchesSearch = p.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch = 
+        p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        (p.sku && p.sku.toLowerCase().includes(searchTerm.toLowerCase()));
       return matchesCat && matchesSearch;
     });
   }, [initialProducts, selectedCategory, searchTerm]);
@@ -100,7 +102,18 @@ export default function CatalogClient({ initialProducts }: { initialProducts: an
           <div className={styles.productGrid}>
             {filteredProducts.map((product) => (
               <div key={product.id} className={styles.productCard}>
-                <span className={styles.categoryTag}>{product.category}</span>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "1rem" }}>
+                  <span className={styles.categoryTag}>{product.category}</span>
+                  {product.sku && (
+                    <span style={{ 
+                      fontSize: "0.75rem", fontWeight: "800", color: "#38bdf8", 
+                      background: "rgba(56, 189, 248, 0.1)", padding: "0.4rem 0.8rem", 
+                      borderRadius: "8px", letterSpacing: "0.05em" 
+                    }}>
+                      IMPA {product.sku}
+                    </span>
+                  )}
+                </div>
                 <h3 className={styles.productName}>{product.name}</h3>
                 <p className={styles.productDesc}>
                   {product.description || `${product.category} kategorisinde yüksek performanslı endüstriyel çözüm.`}
