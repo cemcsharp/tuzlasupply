@@ -1,5 +1,7 @@
+
 "use client";
 
+import { useState, useEffect } from "react";
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend, BarChart, Bar
@@ -12,6 +14,16 @@ import {
 const COLORS = ['#00A3FF', '#10B981', '#F59E0B', '#EF4444'];
 
 export default function DashboardCharts({ data }: { data: any }) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <div style={{ height: '600px', width: '100%', background: '#f8fafc', borderRadius: '24px' }} />;
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem" }}>
       

@@ -140,7 +140,59 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. NAVIS AI: SMART SUPPLY CHAIN */}
+      {/* 4. TECHNICAL INSIGHTS & PORT GUIDES (THE SEO POWERHOUSE) */}
+      <section className={styles.insightsSection}>
+        <div className="container">
+          <div className="reveal reveal-1" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
+            <div>
+              <h2 className="section-title">{isTr ? "TEKNİK REHBER & LİMAN SERVİSLERİ" : "TECHNICAL INSIGHTS & PORT SERVICES"}</h2>
+              <p className="section-subtitle" style={{ margin: 0 }}>
+                {isTr 
+                  ? "Supply Chain Management ve denizcilik lojistiği hakkında uzman görüşleri." 
+                  : "Expert views on Supply Chain Management and maritime logistics."}
+              </p>
+            </div>
+            <Link href="/company/insights" className={styles.btnLink}>
+              {isTr ? "TÜM YAZILAR" : "ALL POSTS"} <ChevronRight size={20} />
+            </Link>
+          </div>
+
+          <div className={styles.insightGrid}>
+            {[
+              {
+                t: isTr ? "Tuzla Port Operations: Gemi İkmali El Kitabı" : "Tuzla Port Operations: Ship Chandler Handbook",
+                d: isTr ? "İstanbul ve Tuzla limanlarında ship chandler seçerken dikkat edilmesi gereken 5 kritik nokta." : "5 critical points to consider when choosing a ship chandler in Istanbul and Tuzla ports.",
+                tag: "Port Services",
+                date: "12 May 2026"
+              },
+              {
+                t: isTr ? "Marine Logistics: Tedarik Zinciri Yönetimi" : "Marine Logistics: Supply Chain Management",
+                d: isTr ? "Modern denizcilikte bunker services ve lojistik optimizasyonu ile maliyet tasarrufu." : "Cost savings with bunker services and logistics optimization in modern shipping.",
+                tag: "Logistics",
+                date: "10 May 2026"
+              },
+              {
+                t: isTr ? "Shipping Agency ve Römorkör Hizmetleri" : "Shipping Agency & Tugboat Operations",
+                d: isTr ? "Pilotage ve römorkör hizmetlerinde operasyonel mükemmellik ve güvenlik standartları." : "Operational excellence and safety standards in pilotage and tugboat services.",
+                tag: "Agency",
+                date: "08 May 2026"
+              }
+            ].map((post, idx) => (
+              <div key={idx} className={`${styles.insightCard} hover-lift reveal reveal-${idx + 1}`}>
+                <span className={styles.insightTag}>{post.tag}</span>
+                <h3>{post.t}</h3>
+                <p>{post.d}</p>
+                <div className={styles.insightFooter}>
+                  <span>{post.date}</span>
+                  <ArrowRight size={16} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5. NAVIS AI: SMART SUPPLY CHAIN */}
       <section className={styles.aiSection}>
         <div className="container">
           <div className={styles.aiContentGrid}>
