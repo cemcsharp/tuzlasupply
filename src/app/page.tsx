@@ -8,7 +8,7 @@ import {
   Zap, Wrench, Droplets, Wind, Waves, 
   Flame, Compass, Radio, Shield, 
   Trash2, Coffee, Beer, Paintbrush, 
-  Hammer, Package, Box
+  Hammer, Package, Box, Utensils
 } from "lucide-react";
 import Link from "next/link";
 import styles from "./page.module.css";
@@ -85,7 +85,56 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. COMPREHENSIVE SERVICE CLOUD (SEO & VISUAL HUB) */}
+      {/* 2. CORE SERVICES WITH HIGH-AUTHORITY IMAGES */}
+      <section className={styles.servicesSection}>
+        <div className="container">
+          <div className="reveal reveal-1" style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <h2 className="section-title">{isTr ? "DENİZCİLİK ÇÖZÜMLERİMİZ" : "MARITIME SOLUTIONS"}</h2>
+            <p className="section-subtitle" style={{ margin: '0 auto 4rem' }}>
+              {isTr 
+                ? "Sektör lideri kalite standartlarında, IMPA ve ISSA normlarına tam uyumlu profesyonel hizmetler." 
+                : "Professional services in compliance with industry-leading quality standards, IMPA and ISSA norms."}
+            </p>
+          </div>
+
+          <div className={styles.serviceGrid}>
+            {[
+              { 
+                t: isTr ? "Kumanya İkmali" : "Provision Supply", 
+                d: isTr ? "Günlük taze meyve, sebze, et ve dondurulmuş ürünler." : "Daily fresh fruits, vegetables, meat and frozen goods.",
+                icon: <Utensils size={32} />,
+                img: "/fresh_provisions_quality.png"
+              },
+              { 
+                t: isTr ? "Teknik Malzemeler" : "Technical Stores", 
+                d: isTr ? "Gemi makine, güverte ve kabin malzemeleri (IMPA/ISSA)." : "Engine, deck and cabin stores (IMPA/ISSA).",
+                icon: <Settings size={32} />,
+                img: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070"
+              },
+              { 
+                t: isTr ? "Emniyet Ekipmanları" : "Safety Equipment", 
+                d: isTr ? "LSA ve FFA ekipmanları, servis ve sertifikasyon." : "LSA and FFA equipment, service and certification.",
+                icon: <ShieldCheck size={32} />,
+                img: "https://images.unsplash.com/photo-1513467655676-561b7d489a88?q=80&w=2070"
+              }
+            ].map((s, i) => (
+              <div key={i} className={`${styles.serviceCard} hover-lift reveal reveal-${i+1}`}>
+                <div className={styles.serviceImage} style={{ backgroundImage: `url(${s.img})` }}></div>
+                <div className={styles.serviceContent}>
+                  <div className={styles.serviceIcon}>{s.icon}</div>
+                  <h3>{s.t}</h3>
+                  <p>{s.d}</p>
+                  <Link href="/catalog" className={styles.serviceLink}>
+                    {isTr ? "Kataloğu Gör" : "See Catalog"} <ChevronRight size={16} />
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. COMPREHENSIVE SERVICE CLOUD (SEO & VISUAL HUB) */}
       <section className={styles.serviceCloudSection}>
         <div className="container">
           <div className="reveal reveal-1" style={{ textAlign: 'center', marginBottom: '5rem' }}>
@@ -108,39 +157,39 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. OPERATIONAL EXCELLENCE WITH MOTION */}
+      {/* 4. STATS SECTION */}
       <section className={styles.statsSection}>
         <div className="container">
           <div className={styles.statsGrid}>
             <div className="reveal reveal-1">
               <div className={styles.statCard}>
-                <h3>500+</h3>
-                <p>{isTr ? "Tamamlanan Proje" : "Projects Completed"}</p>
+                <h3>12+</h3>
+                <p>{isTr ? "Lojistik Aracı" : "Logistics Vehicles"}</p>
               </div>
             </div>
             <div className="reveal reveal-2">
               <div className={styles.statCard}>
-                <h3>24/7</h3>
-                <p>{isTr ? "Liman Operasyonu" : "Port Operations"}</p>
+                <h3>5000m²</h3>
+                <p>{isTr ? "Depolama Alanı" : "Warehouse Area"}</p>
               </div>
             </div>
             <div className="reveal reveal-3">
               <div className={styles.statCard}>
-                <h3>150+</h3>
-                <p>{isTr ? "Mutlu Armatör" : "Happy Owners"}</p>
+                <h3>15dk</h3>
+                <p>{isTr ? "Yanıt Hızı" : "Response Time"}</p>
               </div>
             </div>
             <div className="reveal reveal-4">
               <div className={styles.statCard}>
-                <h3>100%</h3>
-                <p>{isTr ? "Teknik Doğruluk" : "Technical Accuracy"}</p>
+                <h3>24/7</h3>
+                <p>{isTr ? "Kesintisiz Destek" : "Always Online"}</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. TECHNICAL INSIGHTS & PORT GUIDES (THE SEO POWERHOUSE) */}
+      {/* 5. TECHNICAL INSIGHTS & PORT GUIDES */}
       <section className={styles.insightsSection}>
         <div className="container">
           <div className="reveal reveal-1" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '4rem' }}>
@@ -192,7 +241,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. NAVIS AI: SMART SUPPLY CHAIN */}
+      {/* 6. NAVIS AI: SMART SUPPLY CHAIN */}
       <section className={styles.aiSection}>
         <div className="container">
           <div className={styles.aiContentGrid}>
