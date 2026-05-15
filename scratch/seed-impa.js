@@ -12,7 +12,7 @@ const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  console.log('--- STARTING REAL IMPA SEEDING (FINAL) ---');
+  console.log('--- STARTING REAL IMPA SEEDING (DESCRIPTION BYPASS) ---');
   
   const dataPath = path.join(__dirname, '../src/data/impa_master.json');
   const impaData = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
@@ -27,7 +27,7 @@ async function main() {
         data: {
           name: item.name,
           category: item.category,
-          sku: item.code,
+          description: `IMPA:${item.code}`, // Storing code in description
           unit: item.unit || "PCS",
           price: 0
         }

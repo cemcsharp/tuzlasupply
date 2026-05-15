@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo } from "react";
@@ -19,9 +20,13 @@ export default function CatalogClient({ initialProducts }: { initialProducts: an
   const filteredProducts = useMemo(() => {
     return initialProducts.filter(p => {
       const matchesCat = selectedCategory === "Tümü" || p.category === selectedCategory;
+      const isImpa = p.description?.startsWith("IMPA:");
+      const impaCode = isImpa ? p.description.split(":")[1] : "";
+      
       const matchesSearch = 
         p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        (p.sku && p.sku.toLowerCase().includes(searchTerm.toLowerCase()));
+        impaCode.toLowerCase().includes(searchTerm.toLowerCase());
+        
       return matchesCat && matchesSearch;
     });
   }, [initialProducts, selectedCategory, searchTerm]);
@@ -83,7 +88,7 @@ export default function CatalogClient({ initialProducts }: { initialProducts: an
             <Search size={18} style={{ position: "absolute", left: "12px", top: "50%", transform: "translateY(-50%)", color: "#94A3B8" }} />
             <input 
               type="text" 
-              placeholder="Ürün adı ile ara..." 
+              placeholder="Ürün adı veya IMPA kodu ile ara..." 
               style={{ 
                 width: "100%", padding: "0.75rem 1rem 0.75rem 2.75rem", borderRadius: "14px", 
                 border: "1px solid #F1F5F9", backgroundColor: "#F8FAFC", outline: "none",
@@ -100,34 +105,39 @@ export default function CatalogClient({ initialProducts }: { initialProducts: an
 
         {filteredProducts.length > 0 ? (
           <div className={styles.productGrid}>
-            {filteredProducts.map((product) => (
-              <div key={product.id} className={styles.productCard}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "1rem" }}>
-                  <span className={styles.categoryTag}>{product.category}</span>
-                  {product.sku && (
-                    <span style={{ 
-                      fontSize: "0.75rem", fontWeight: "800", color: "#38bdf8", 
-                      background: "rgba(56, 189, 248, 0.1)", padding: "0.4rem 0.8rem", 
-                      borderRadius: "8px", letterSpacing: "0.05em" 
-                    }}>
-                      IMPA {product.sku}
-                    </span>
-                  )}
-                </div>
-                <h3 className={styles.productName}>{product.name}</h3>
-                <p className={styles.productDesc}>
-                  {product.description || `${product.category} kategorisinde yüksek performanslı endüstriyel çözüm.`}
-                </p>
-                <div className={styles.productFooter}>
-                  <div style={{ color: "var(--color-accent)", fontWeight: "700", fontSize: "0.9rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <Package size={16} /> <span>Birim: {product.unit}</span>
+            {filteredProducts.map((product) => {
+              const isImpa = product.description?.startsWith("IMPA:");
+              const impaCode = isImpa ? product.description.split(":")[1] : null;
+              
+              return (
+                <div key={product.id} className={styles.productCard}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "1rem" }}>
+                    <span className={styles.categoryTag}>{product.category}</span>
+                    {impaCode && (
+                      <span style={{ 
+                        fontSize: "0.75rem", fontWeight: "800", color: "#38bdf8", 
+                        background: "rgba(56, 189, 248, 0.1)", padding: "0.4rem 0.8rem", 
+                        borderRadius: "8px", letterSpacing: "0.05em" 
+                      }}>
+                        IMPA {impaCode}
+                      </span>
+                    )}
                   </div>
-                  <Link href="/rfq" className="btn-primary" style={{ padding: "0.75rem 1.25rem", borderRadius: "14px", fontSize: "0.9rem" }}>
-                    Fiyat İste <ArrowRight size={16} style={{ marginLeft: "4px" }} />
-                  </Link>
+                  <h3 className={styles.productName}>{product.name}</h3>
+                  <p className={styles.productDesc}>
+                    {isImpa ? `${product.category} kategorisinde yüksek performanslı endüstriyel çözüm.` : product.description}
+                  </p>
+                  <div className={styles.productFooter}>
+                    <div style={{ color: "var(--color-accent)", fontWeight: "700", fontSize: "0.9rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <Package size={16} /> <span>Birim: {product.unit}</span>
+                    </div>
+                    <Link href="/rfq" className="btn-primary" style={{ padding: "0.75rem 1.25rem", borderRadius: "14px", fontSize: "0.9rem" }}>
+                      Fiyat İste <ArrowRight size={16} style={{ marginLeft: "4px" }} />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           <div style={{ textAlign: "center", padding: "10rem 0", color: "#94A3B8" }}>
