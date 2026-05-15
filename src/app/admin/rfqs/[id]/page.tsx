@@ -5,6 +5,8 @@ import Link from "next/link";
 import StatusButtons from "./StatusButtons";
 import QuotePanel from "./QuotePanel";
 
+export const dynamic = 'force-dynamic';
+
 export default async function RFQDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const rfq = await prisma.rfqRequest.findUnique({

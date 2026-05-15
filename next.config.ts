@@ -1,8 +1,8 @@
+
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // reactCompiler: true, // Devre dışı bırakıldı (Build kararlılığı için)
-  output: 'standalone',
+  // output: 'standalone' kaldırıldı, Vercel varsayılanı kullanılacak
   experimental: {
     serverActions: {
       bodySizeLimit: '500mb',

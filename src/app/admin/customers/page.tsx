@@ -1,6 +1,8 @@
 import styles from "../admin.module.css";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = 'force-dynamic';
+
 export default async function CustomersPage() {
   // Veritabanından benzersiz firmaları ve onların toplam talep sayılarını çekiyoruz
   const customers = await prisma.rfqRequest.groupBy({

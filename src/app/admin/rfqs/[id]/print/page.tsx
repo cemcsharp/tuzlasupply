@@ -4,6 +4,8 @@ import styles from "./print.module.css";
 import PrintButton from "./PrintButton";
 import PDFExportButton from "./PDFExportButton";
 
+export const dynamic = 'force-dynamic';
+
 export default async function PrintRFQPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const [rfq, settings] = await Promise.all([

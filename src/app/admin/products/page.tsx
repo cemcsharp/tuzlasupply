@@ -3,6 +3,8 @@ import styles from "../admin.module.css";
 import ProductForm from "./ProductForm";
 import ProductList from "./ProductList";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProductsPage() {
   const products = await prisma.product.findMany({
     orderBy: { category: "asc" }
