@@ -33,19 +33,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const sitemapEntries: MetadataRoute.Sitemap = [
     ...routes.map((route) => ({
       url: `${baseUrl}${route}`,
-      lastModified: new Promise<Date>((resolve) => resolve(new Date())),
+      lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: route === '' ? 1 : 0.8,
     })),
     ...ports.map((port) => ({
       url: `${baseUrl}/ports/${port}`,
-      lastModified: new Promise<Date>((resolve) => resolve(new Date())),
+      lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
     ...insights.map((slug) => ({
       url: `${baseUrl}/company/insights/${slug}`,
-      lastModified: new Promise<Date>((resolve) => resolve(new Date())),
+      lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
