@@ -10,12 +10,16 @@ import {
 import Link from "next/link";
 import styles from "./page.module.css";
 
+import { Suspense } from "react";
+
 export default function HomePage() {
   const isTr = true; // Defaulting to TR for the user's focus
 
   return (
     <main className={styles.main}>
-      <HomeNavbar />
+      <Suspense fallback={null}>
+        <HomeNavbar />
+      </Suspense>
 
       {/* 1. INDUSTRIAL HERO SECTION */}
       <section className={styles.industrialHero}>
