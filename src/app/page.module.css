@@ -48,11 +48,12 @@
 }
 
 .heroTitle {
-  font-size: 4.5rem;
+  font-size: 5rem;
   font-weight: 950;
-  line-height: 1.05;
+  line-height: 1;
   margin-bottom: 2rem;
   color: white;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .accentText {
@@ -140,6 +141,49 @@
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
+}
+
+/* SERVICE CLOUD */
+.serviceCloudSection {
+  padding: 120px 0;
+  background: #f8fafc;
+}
+
+.serviceCloudGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.serviceMiniCard {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.serviceMiniIcon {
+  color: var(--color-accent);
+  background: rgba(56, 189, 248, 0.1);
+  padding: 1rem;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.serviceMiniCard:hover .serviceMiniIcon {
+  transform: rotate(10deg) scale(1.1);
+}
+
+.serviceMiniCard span {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--color-primary);
 }
 
 /* SERVICES GRID */
@@ -239,6 +283,27 @@
   color: var(--color-accent);
   position: relative;
   z-index: 2;
+  animation: float 4s ease-in-out infinite;
+}
+
+.aiDataNode {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  background: rgba(56, 189, 248, 0.2);
+  border: 1px solid var(--color-accent);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  z-index: 3;
+  animation: float 6s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
 }
 
 .aiFeatureList {
